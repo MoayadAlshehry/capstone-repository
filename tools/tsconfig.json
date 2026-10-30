@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "lib": ["ES2024", "DOM"],
+    "jsx": "react-jsx"
+  },
+  "include": ["**/*.ts", "../config/testing/*.ts", "**/*.tsx"],
+  "exclude": ["ai-v1/**/*.test.ts"]
+}

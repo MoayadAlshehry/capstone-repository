@@ -1,0 +1,220 @@
+@font-face {
+  font-family: P3Inter;
+  src: url('/fonts/inter-latin-400-normal.woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: P3Inter;
+  src: url('/fonts/inter-latin-600-normal.woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: P3Inter;
+  src: url('/fonts/inter-latin-700-normal.woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: Jakarta;
+  src: url('/fonts/p3-plusjakartasans.woff2');
+  font-weight: 200 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: Plex;
+  src: url('/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: Plex;
+  src: url('/fonts/ibm-plex-sans-arabic-arabic-600-normal.woff2');
+  font-weight: 500 800;
+  font-display: swap;
+}
+@scope ([data-cr-ds][data-context="public"]) to (:scope [data-cr-ds]) {
+  :scope.p3-public {
+    --cr-component-public-body-font: P3Inter;
+  }
+  .p3-project-media {
+    position: relative;
+    aspect-ratio: 16/10;
+    inline-size: 100%;
+    overflow: hidden;
+  }
+  .p3-project-media > svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .p3-project-media > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .p3-empty-feature {
+    min-height: 480px;
+    background: var(--r16-hero);
+  }
+  .p3-empty-feature .pav-window-note {
+    position: relative;
+    inset: auto;
+    max-width: 100%;
+    padding: 36px;
+  }
+  .p3-error {
+    padding-block: 80px;
+  }
+  .p3-access {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-block: 20px;
+  }
+  .p3-access a {
+    text-decoration: underline;
+  }
+  .pav-object {
+    scroll-margin-block: 24px;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .ds-skip {
+    position: absolute;
+    left: 12px;
+    top: 8px;
+    transform: translateY(-200%);
+    z-index: 1000;
+    background: var(--r16-surface);
+    padding: 12px;
+  }
+  .ds-skip:focus {
+    transform: none;
+  }
+  .login-form input {
+    scroll-margin-block: 90px;
+  }
+  :scope.arabic :is(.pav-object-sheet h3, .abstract) {
+    text-align: start;
+  }
+  .pav-object-sheet :is(h3, p),
+  .pav-publication h1 {
+    overflow-wrap: anywhere;
+  }
+  .public-reader .p3-reader-title {
+    font: inherit;
+    font-weight: 700;
+    letter-spacing: normal;
+    margin: 0;
+  }
+  .public-reader :is(pre, .table-scroll) {
+    max-width: 100%;
+  }
+  #public-files {
+    display: block;
+    scroll-margin-block: 100px;
+  }
+  @media (max-width: 760px) {
+    .p3-empty-feature {
+      min-height: 360px;
+    }
+    .p3-empty-feature .pav-window-note {
+      padding: 24px;
+    }
+  }
+}
+
+/* Existing approved Research Editions media keeps its light colors inside this owner. */
+[data-cr-ds][data-context='public'][data-theme='light']
+  .p3-project-media
+  > .visual-cover-art {
+  --cover-canvas: #eeeae0;
+  --cover-solid: #104f48;
+  --cover-light: #acc9ba;
+  --cover-sand: #d1b471;
+  --cover-ink: #114b44;
+}
+[data-cr-ds][data-context='public'].p3-public .source-language {
+  color: var(--cr-semantic-text-muted);
+  opacity: 1;
+}
+
+@keyframes p3-source-entry {
+  from {
+    translate: 0 5px;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+[data-cr-ds][data-context='public'].p3-public
+  :is(.reader-scroll, .focus-scroll) {
+  animation-name: p3-source-entry;
+  opacity: 1;
+}
+
+@scope ([data-cr-ds][data-context="public"]) to (:scope [data-cr-ds]) {
+  .p3-native-content {
+    max-width: 100%;
+    color: #203c32;
+    background: #fffefa;
+  }
+  .p3-native-content :is(.native-pdf, .lra-image-view, .lra-table-scroll) {
+    max-width: 100%;
+    overflow: auto;
+  }
+  .p3-native-content .admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .p3-native-content .admin-actions label {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .p3-native-content .admin-actions input {
+    width: 5em;
+    min-width: 44px;
+  }
+  .p3-native-content :is(audio, video, img, canvas) {
+    max-width: 100%;
+  }
+  .p3-native-content table {
+    border-collapse: collapse;
+  }
+  .p3-native-content :is(th, td) {
+    padding: 10px;
+    border: 1px solid #657f6d;
+    overflow-wrap: anywhere;
+  }
+  .p3-native-content .ss-pdf-stage {
+    max-width: 100%;
+    overflow: auto;
+  }
+}
+
+[data-cr-ds][data-context='public'].p3-public .avatar > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+}

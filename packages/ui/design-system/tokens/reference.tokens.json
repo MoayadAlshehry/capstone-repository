@@ -1,0 +1,265 @@
+{
+  "$description": "P2 immutable accepted-light reference inputs; measured P0 values reconciled against the complete local P1 source.",
+  "reference": {
+    "color": {
+      "ivory": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9725490196078431, 0.9686274509803922, 0.9411764705882353
+          ],
+          "alpha": 1,
+          "hex": "#F8F7F0"
+        }
+      },
+      "paper": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1.0, 0.996078431372549, 0.9803921568627451],
+          "alpha": 1,
+          "hex": "#FFFEFA"
+        }
+      },
+      "inkEvergreen": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.12549019607843137, 0.23529411764705882, 0.19607843137254902
+          ],
+          "alpha": 1,
+          "hex": "#203C32"
+        }
+      },
+      "mutedEvergreen": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.30980392156862746, 0.396078431372549, 0.34901960784313724
+          ],
+          "alpha": 1,
+          "hex": "#4F6559"
+        }
+      },
+      "evergreen": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.09803921568627451, 0.3607843137254902, 0.2784313725490196
+          ],
+          "alpha": 1,
+          "hex": "#195C47"
+        }
+      },
+      "evergreenHover": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.07058823529411765, 0.29411764705882354, 0.22745098039215686
+          ],
+          "alpha": 1,
+          "hex": "#124B3A"
+        }
+      },
+      "evergreenPressed": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.06274509803921569, 0.24705882352941178, 0.19607843137254902
+          ],
+          "alpha": 1,
+          "hex": "#103F32"
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.23529411764705882, 0.43137254901960786, 0.33725490196078434
+          ],
+          "alpha": 1,
+          "hex": "#3C6E56"
+        }
+      },
+      "ochre": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7843137254901961, 0.6274509803921569, 0.41568627450980394
+          ],
+          "alpha": 1,
+          "hex": "#C8A06A"
+        }
+      },
+      "sageSoft": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8980392156862745, 0.9333333333333333, 0.8901960784313725
+          ],
+          "alpha": 1,
+          "hex": "#E5EEE3"
+        }
+      },
+      "sageHero": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8666666666666667, 0.9137254901960784, 0.8666666666666667
+          ],
+          "alpha": 1,
+          "hex": "#DDE9DD"
+        }
+      },
+      "borderSubtle": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.7803921568627451, 0.8313725490196079, 0.7843137254901961
+          ],
+          "alpha": 1,
+          "hex": "#C7D4C8"
+        }
+      },
+      "focus": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.09019607843137255, 0.2980392156862745, 0.23137254901960785
+          ],
+          "alpha": 1,
+          "hex": "#174C3B"
+        }
+      },
+      "disabledSurface": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9019607843137255, 0.9215686274509803, 0.8862745098039215
+          ],
+          "alpha": 1,
+          "hex": "#E6EBE2"
+        }
+      },
+      "disabledInk": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.3215686274509804, 0.38823529411764707, 0.3411764705882353
+          ],
+          "alpha": 1,
+          "hex": "#526357"
+        }
+      },
+      "controlBorder": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.396078431372549, 0.4980392156862745, 0.42745098039215684
+          ],
+          "alpha": 1,
+          "hex": "#657F6D"
+        }
+      },
+      "sageSelected": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8235294117647058, 0.8862745098039215, 0.8313725490196079
+          ],
+          "alpha": 1,
+          "hex": "#D2E2D4"
+        }
+      }
+    },
+    "font": {
+      "display": {
+        "$type": "fontFamily",
+        "$value": ["Jakarta", "sans-serif"],
+        "$description": "Actual accepted Plus Jakarta Sans file, not nominal manifest prose"
+      },
+      "body": {
+        "$type": "fontFamily",
+        "$value": ["Inter", "sans-serif"],
+        "$description": "Actual accepted Inter file"
+      },
+      "arabic": {
+        "$type": "fontFamily",
+        "$value": ["Plex", "sans-serif"],
+        "$description": "Accepted IBM Plex Sans Arabic, existing files/licence"
+      },
+      "bodyFace": {
+        "$type": "fontFamily",
+        "$value": "Inter",
+        "$description": "Exact single-face alias for accepted CSS shorthands, whose component syntax already supplies its own fallbacks"
+      },
+      "displayFace": {
+        "$type": "fontFamily",
+        "$value": "Jakarta",
+        "$description": "Exact single-face alias for accepted CSS shorthands, whose component syntax already supplies its own fallbacks"
+      }
+    },
+    "radius": {
+      "Small": {
+        "$type": "dimension",
+        "$value": {
+          "value": 10,
+          "unit": "px"
+        },
+        "$description": "accepted radius metadata"
+      },
+      "Medium": {
+        "$type": "dimension",
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$description": "accepted radius metadata"
+      },
+      "Large": {
+        "$type": "dimension",
+        "$value": {
+          "value": 34,
+          "unit": "px"
+        },
+        "$description": "accepted radius metadata"
+      },
+      "XLarge": {
+        "$type": "dimension",
+        "$value": {
+          "value": 46,
+          "unit": "px"
+        },
+        "$description": "accepted radius metadata"
+      }
+    }
+  },
+  "component": {
+    "public": {
+      "bodyFont": {
+        "$type": "fontFamily",
+        "$value": "{reference.font.bodyFace}"
+      },
+      "displayFont": {
+        "$type": "fontFamily",
+        "$value": "{reference.font.displayFace}"
+      }
+    }
+  }
+}

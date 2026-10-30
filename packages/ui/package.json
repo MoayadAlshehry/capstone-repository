@@ -1,0 +1,74 @@
+{
+  "name": "@capstone/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./score-format": {
+      "types": "./dist/score-format.d.ts",
+      "default": "./dist/score-format.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./theme": {
+      "types": "./dist/theme.d.ts",
+      "default": "./dist/theme.js"
+    },
+    "./styles.css": "./styles.css",
+    "./r3": {
+      "types": "./dist/r3/index.d.ts",
+      "default": "./dist/r3/index.js"
+    },
+    "./r3.css": "./r3.css",
+    "./workspace-v2": {
+      "types": "./dist/workspace-v2/index.d.ts",
+      "default": "./dist/workspace-v2/index.js"
+    },
+    "./workspace-v2.css": "./workspace-v2.css",
+    "./visual-media": {
+      "types": "./dist/visual-media.d.ts",
+      "default": "./dist/visual-media.js"
+    },
+    "./visual-media.css": "./visual-media.css",
+    "./design-system": {
+      "types": "./dist/design-system/index.d.ts",
+      "default": "./dist/design-system/index.js"
+    },
+    "./design-system/client": {
+      "types": "./dist/design-system/client.d.ts",
+      "default": "./dist/design-system/client.js"
+    },
+    "./design-system.css": "./src/design-system/styles.css",
+    "./brand-logo": {
+      "types": "./dist/brand-logo.d.ts",
+      "default": "./dist/brand-logo.js"
+    },
+    "./bidi": {
+      "types": "./dist/bidi.d.ts",
+      "default": "./dist/bidi.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "dependencies": {
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "lucide-react": "1.50.0",
+    "radix-ui": "1.6.7",
+    "react-resizable-panels": "4.14.3",
+    "sonner": "2.0.8",
+    "tailwind-merge": "3.7.0"
+  },
+  "devDependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  }
+}

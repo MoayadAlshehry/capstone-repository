@@ -1,0 +1,315 @@
+{
+  "$description": "Separate measured public/workspace/assessment contexts. Metrics remain current; no universal public density.",
+  "geometry": {
+    "public": {
+      "contentMax": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1320,
+          "unit": "px"
+        },
+        "$description": "accepted manifest and1440 native width"
+      },
+      "headerMin": {
+        "$type": "dimension",
+        "$value": {
+          "value": 104,
+          "unit": "px"
+        },
+        "$description": "02.css pav-header"
+      },
+      "bodySize": {
+        "$type": "dimension",
+        "$value": {
+          "value": 17,
+          "unit": "px"
+        },
+        "$description": "actual family body"
+      },
+      "homeHeading": {
+        "$type": "dimension",
+        "$value": {
+          "value": 58,
+          "unit": "px"
+        },
+        "$description": "02.css h1 desktop"
+      },
+      "catalogueHeading": {
+        "$type": "dimension",
+        "$value": {
+          "value": 46,
+          "unit": "px"
+        },
+        "$description": "02.css catalogue"
+      },
+      "projectHeading": {
+        "$type": "dimension",
+        "$value": {
+          "value": 56,
+          "unit": "px"
+        },
+        "$description": "02.css record"
+      },
+      "loginHeading": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "$description": "02.css login"
+      },
+      "formControlMin": {
+        "$type": "dimension",
+        "$value": {
+          "value": 52,
+          "unit": "px"
+        },
+        "$description": "Login input/button native"
+      },
+      "headerActionMin": {
+        "$type": "dimension",
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        },
+        "$description": "native header CTA"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": 1.6,
+        "$description": "Accepted base; paragraphs1.65"
+      },
+      "breakpointWide": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1100,
+          "unit": "px"
+        }
+      },
+      "breakpointMobile": {
+        "$type": "dimension",
+        "$value": {
+          "value": 760,
+          "unit": "px"
+        }
+      },
+      "displayMeta": {
+        "$type": "dimension",
+        "$value": {
+          "value": 64,
+          "unit": "px"
+        }
+      },
+      "heroCornerTL": {
+        "$type": "dimension",
+        "$value": {
+          "value": 46,
+          "unit": "px"
+        }
+      },
+      "heroCornerTR": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      },
+      "heroCornerBR": {
+        "$type": "dimension",
+        "$value": {
+          "value": 34,
+          "unit": "px"
+        }
+      },
+      "heroCornerBL": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      },
+      "mobileHeroTL": {
+        "$type": "dimension",
+        "$value": {
+          "value": 30,
+          "unit": "px"
+        }
+      },
+      "mobileHeroTR": {
+        "$type": "dimension",
+        "$value": {
+          "value": 18,
+          "unit": "px"
+        }
+      },
+      "mobileHeroBR": {
+        "$type": "dimension",
+        "$value": {
+          "value": 26,
+          "unit": "px"
+        }
+      },
+      "mobileHeroBL": {
+        "$type": "dimension",
+        "$value": {
+          "value": 18,
+          "unit": "px"
+        }
+      }
+    },
+    "workspace": {
+      "sidebarExpanded": {
+        "$type": "dimension",
+        "$value": {
+          "value": 248,
+          "unit": "px"
+        },
+        "$description": "shell.tsx explicit override"
+      },
+      "sidebarCollapsed": {
+        "$type": "dimension",
+        "$value": {
+          "value": 72,
+          "unit": "px"
+        },
+        "$description": "shell.tsx explicit override"
+      },
+      "topbar": {
+        "$type": "dimension",
+        "$value": {
+          "value": 64,
+          "unit": "px"
+        },
+        "$description": "workspace-v2.css"
+      },
+      "bodySize": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        },
+        "$description": "workspace-v2.css; do not replace with public17"
+      },
+      "lineHeight": {
+        "$type": "number",
+        "$value": 1.6,
+        "$description": "Existing workspace density"
+      },
+      "mobileDrawer": {
+        "$type": "dimension",
+        "$value": {
+          "value": 18,
+          "unit": "rem"
+        }
+      },
+      "mobileBreakpoint": {
+        "$type": "dimension",
+        "$value": {
+          "value": 768,
+          "unit": "px"
+        }
+      },
+      "controlDefault": {
+        "$type": "dimension",
+        "$value": {
+          "value": 36,
+          "unit": "px"
+        }
+      },
+      "controlSmall": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32,
+          "unit": "px"
+        }
+      },
+      "inputRadius": {
+        "$type": "dimension",
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        }
+      },
+      "navigationHeight": {
+        "$type": "dimension",
+        "$value": {
+          "value": 44,
+          "unit": "px"
+        }
+      }
+    },
+    "assessment": {
+      "handle": {
+        "$type": "dimension",
+        "$value": {
+          "value": 5,
+          "unit": "px"
+        },
+        "$description": "studio.css"
+      },
+      "evidenceRatio": {
+        "$type": "number",
+        "$value": 62
+      },
+      "assessmentRatio": {
+        "$type": "number",
+        "$value": 38
+      },
+      "evidenceMin": {
+        "$type": "dimension",
+        "$value": {
+          "value": 420,
+          "unit": "px"
+        }
+      },
+      "assessmentMin": {
+        "$type": "dimension",
+        "$value": {
+          "value": 340,
+          "unit": "px"
+        }
+      },
+      "tabCollapse": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1000,
+          "unit": "px"
+        }
+      }
+    },
+    "component": {
+      "projectCardRadius": {
+        "$type": "dimension",
+        "$value": {
+          "value": 30,
+          "unit": "px"
+        },
+        "$description": "actual02.css pav-object; deliberate exception"
+      },
+      "projectWindowRadius": {
+        "$type": "dimension",
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        },
+        "$description": "actual02.css pav-window"
+      }
+    },
+    "credits": {
+      "twoNames": {
+        "$type": "dimension",
+        "$value": {
+          "value": 270,
+          "unit": "px"
+        }
+      },
+      "threeNames": {
+        "$type": "dimension",
+        "$value": {
+          "value": 440,
+          "unit": "px"
+        }
+      }
+    }
+  }
+}

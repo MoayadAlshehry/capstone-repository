@@ -1,0 +1,29 @@
+CREATE FUNCTION app.checkpoint_read(who uuid,sid uuid,sub uuid) RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,app AS $$
+DECLARE p app.projects;s app.project_submissions;v app.project_versions;r app.checkpoint_rounds;d app.checkpoint_decisions;
+BEGIN
+ p:=app.checkpoint_actor(who,sid,sub);SELECT * INTO s FROM app.project_submissions WHERE id=sub;SELECT * INTO r FROM app.checkpoint_rounds WHERE submission_id=sub;SELECT * INTO d FROM app.checkpoint_decisions WHERE submission_id=sub;SELECT * INTO v FROM app.project_versions WHERE id=s.version_id;
+ RETURN jsonb_build_object('id',sub,'purpose','CHECKPOINT','contract','CHECKPOINT_V1','project',p.id,'version',v.id,'number',r.checkpoint_number,'submittedAt',s.submitted_at,'metadata',s.metadata_snapshot,'authors',s.authors_snapshot,'files',(app.submission_native_read(who,sid,p.id,v.id,sub,NULL)->'files'),'state',CASE WHEN d.id IS NULL THEN 'awaiting_review' ELSE d.decision END,'decision',CASE WHEN d.id IS NULL THEN NULL ELSE jsonb_build_object('state',d.decision,'comment',d.comment,'actor',d.actor_name,'decidedAt',d.decided_at) END,'revision',v.row_version,'assignmentRevision',p.row_version,'canDecide',p.supervisor_id=who AND (SELECT role_code='faculty_supervisor' FROM app.users WHERE id=who) AND d.id IS NULL AND v.status='pending_review' AND sub=(SELECT id FROM app.project_submissions WHERE version_id=v.id ORDER BY round_number DESC LIMIT 1),'current',p.current_version_id=v.id);
+END $$;
+CREATE FUNCTION app.semester_state(who uuid,sid uuid,pid uuid) RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,app AS $$
+DECLARE p app.projects;v app.project_versions;a app.users;latest jsonb;history jsonb;issues jsonb;draft jsonb;pending_final boolean;
+BEGIN
+ a:=app.assignment_principal(who,sid);SELECT * INTO p FROM app.projects WHERE id=pid AND university_id=a.university_id;
+ p:=app.file_actor(who,sid,pid,p.current_version_id,false);SELECT * INTO v FROM app.project_versions WHERE id=p.current_version_id;
+ draft:=(app.draft_view(who,sid,pid)->'projects')->0;
+ SELECT coalesce(jsonb_agg(jsonb_build_object('id',s.id,'purpose',s.purpose,'number',c.checkpoint_number,'submittedAt',s.submitted_at,'state',CASE WHEN s.purpose='FINAL' THEN coalesce(fr.decision,CASE WHEN s.id=v.approved_submission_id THEN 'archived' ELSE 'final_pending' END) WHEN d.id IS NULL THEN 'awaiting_review' ELSE d.decision END,'comment',coalesce(d.comment,fr.comment),'actor',d.actor_name,'decidedAt',coalesce(d.decided_at,fr.decided_at)) ORDER BY s.round_number DESC),'[]') INTO history FROM app.project_submissions s LEFT JOIN app.checkpoint_rounds c ON c.submission_id=s.id LEFT JOIN app.checkpoint_decisions d ON d.submission_id=s.id LEFT JOIN app.review_records fr ON fr.submission_id=s.id WHERE s.version_id=v.id;
+ SELECT app.checkpoint_read(who,sid,s.id) INTO latest FROM app.project_submissions s WHERE s.version_id=v.id AND s.purpose='CHECKPOINT' ORDER BY s.round_number DESC LIMIT 1;
+ pending_final:=v.status='pending_review' AND EXISTS(SELECT 1 FROM app.project_submissions WHERE version_id=v.id AND purpose='FINAL' AND id=(SELECT id FROM app.project_submissions WHERE version_id=v.id ORDER BY round_number DESC LIMIT 1));
+ issues:=app.checkpoint_issues(pid,v.id);
+ RETURN jsonb_build_object('project',draft,'versionNumber',v.version_number,'role',CASE WHEN a.role_code='faculty_supervisor' THEN 'supervisor' WHEN EXISTS(SELECT 1 FROM app.project_authors WHERE project_id=pid AND user_id=who AND is_team_lead) THEN 'lead' ELSE 'author' END,'editable',a.role_code='student' AND v.status IN ('draft','revision_required'),'files',app.semester_files(pid,v.id),'quota',app.file_quota_value(pid),'issues',issues,'canSend',a.role_code='student' AND EXISTS(SELECT 1 FROM app.project_authors WHERE project_id=pid AND user_id=who AND is_team_lead) AND issues='[]'::jsonb,'manifestDigest',app.semester_manifest(pid,v.id),'latest',latest,'history',history,'legacyFinalPending',pending_final,'lifecycle',CASE WHEN v.status='archived' THEN 'archived' WHEN v.status='rejected' THEN 'retained' WHEN pending_final THEN 'final_pending' WHEN v.status='pending_review' THEN 'awaiting_review' ELSE coalesce(latest->>'state','in_progress') END);
+END $$;
+CREATE FUNCTION app.semester_collection(who uuid,sid uuid,needs_review boolean DEFAULT false) RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,app AS $$
+DECLARE a app.users;item jsonb;pid uuid;result jsonb:='[]';data jsonb;
+BEGIN
+ a:=app.assignment_principal(who,sid);IF a.role_code NOT IN ('student','faculty_supervisor') OR needs_review AND a.role_code<>'faculty_supervisor' THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='FORBIDDEN';END IF;
+ FOR item IN SELECT value FROM jsonb_array_elements(app.assignment_view(who,sid,NULL)->'projects') ORDER BY value->>'id' LOOP
+  pid:=(item->>'id')::uuid;data:=app.semester_state(who,sid,pid);
+  IF NOT needs_review OR data->>'lifecycle'='awaiting_review' THEN result:=result||jsonb_build_array(jsonb_build_object('id',pid,'title',data->'project'->'metadata'->>'title','department',item->>'department','year',data->'project'->'metadata'->>'academic_year','supervisor',item->'supervisor'->>'name','lead',(SELECT u.full_name FROM app.project_authors pa JOIN app.users u ON u.id=pa.user_id WHERE pa.project_id=pid AND pa.is_team_lead),'role',data->>'role','lifecycle',data->>'lifecycle','checkpoint',data->'latest'->>'id','number',data->'latest'->>'number','submittedAt',data->'latest'->>'submittedAt','updatedAt',data->'project'->>'updatedAt'));END IF;
+ END LOOP;RETURN jsonb_build_object('items',result);
+END $$;
+REVOKE ALL ON FUNCTION app.checkpoint_read(uuid,uuid,uuid),app.semester_state(uuid,uuid,uuid),app.semester_collection(uuid,uuid,boolean) FROM PUBLIC,capstone_jobs;
+GRANT EXECUTE ON FUNCTION app.checkpoint_read(uuid,uuid,uuid),app.semester_state(uuid,uuid,uuid),app.semester_collection(uuid,uuid,boolean) TO capstone_runtime;

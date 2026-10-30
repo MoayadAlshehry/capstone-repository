@@ -1,0 +1,5 @@
+.public-refined[data-cr-ds][data-context='public'] .ci-evidence-target {
+  outline: 2px solid var(--cr-semantic-focus-ring, currentColor);
+  outline-offset: 5px;
+  border-radius: 3px;
+}

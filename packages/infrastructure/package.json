@@ -1,0 +1,79 @@
+{
+  "name": "@capstone/infrastructure",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./public-views": {
+      "types": "./dist/public-views.d.ts",
+      "default": "./dist/public-views.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./uploads": {
+      "types": "./dist/uploads.d.ts",
+      "default": "./dist/uploads.js"
+    },
+    "./file-export": {
+      "types": "./dist/file-export.d.ts",
+      "default": "./dist/file-export.js"
+    },
+    "./native-files": {
+      "types": "./dist/native-files.d.ts",
+      "default": "./dist/native-files.js"
+    },
+    "./governance-worker": {
+      "types": "./dist/governance-worker.d.ts",
+      "default": "./dist/governance-worker.js"
+    },
+    "./account-mail": {
+      "types": "./dist/account-mail.d.ts",
+      "default": "./dist/account-mail.js"
+    },
+    "./account-mail-worker": {
+      "types": "./dist/account-mail-worker.d.ts",
+      "default": "./dist/account-mail-worker.js"
+    },
+    "./visual-images": {
+      "types": "./dist/visual-images.d.ts",
+      "default": "./dist/visual-images.js"
+    },
+    "./visual-media": {
+      "types": "./dist/visual-media.d.ts",
+      "default": "./dist/visual-media.js"
+    },
+    "./committee-mail": {
+      "types": "./dist/committee-mail.d.ts",
+      "default": "./dist/committee-mail.js"
+    },
+    "./evaluation-events": {
+      "types": "./dist/evaluation-events.d.ts",
+      "default": "./dist/evaluation-events.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@capstone/config": "workspace:*",
+    "@capstone/db": "workspace:*",
+    "@capstone/domain": "workspace:*",
+    "@capstone/storage": "workspace:*",
+    "@tus/server": "2.4.5",
+    "archiver": "8.0.0",
+    "papaparse": "5.5.3",
+    "pg": "8.23.1",
+    "pg-boss": "12.12.0",
+    "pino": "10.4.0",
+    "server-only": "0.0.1",
+    "sharp": "0.35.5",
+    "shiki": "4.5.0"
+  },
+  "devDependencies": {
+    "@types/archiver": "8.0.0",
+    "@types/papaparse": "5.5.2"
+  }
+}

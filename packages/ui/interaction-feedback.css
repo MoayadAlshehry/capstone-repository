@@ -1,0 +1,288 @@
+/* Shared progress and appearance controls across public, account and assessment shells. */
+.action-spinner {
+  display: inline-block;
+  inline-size: 16px;
+  block-size: 16px;
+  flex: none;
+  border: 2px solid currentColor;
+  border-inline-end-color: transparent;
+  border-radius: 50%;
+  animation: action-turn 0.8s linear infinite;
+}
+@keyframes action-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .action-spinner {
+    animation: none;
+    border-style: dotted;
+  }
+}
+.appearance-control,
+.language-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  inline-size: 40px;
+  block-size: 40px;
+  min-inline-size: 40px;
+  padding: 8px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.appearance-control svg,
+.language-control svg {
+  width: 20px;
+  height: 20px;
+}
+.appearance-control:hover,
+.language-control:hover {
+  background: color-mix(in srgb, currentColor 9%, transparent);
+}
+.appearance-control:focus-visible,
+.language-control:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+.appearance-moon {
+  display: none;
+}
+html[data-theme='dark'] .appearance-moon {
+  display: block;
+}
+html[data-theme='dark'] .appearance-sun {
+  display: none;
+}
+/* The one shared menu has three clear choices; portal colors follow the root theme. */
+.appearance-control {
+  inline-size: 56px;
+  min-inline-size: 56px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, currentColor 24%, transparent);
+}
+.appearance-control .appearance-chevron {
+  inline-size: 12px;
+  block-size: 12px;
+}
+.appearance-system {
+  display: none;
+}
+html[data-appearance='system']
+  .appearance-control
+  :is(.appearance-sun, .appearance-moon) {
+  display: none;
+}
+html[data-appearance='system'] .appearance-system {
+  display: block;
+}
+.appearance-menu {
+  --appearance-paper: #fffefa;
+  --appearance-ink: #203c32;
+  --appearance-soft: #e5eee3;
+  --appearance-line: #657f6d;
+  --appearance-focus: #174c3b;
+  z-index: 1000;
+  inline-size: 252px;
+  max-inline-size: calc(100vw - 24px);
+  padding: 12px;
+  border: 1px solid var(--appearance-line);
+  border-radius: 18px;
+  background: var(--appearance-paper);
+  color: var(--appearance-ink);
+  box-shadow: 0 12px 32px #0002;
+  font:
+    14px/1.5 Inter,
+    'IBM Plex Sans Arabic',
+    sans-serif;
+  animation: appearance-enter 140ms ease-out;
+  opacity: 1;
+}
+.appearance-heading {
+  padding: 0 4px 10px;
+  font-weight: 600;
+}
+.appearance-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+.appearance-menu .appearance-choice {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  min-block-size: 76px;
+  min-inline-size: 0;
+  padding: 10px 3px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: box-shadow 140ms ease-out;
+}
+.appearance-choice > span:first-child {
+  display: none;
+}
+.appearance-choice svg {
+  inline-size: 20px;
+  block-size: 20px;
+}
+.appearance-choice .appearance-choice-label {
+  position: static;
+  white-space: normal;
+  text-align: center;
+}
+.appearance-menu .appearance-choice .appearance-choice-check {
+  display: none;
+  position: absolute;
+  inset-inline-end: 4px;
+  inset-block-start: 4px;
+  inline-size: 12px;
+  block-size: 12px;
+}
+.appearance-menu .appearance-choice[data-state='checked'] {
+  background: var(--appearance-soft);
+  border-color: var(--appearance-line);
+  font-weight: 600;
+}
+.appearance-menu
+  .appearance-choice[data-state='checked']
+  .appearance-choice-check {
+  display: block;
+}
+.appearance-menu .appearance-choice[data-highlighted] {
+  box-shadow: inset 0 0 0 2px var(--appearance-focus);
+}
+html[data-theme='dark'] .appearance-menu {
+  --appearance-paper: #202a34;
+  --appearance-ink: #e9eeec;
+  --appearance-soft: #30464d;
+  --appearance-line: #8796a5;
+  --appearance-focus: #e1be83;
+}
+@keyframes appearance-enter {
+  from {
+    transform: translateY(-3px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .appearance-menu {
+    animation: none;
+  }
+  .appearance-menu .appearance-choice {
+    transition: none;
+  }
+}
+/* Fixed physical identity slots; compact avatar stacks use their own explicit overlap rules. */
+.public-sort-control {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+.public-sort-label {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.public-refined[data-cr-ds][data-context='public'] .public-sort-trigger {
+  min-inline-size: 168px;
+  min-block-size: 44px;
+  border: 1px solid var(--r16-border);
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--r16-surface);
+  color: var(--r16-ink);
+  font: inherit;
+  box-shadow: none;
+}
+.public-refined[data-cr-ds][data-context='public']
+  .public-sort-trigger:focus-visible {
+  outline: 2px solid var(--cr-semantic-focus-ring);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+.public-sort-menu {
+  z-index: 1000;
+  min-inline-size: var(--radix-select-trigger-width);
+  border: 1px solid #657f6d;
+  border-radius: 14px;
+  padding: 5px;
+  background: #fffefa;
+  color: #203c32;
+  font:
+    14px/1.5 Inter,
+    'IBM Plex Sans Arabic',
+    sans-serif;
+  animation: appearance-enter 140ms ease-out;
+}
+.public-sort-menu [data-slot='select-item'] {
+  min-block-size: 42px;
+  padding-block: 10px;
+  padding-inline: 12px 32px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.public-sort-menu [data-highlighted] {
+  background: #e5eee3;
+  color: #203c32;
+  outline: 2px solid #174c3b;
+  outline-offset: -2px;
+}
+html[data-theme='dark'] .public-sort-menu {
+  background: #202a34;
+  color: #e9eeec;
+  border-color: #8796a5;
+}
+html[data-theme='dark'] .public-sort-menu [data-highlighted] {
+  background: #30464d;
+  color: #e9eeec;
+  outline-color: #e1be83;
+}
+.public-sort-menu [data-state='checked'] {
+  font-weight: 600;
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-sort-menu {
+    animation: none;
+  }
+}
+strong:has(> .visual-avatar) {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+strong:has(> .visual-avatar) > bdi {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.password-field {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+/* Palette pairs commit atomically during the normal theme controller's two paint boundary.
+   Ordinary interaction transitions and keyframe animations remain available between changes. */
+:root[data-cr-palette-sync],
+:root[data-cr-palette-sync] *,
+:root[data-cr-palette-sync] *::before,
+:root[data-cr-palette-sync] *::after {
+  transition: none !important;
+}

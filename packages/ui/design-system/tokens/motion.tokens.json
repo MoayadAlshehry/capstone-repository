@@ -1,0 +1,42 @@
+{
+  "motion": {
+    "catalogueDuration": {
+      "$type": "duration",
+      "$value": {
+        "value": 320,
+        "unit": "ms"
+      },
+      "$description": "Actual accepted same-keyed-node FLIP"
+    },
+    "catalogueEasing": {
+      "$type": "cubicBezier",
+      "$value": [0.22, 0.75, 0.25, 1],
+      "$description": "Actual accepted easing"
+    },
+    "skeletonPulse": {
+      "$type": "duration",
+      "$value": {
+        "value": 1600,
+        "unit": "ms"
+      }
+    },
+    "skeletonCycles": {
+      "$type": "number",
+      "$value": 2
+    },
+    "feedbackThreshold": {
+      "$type": "duration",
+      "$value": {
+        "value": 150,
+        "unit": "ms"
+      }
+    },
+    "slowHintThreshold": {
+      "$type": "duration",
+      "$value": {
+        "value": 8000,
+        "unit": "ms"
+      }
+    }
+  }
+}

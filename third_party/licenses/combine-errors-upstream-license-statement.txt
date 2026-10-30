@@ -1,0 +1,5 @@
+Package combine-errors3.0.3: original upstream README license statement follows. Package manifest lacks a license field; this statement resolves that metadata omission. No package implementation is bundled.
+
+## License
+
+MIT

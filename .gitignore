@@ -1,0 +1,15 @@
+.local/
+.pnpm-store/
+node_modules/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+
+**/.next/
+**/dist/
+**/*.tsbuildinfo
+playwright-report/
+test-results/
+*.zip

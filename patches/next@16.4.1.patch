@@ -1,0 +1,26 @@
+diff --git a/dist/client/components/app-router-state.js b/dist/client/components/app-router-state.js
+--- a/dist/client/components/app-router-state.js
++++ b/dist/client/components/app-router-state.js
+@@ -201,7 +201,8 @@
+     return completeHardNavigation(state, url, navigateType);
+ }
+ function navigateUsingPrefetchedRouteTree(now, state, url, currentUrl, currentRenderedSearch, nextUrl, currentRoot, freshnessPolicy, scrollBehavior, navigateType, route, navigationLock, map) {
+-    const canonicalUrl = route.canonicalUrl + url.hash;
++    // A requested fragment replaces one retained by an earlier cached visit.
++    const canonicalUrl = url.hash ? route.canonicalUrl.split('#', 1)[0] + url.hash : route.canonicalUrl;
+     const renderedSearch = route.renderedSearch;
+     const prefetchSeed = {
+         renderedSearch,
+diff --git a/dist/esm/client/components/app-router-state.js b/dist/esm/client/components/app-router-state.js
+--- a/dist/esm/client/components/app-router-state.js
++++ b/dist/esm/client/components/app-router-state.js
+@@ -174,7 +174,8 @@
+     return completeHardNavigation(state, url, navigateType);
+ }
+ function navigateUsingPrefetchedRouteTree(now, state, url, currentUrl, currentRenderedSearch, nextUrl, currentRoot, freshnessPolicy, scrollBehavior, navigateType, route, navigationLock, map) {
+-    const canonicalUrl = route.canonicalUrl + url.hash;
++    // A requested fragment replaces one retained by an earlier cached visit.
++    const canonicalUrl = url.hash ? route.canonicalUrl.split('#', 1)[0] + url.hash : route.canonicalUrl;
+     const renderedSearch = route.renderedSearch;
+     const prefetchSeed = {
+         renderedSearch,

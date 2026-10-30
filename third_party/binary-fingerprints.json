@@ -1,0 +1,15 @@
+{
+  "npm_package": "ffmpeg-static",
+  "npm_version": "5.3.0",
+  "package_binary_release_tag": "b6.1.1",
+  "observed_executable_version": "ffmpeg version 7.0.2-static https://johnvansickle.com/ffmpeg/  Copyright (c) 2000-2024 the FFmpeg developers",
+  "executable_sha256": "e7e7fb30477f717e6f55f9180a70386c62677ef8a4d4d1a5d948f4098aa3eb99",
+  "executable_bytes": 79826272,
+  "license_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+  "package_license_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+  "license": "GPL-3.0",
+  "upstream_fetch": "https://github.com/eugeneware/ffmpeg-static/releases/download/b6.1.1/ffmpeg-linux-x64.gz",
+  "binary_readme_build": "ffmpeg-7.0.2-amd64-static.tar.xz",
+  "binary_bundled_in_source_release": false,
+  "note": "Observed executable is7.0.2 despite package release tag b6.1.1. Record exact bytes; do not call tag text a binary-version proof. Source-only fetch does not waive upstream license obligations."
+}

@@ -1,0 +1,281 @@
+{
+  "$description": "Accepted-light aliases plus source-derived status candidates",
+  "semantic": {
+    "surface": {
+      "canvas": {
+        "$type": "color",
+        "$value": "{reference.color.ivory}"
+      },
+      "paper": {
+        "$type": "color",
+        "$value": "{reference.color.paper}"
+      },
+      "soft": {
+        "$type": "color",
+        "$value": "{reference.color.sageSoft}"
+      },
+      "hero": {
+        "$type": "color",
+        "$value": "{reference.color.sageHero}"
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "{reference.color.paper}"
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{reference.color.inkEvergreen}"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{reference.color.mutedEvergreen}"
+      },
+      "onPrimary": {
+        "$type": "color",
+        "$value": "{reference.color.paper}"
+      },
+      "onAccent": {
+        "$type": "color",
+        "$value": "{reference.color.inkEvergreen}"
+      }
+    },
+    "action": {
+      "primary": {
+        "default": {
+          "$type": "color",
+          "$value": "{reference.color.evergreen}"
+        },
+        "hover": {
+          "$type": "color",
+          "$value": "{reference.color.evergreenHover}"
+        },
+        "pressed": {
+          "$type": "color",
+          "$value": "{reference.color.evergreenPressed}"
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{reference.color.secondary}"
+      },
+      "disabled": {
+        "surface": {
+          "$type": "color",
+          "$value": "{reference.color.disabledSurface}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{reference.color.disabledInk}"
+        }
+      }
+    },
+    "border": {
+      "subtle": {
+        "$type": "color",
+        "$value": "{reference.color.borderSubtle}"
+      },
+      "control": {
+        "$type": "color",
+        "$value": "{reference.color.controlBorder}"
+      }
+    },
+    "focus": {
+      "ring": {
+        "$type": "color",
+        "$value": "{reference.color.focus}"
+      }
+    },
+    "selection": {
+      "surface": {
+        "$type": "color",
+        "$value": "{reference.color.sageSelected}"
+      }
+    },
+    "accent": {
+      "decorative": {
+        "$type": "color",
+        "$value": "{reference.color.ochre}"
+      },
+      "onAccent": {
+        "$type": "color",
+        "$value": "{reference.color.inkEvergreen}"
+      }
+    },
+    "feedback": {
+      "info": {
+        "text": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1411764705882353, 0.29411764705882354, 0.42745098039215684
+            ],
+            "alpha": 1,
+            "hex": "#244B6D"
+          }
+        },
+        "surface": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9137254901960784, 0.9450980392156862, 0.9686274509803922
+            ],
+            "alpha": 1,
+            "hex": "#E9F1F7"
+          }
+        }
+      },
+      "success": {
+        "text": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.13333333333333333, 0.38823529411764707, 0.2784313725490196
+            ],
+            "alpha": 1,
+            "hex": "#226347"
+          }
+        },
+        "surface": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9333333333333333, 0.9607843137254902, 0.9372549019607843
+            ],
+            "alpha": 1,
+            "hex": "#EEF5EF"
+          }
+        }
+      },
+      "warning": {
+        "text": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.4666666666666667, 0.3411764705882353, 0.09803921568627451
+            ],
+            "alpha": 1,
+            "hex": "#775719"
+          }
+        },
+        "surface": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9725490196078431, 0.9490196078431372, 0.8980392156862745
+            ],
+            "alpha": 1,
+            "hex": "#F8F2E5"
+          }
+        }
+      },
+      "danger": {
+        "text": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6823529411764706, 0.18823529411764706, 0.1607843137254902
+            ],
+            "alpha": 1,
+            "hex": "#AE3029"
+          }
+        },
+        "surface": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.984313725490196, 0.9254901960784314, 0.9098039215686274
+            ],
+            "alpha": 1,
+            "hex": "#FBECE8"
+          }
+        }
+      },
+      "pending": {
+        "text": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.30980392156862746, 0.396078431372549, 0.34901960784313724
+            ],
+            "alpha": 1,
+            "hex": "#4F6559"
+          }
+        },
+        "surface": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8980392156862745, 0.9333333333333333, 0.8901960784313725
+            ],
+            "alpha": 1,
+            "hex": "#E5EEE3"
+          }
+        }
+      },
+      "unavailable": {
+        "text": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3215686274509804, 0.38823529411764707, 0.3411764705882353
+            ],
+            "alpha": 1,
+            "hex": "#526357"
+          }
+        },
+        "surface": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9019607843137255, 0.9215686274509803, 0.8862745098039215
+            ],
+            "alpha": 1,
+            "hex": "#E6EBE2"
+          }
+        }
+      }
+    },
+    "loading": {
+      "placeholder": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8705882352941177, 0.9058823529411765, 0.8588235294117647
+          ],
+          "alpha": 1,
+          "hex": "#DEE7DB"
+        }
+      }
+    }
+  },
+  "component": {
+    "loading": {
+      "surface": {
+        "$type": "color",
+        "$value": "{semantic.loading.placeholder}"
+      }
+    },
+    "workspace": {
+      "tabInactiveText": {
+        "$type": "color",
+        "$value": "{semantic.text.muted}",
+        "$description": "Opaque source semantic muted ink instead of existing 60% foreground: fixes measured 3.39:1 inactive assessment tab without geometry change."
+      }
+    }
+  }
+}

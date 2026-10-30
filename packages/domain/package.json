@@ -1,0 +1,122 @@
+{
+  "name": "@capstone/domain",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./discovery": {
+      "types": "./dist/discovery.d.ts",
+      "default": "./dist/discovery.js"
+    },
+    "./native-files": {
+      "types": "./dist/native-files.d.ts",
+      "default": "./dist/native-files.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "default": "./dist/server.js"
+    },
+    "./files-engine": {
+      "types": "./dist/files-engine.d.ts",
+      "default": "./dist/files-engine.js"
+    },
+    "./submissions-engine": {
+      "types": "./dist/submissions-engine.d.ts",
+      "default": "./dist/submissions-engine.js"
+    },
+    "./evaluations-engine": {
+      "types": "./dist/evaluations-engine.d.ts",
+      "default": "./dist/evaluations-engine.js"
+    },
+    "./publications-engine": {
+      "types": "./dist/publications-engine.d.ts",
+      "default": "./dist/publications-engine.js"
+    },
+    "./editions-engine": {
+      "types": "./dist/editions-engine.d.ts",
+      "default": "./dist/editions-engine.js"
+    },
+    "./discovery-engine": {
+      "types": "./dist/discovery-engine.d.ts",
+      "default": "./dist/discovery-engine.js"
+    },
+    "./notification-types": {
+      "types": "./dist/notification-types.d.ts",
+      "default": "./dist/notification-types.js"
+    },
+    "./reviewer-types": {
+      "types": "./dist/reviewer-types.d.ts",
+      "default": "./dist/reviewer-types.js"
+    },
+    "./packets": {
+      "types": "./dist/packets.d.ts",
+      "default": "./dist/packets.js"
+    },
+    "./packets-engine": {
+      "types": "./dist/packets-engine.d.ts",
+      "default": "./dist/packets-engine.js"
+    },
+    "./external-reviews": {
+      "types": "./dist/external-reviews.d.ts",
+      "default": "./dist/external-reviews.js"
+    },
+    "./external-reviews-engine": {
+      "types": "./dist/external-reviews-engine.d.ts",
+      "default": "./dist/external-reviews-engine.js"
+    },
+    "./allocation-policy": {
+      "types": "./dist/allocation-policy.d.ts",
+      "default": "./dist/allocation-policy.js"
+    },
+    "./allocation-engine": {
+      "types": "./dist/allocation-engine.d.ts",
+      "default": "./dist/allocation-engine.js"
+    },
+    "./corrections-engine": {
+      "types": "./dist/corrections-engine.d.ts",
+      "default": "./dist/corrections-engine.js"
+    },
+    "./showcase-engine": {
+      "types": "./dist/showcase-engine.d.ts",
+      "default": "./dist/showcase-engine.js"
+    },
+    "./showcase": {
+      "types": "./dist/showcase.d.ts",
+      "default": "./dist/showcase.js"
+    },
+    "./semester-engine": {
+      "types": "./dist/semester-engine.d.ts",
+      "default": "./dist/semester-engine.js"
+    },
+    "./academic-engine": {
+      "types": "./dist/academic-engine.d.ts",
+      "default": "./dist/academic-engine.js"
+    },
+    "./event-allocation-policy": {
+      "types": "./dist/event-allocation-policy.d.ts",
+      "default": "./dist/event-allocation-policy.js"
+    },
+    "./committee-engine": {
+      "types": "./dist/committee-engine.d.ts",
+      "default": "./dist/committee-engine.js"
+    },
+    "./committee-types": {
+      "types": "./dist/committee-types.d.ts",
+      "default": "./dist/committee-types.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@capstone/db": "workspace:*",
+    "@capstone/storage": "workspace:*",
+    "server-only": "0.0.1",
+    "zod": "4.6.6"
+  }
+}

@@ -1,0 +1,2 @@
+import{defineConfig}from'vitest/config';import base from'./vitest.permanent-evaluation.config.ts';
+export default defineConfig({...base,test:{...base.test,include:['tools/permanent-evaluation/exact70-release.integration.test.ts','tools/permanent-evaluation/progression-status.integration.test.ts','tools/permanent-evaluation/committee.integration.test.ts','tools/permanent-evaluation/security.integration.test.ts','tools/allocation/policy.test.ts'],fileParallelism:false,maxWorkers:1,testTimeout:300000,hookTimeout:180000}});

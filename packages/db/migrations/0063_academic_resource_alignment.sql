@@ -1,0 +1,29 @@
+-- R06: retain body-bound committee/optional-locator scope; no arbitrary academic roster cap.
+CREATE OR REPLACE FUNCTION app.academic_draft_save(who uuid,sid uuid,sub uuid,expected integer,assignment_expected integer,draft_expected integer,payload jsonb,command uuid,digest text) RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,app AS $$
+DECLARE p app.projects;s app.project_submissions;row app.academic_assessment_drafts;r app.command_receipts;layer_value text:=payload->>'layer';c jsonb;l jsonb;seen text[]:='{}';ev uuid:=gen_random_uuid();t timestamptz:=clock_timestamp();result jsonb;BEGIN
+ PERFORM pg_advisory_xact_lock(hashtextextended(who::text||command::text,0));p:=app.evaluation_actor(who,sid,sub,false);
+ IF NOT EXISTS(SELECT 1 FROM app.academic_finals WHERE submission_id=sub) THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='NEW_FINAL_REQUIRED';END IF;
+ SELECT * INTO r FROM app.command_receipts WHERE actor_id=who AND command_id=command;
+ IF r.command_id IS NOT NULL THEN IF r.action<>'academic.draft.'||layer_value OR r.payload_digest<>digest THEN RAISE EXCEPTION USING ERRCODE='40001',MESSAGE='IDEMPOTENCY_CONFLICT';END IF;RETURN (r.result->>'scope')::jsonb;END IF;
+ PERFORM app.evaluation_actor(who,sid,sub,true,expected,assignment_expected);
+ IF layer_value NOT IN ('supervisor','committee') OR layer_value IS NULL OR draft_expected IS NULL OR draft_expected<0 OR EXISTS(SELECT 1 FROM app.internal_assessments WHERE submission_id=sub AND layer=layer_value) OR layer_value='committee' AND NOT EXISTS(SELECT 1 FROM app.internal_assessments WHERE submission_id=sub AND layer='supervisor') THEN RAISE EXCEPTION USING ERRCODE='40001',MESSAGE='ASSESSMENT_LOCKED';END IF;
+ IF EXISTS(SELECT 1 FROM jsonb_object_keys(payload) k WHERE k NOT IN ('layer','criteria','overall','calibration','members','assessedOn','attestation')) OR jsonb_typeof(payload->'criteria') IS DISTINCT FROM 'array' OR jsonb_array_length(payload->'criteria')<>7 OR jsonb_typeof(payload->'overall') IS DISTINCT FROM 'string' OR char_length(app.evaluation_trim(payload->>'overall'))>2000 OR jsonb_typeof(payload->'calibration') IS DISTINCT FROM 'boolean' OR jsonb_typeof(payload->'attestation') IS DISTINCT FROM 'boolean' OR jsonb_typeof(payload->'members') IS DISTINCT FROM 'array' THEN RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='INVALID_DRAFT';END IF;
+ FOR c IN SELECT value FROM jsonb_array_elements(payload->'criteria') LOOP
+  IF jsonb_typeof(c) IS DISTINCT FROM 'object' OR EXISTS(SELECT 1 FROM jsonb_object_keys(c) k WHERE k NOT IN ('code','level','comment','locators')) OR coalesce(c->>'code','') !~ '^C[1-7]$' OR c->>'code'=ANY(seen) OR (c->'level' IS DISTINCT FROM 'null'::jsonb AND (jsonb_typeof(c->'level') IS DISTINCT FROM 'number' OR (c->>'level')::numeric NOT BETWEEN 0 AND 4 OR (c->>'level')::numeric<>trunc((c->>'level')::numeric))) OR jsonb_typeof(c->'comment') IS DISTINCT FROM 'string' OR char_length(c->>'comment')>1000 OR jsonb_typeof(c->'locators') IS DISTINCT FROM 'array' THEN RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='INVALID_DRAFT_CRITERION';END IF;
+  seen:=array_append(seen,c->>'code');
+  FOR l IN SELECT value FROM jsonb_array_elements(c->'locators') LOOP
+   IF jsonb_typeof(l) IS DISTINCT FROM 'object' OR EXISTS(SELECT 1 FROM jsonb_object_keys(l) k WHERE k NOT IN ('file','kind','reference')) OR coalesce(l->>'kind','') NOT IN ('page','section','figure','test','lines') OR jsonb_typeof(l->'reference') IS DISTINCT FROM 'string' OR char_length(l->>'reference') NOT BETWEEN 1 AND 200 OR NOT EXISTS(SELECT 1 FROM app.submission_files WHERE submission_id=sub AND file_id=(l->>'file')::uuid) THEN RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='INVALID_LOCATOR';END IF;
+   PERFORM app.submission_native_read(who,sid,p.id,p.current_version_id,sub,(l->>'file')::uuid);
+  END LOOP;
+ END LOOP;
+ IF EXISTS(SELECT 1 FROM jsonb_array_elements(payload->'members') x WHERE jsonb_typeof(x) IS DISTINCT FROM 'string' OR char_length(x#>>'{}')>131072) OR (payload->'assessedOn' IS DISTINCT FROM 'null'::jsonb AND (jsonb_typeof(payload->'assessedOn') IS DISTINCT FROM 'string' OR coalesce(payload->>'assessedOn','') !~ '^\d{4}-\d{2}-\d{2}$')) THEN RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='INVALID_DRAFT_PROVENANCE';END IF;
+ SELECT * INTO row FROM app.academic_assessment_drafts WHERE submission_id=sub AND layer=layer_value AND actor_id=who FOR UPDATE;
+ IF coalesce(row.revision,0)<>draft_expected THEN RAISE EXCEPTION USING ERRCODE='40001',MESSAGE='DRAFT_CONFLICT';END IF;
+ SELECT * INTO s FROM app.project_submissions WHERE id=sub;
+ INSERT INTO app.academic_assessment_drafts(university_id,project_id,version_id,submission_id,layer,actor_id,payload,revision,saved_at) VALUES(p.university_id,p.id,s.version_id,sub,layer_value,who,payload,draft_expected+1,t) ON CONFLICT(submission_id,layer,actor_id) DO UPDATE SET payload=EXCLUDED.payload,revision=EXCLUDED.revision,saved_at=EXCLUDED.saved_at;
+ result:=jsonb_build_object('submission',sub,'layer',layer_value,'revision',draft_expected+1,'savedAt',t);
+ INSERT INTO app.audit_logs(id,actor_id,actor_role,university_id,action,object_type,object_id,project_id,version_id,correlation_id,event_key,after_state) VALUES(ev,who,'faculty_supervisor',p.university_id,'academic.draft.'||layer_value,'project_submission',sub,p.id,s.version_id,command,ev,jsonb_build_object('scope',result::text));
+ INSERT INTO app.notifications(event_id,recipient_id,university_id,project_id,type,payload) VALUES(ev,who,p.university_id,p.id,'evaluation.draft.saved',jsonb_build_object('route','/submissions/'||sub::text,'message_key','evaluation.draft.saved'));
+ INSERT INTO app.outbox_events(event_id,kind) VALUES(ev,'immediate_notice');
+ INSERT INTO app.command_receipts(actor_id,command_id,action,payload_digest,audit_id,result) VALUES(who,command,'academic.draft.'||layer_value,digest,ev,jsonb_build_object('scope',result::text));RETURN result;
+END $$;

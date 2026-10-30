@@ -1,0 +1,189 @@
+/* P5.1: one disclosure and action-layout recipe for public, identity and workspaces.
+   Native details/summary retain their keyboard, focus, open state and no-JS behavior. */
+:root {
+  --ui-action-gap: 0.75rem;
+  --ui-action-row-gap: 0.75rem;
+  --ui-disclosure-duration: 180ms;
+}
+
+/* Explicit specificity also covers earlier route-specific list-item summaries. */
+html body details > summary {
+  box-sizing: border-box;
+  display: flex !important;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-block-size: 44px;
+  inline-size: 100%;
+  padding: 0.625rem 2.25rem 0.625rem 0.75rem;
+  border-radius: 0.625rem;
+  font-weight: 600;
+  line-height: 1.55;
+  text-decoration: none !important;
+  list-style: none;
+  cursor: pointer;
+  transition: background-color var(--ui-disclosure-duration) ease;
+}
+html body details > summary::-webkit-details-marker {
+  display: none;
+}
+html body details > summary::marker {
+  content: '';
+}
+html body details > summary::after {
+  content: '';
+  position: absolute;
+  right: 0.875rem;
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-right: 1.75px solid currentColor;
+  border-bottom: 1.75px solid currentColor;
+  transform: rotate(45deg) translate(-1px, -1px);
+  transition: transform var(--ui-disclosure-duration) ease;
+}
+html body details[open] > summary::after {
+  transform: rotate(225deg) translate(-1px, -1px);
+}
+html body details > summary:hover {
+  background-color: color-mix(in srgb, currentColor 6%, transparent);
+}
+html body details > summary:focus-visible {
+  outline: 2px solid var(--cr-semantic-focus-ring, currentColor);
+  outline-offset: 3px;
+}
+html body details[open] > summary {
+  margin-block-end: 0.5rem;
+}
+
+/* The PDF overflow menu is a compact named button, not an accordion header. */
+html body .pdf-more > summary {
+  inline-size: 44px;
+  justify-content: center;
+  padding: 0.5rem;
+}
+html body .pdf-more > summary::after {
+  content: none;
+}
+html body .pdf-more[open] > summary {
+  margin-block-end: 0;
+}
+
+/* Animate intrinsic content size, including close; older engines retain instant
+   native disclosure instead of max-height clipping or delayed focus hiding. */
+@supports (interpolate-size: allow-keywords) {
+  html body details:not(.pdf-more) {
+    interpolate-size: allow-keywords;
+  }
+  html body details:not(.pdf-more)::details-content {
+    block-size: 0;
+    opacity: 0;
+    overflow: clip;
+    transition:
+      block-size var(--ui-disclosure-duration) ease,
+      opacity var(--ui-disclosure-duration) ease,
+      content-visibility var(--ui-disclosure-duration) allow-discrete;
+  }
+  html body details[open]:not(.pdf-more)::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+}
+
+/* Flat action rows. Do not apply to tabs, radios, connected input addons,
+   navigation, crop canvases or segmented view controls. Order is never reversed. */
+html
+  body
+  :is(
+    .ui-action-row,
+    .admin-actions,
+    .ac-confirm-actions,
+    .ac-form-actions,
+    .ac-task-actions,
+    .af-record-actions,
+    .as-access-actions,
+    .as-completion-actions,
+    .as-pager,
+    .ss-form-actions,
+    .ss-reader-actions,
+    .ss-plan-actions,
+    .ss-decision-actions,
+    .ss-upload-actions,
+    .ss-code-toolbar,
+    .po-task-actions,
+    .po-order-actions,
+    .ps-actions,
+    .on-actions,
+    .on-form-actions,
+    .committee-member-actions,
+    .committee-session-actions,
+    .dialog-actions,
+    .file-actions,
+    .code-toolbar,
+    .project-actions,
+    .visual-editor-actions,
+    .visual-crop-footer,
+    .lra-reader-actions,
+    .lra-reading-controls,
+    .ps-header-actions,
+    .on-pagination,
+    .po-pagination,
+    .ps-pagination,
+    .af-pagination,
+    .lra-pagination,
+    .ui-pagination,
+    .ss-plan-footer,
+    .ss-reader-navigation,
+    .pdf-page-navigation,
+    .pdf-more-panel,
+    .lra-facet-footer,
+    .po-person-access,
+    .pagination,
+    [data-slot='dialog-footer'],
+    [data-slot='card-footer'],
+    [data-slot='item-actions']
+  ) {
+  display: flex;
+  direction: ltr;
+  flex-wrap: wrap !important;
+  align-items: center;
+  column-gap: var(--ui-action-gap) !important;
+  row-gap: var(--ui-action-row-gap) !important;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+html body .ui-action-row-end {
+  justify-content: flex-end;
+}
+html body .ui-action-row > :is(button, a),
+html body [data-slot='dialog-footer'] > :is(button, a) {
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+html body .ac-alert-dialog > .ui-action-row {
+  margin-block-start: 1rem;
+}
+/* Layout recipes must never expose an inactive panel or hidden toolbar. */
+html body [hidden]:not([hidden='until-found']) {
+  display: none !important;
+}
+/* Existing shared footer direction remains physical and stable across locales. */
+@media (width < 640px) {
+  html body [data-slot='dialog-footer'] {
+    flex-direction: column-reverse;
+  }
+  html body [data-slot='dialog-footer'] > :is(button, a) {
+    inline-size: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ui-disclosure-duration: 0ms;
+  }
+  html body details::details-content,
+  html body details > summary,
+  html body details > summary::after {
+    transition: none;
+  }
+}

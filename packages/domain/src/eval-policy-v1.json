@@ -1,0 +1,28 @@
+{
+  "code": "EVAL_POLICY_V1",
+  "schemaVersion": 1,
+  "internalFloor": 70,
+  "committeeFloor": 65,
+  "criterionFloor": 2,
+  "meritFloor": 80,
+  "minimumCohort": 10,
+  "quota": "ceil(N/5)",
+  "priority": "0.50I+0.20J+0.15V+0.15B",
+  "band": "min(19,floor(P/5))",
+  "agingDays": 30,
+  "pattern": ["Merit", "Merit", "Discovery", "Merit", "Expansion"],
+  "capacity": 2,
+  "offerDays": 7,
+  "taskDays": 14,
+  "neverAssigned": "first",
+  "caseTie": "publication-time-then-case-id",
+  "reviewerOrder": [
+    "institution-diversity",
+    "exact-tag-overlap",
+    "workload",
+    "oldest-assignment",
+    "user-id"
+  ],
+  "skip": "consume-next-successful-pattern-position",
+  "rotation": "last-successful-id-stable-codepoint-successor"
+}

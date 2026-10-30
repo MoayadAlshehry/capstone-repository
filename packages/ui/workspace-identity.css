@@ -1,0 +1,175 @@
+@import './design-system/generated/workspace-tokens.css';
+@import './workspace-appearance.css';
+/* P4: tokens → existing aliases. Anatomy, fonts, widths, spacing and density remain original. */
+.wsv2,
+:root[data-theme='dark'] .wsv2 {
+  --wv-background: var(--cr-semantic-surface-canvas);
+  --wv-sidebar: var(--cr-semantic-surface-soft);
+  --wv-card: var(--cr-semantic-surface-paper);
+  --wv-muted: var(--cr-semantic-surface-soft);
+  --wv-foreground: var(--cr-semantic-text-primary);
+  --wv-muted-foreground: var(--cr-semantic-text-muted);
+  --wv-border: var(--cr-semantic-border-subtle);
+  --wv-input: var(--cr-semantic-border-control);
+  --wv-primary: var(--cr-semantic-action-primary-default);
+  --wv-primary-foreground: var(--cr-semantic-text-on-primary);
+  --wv-popover: var(--cr-semantic-surface-raised);
+  --wv-selection: var(--cr-semantic-selection-surface);
+  --wv-warm: var(--cr-semantic-accent-decorative);
+  --wv-positive: var(--cr-semantic-feedback-success-text);
+  --wv-positive-surface: var(--cr-semantic-feedback-success-surface);
+  --wv-attention: var(--cr-semantic-feedback-warning-text);
+  --wv-attention-surface: var(--cr-semantic-feedback-warning-surface);
+  --wv-destructive: var(--cr-semantic-feedback-danger-text);
+  --wv-destructive-foreground: var(--cr-semantic-feedback-danger-surface);
+  --wv-brand-backplate: var(--cr-semantic-surface-paper);
+}
+.wsv2 :focus-visible {
+  outline-color: var(--cr-semantic-focus-ring);
+}
+.wsv2 [data-slot='tabs-trigger'][data-state='inactive'] {
+  color: var(--cr-semantic-text-muted);
+}
+/* Verified score/unit collision: preserve the original header/split; let attribution wrap. */
+.wsv2 .as-summary-header > div:first-child {
+  min-width: 0;
+}
+.wsv2 .as-summary-header .as-total {
+  flex: none;
+  gap: 8px;
+}
+.wsv2 .as-total > strong,
+.wsv2 .as-total > span {
+  flex-shrink: 0;
+}
+/* Conditional long-action fix: opt-in P2 adapter and People invitation only. */
+.wsv2 .ds-workspace-wrap {
+  min-width: 0;
+  max-width: 100%;
+  min-height: 36px;
+  height: auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  padding-block: max(0px, calc((36px - 1lh) / 2));
+}
+/* The existing People grid/order remains; labels wrap at words, never letter fragments. */
+@media (max-width: 640px) {
+  .wsv2 .on-tabs > .on-faculty-tab {
+    padding-inline: 2px;
+    overflow-wrap: normal;
+  }
+}
+/* P2 pending anatomy at the existing private preview boundary; no public CSS import. */
+.wsv2 .ds-skeleton {
+  display: block;
+  width: var(--ds-shape-width, 100%);
+  height: var(--ds-shape-height, 1lh);
+  border-radius: 4px;
+  background: var(--cr-component-loading-surface);
+  flex-shrink: 0;
+}
+.wsv2 .ds-preview-skeleton {
+  display: grid;
+  align-content: start;
+  gap: 24px;
+  padding: 16px;
+  min-height: 320px;
+}
+.wsv2 .ds-skeleton[data-pulse] {
+  animation: workspace-readiness var(--cr-motion-skeleton-pulse) ease-in-out
+    var(--cr-motion-skeleton-cycles);
+}
+@keyframes workspace-readiness {
+  50% {
+    opacity: 0.58;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wsv2 .ds-skeleton[data-pulse] {
+    animation: none;
+  }
+}
+
+/* P4.1 workspace dark only. Existing geometry, typography and Light remain owned above. */
+:root[data-theme='dark'] .wsv2 {
+  --wv-sidebar: var(--cr-semantic-surface-sidebar);
+  --wv-topbar: var(--cr-semantic-surface-topbar);
+  --wv-accent: var(--cr-semantic-selection-surface);
+}
+:root[data-theme='dark'] .wsv2 .wv-topbar {
+  background: var(--wv-topbar);
+}
+:root[data-theme='dark'] .wsv2 :focus-visible {
+  outline-color: var(--cr-semantic-focus-ring);
+}
+:root[data-theme='dark'] .wsv2 .as-level:focus-within,
+:root[data-theme='dark'] .wsv2.wv-menu [data-highlighted]:focus {
+  outline-color: var(--cr-semantic-focus-ring);
+}
+:root[data-theme='dark'] .wsv2 [data-ws-action='default']:not(:disabled):hover {
+  background: var(--cr-semantic-action-primary-hover);
+  color: var(--cr-semantic-text-on-primary);
+}
+:root[data-theme='dark']
+  .wsv2
+  [data-ws-action='default']:not(:disabled):active {
+  background: var(--cr-semantic-action-primary-pressed);
+}
+:root[data-theme='dark']
+  .wsv2
+  :is(
+    [data-ws-action='outline'],
+    [data-ws-action='ghost'],
+    [data-ws-action='secondary']
+  ):not(:disabled):hover {
+  background: var(--cr-semantic-surface-soft);
+  color: var(--cr-semantic-text-primary);
+}
+:root[data-theme='dark']
+  .wsv2
+  :is(
+    [data-ws-action='outline'],
+    [data-ws-action='ghost'],
+    [data-ws-action='secondary']
+  ):not(:disabled):active {
+  background: var(--cr-semantic-selection-surface);
+}
+:root[data-theme='dark']
+  .wsv2
+  [data-ws-action='destructive']:not(:disabled):is(:hover, :active) {
+  background: var(--cr-semantic-feedback-danger-text);
+  color: var(--cr-semantic-feedback-danger-surface);
+}
+:root[data-theme='dark'] .wsv2 [data-ws-action='link'] {
+  color: var(--cr-semantic-action-secondary);
+}
+:root[data-theme='dark']
+  .wsv2
+  :is(
+    [data-ws-action],
+    [data-slot='input'],
+    [data-slot='textarea'],
+    [data-slot='select-trigger']
+  ):disabled {
+  opacity: 1;
+  color: var(--cr-semantic-action-disabled-text);
+  background: var(--cr-semantic-action-disabled-surface);
+  border-color: var(--cr-semantic-border-subtle);
+}
+/* Level cells are essential controls; their default edge needs control contrast. */
+:root[data-theme='dark'] .wsv2 .as-level {
+  border-color: var(--cr-semantic-border-control);
+}
+:root[data-theme='dark'] .wsv2 .as-level[data-selected='true'] {
+  border-color: var(--cr-semantic-action-primary-default);
+}
+/* Neutral semantic reading frames; original media/PDF canvases and Shiki colors are untouched. */
+:root[data-theme='dark'] .wsv2 :is(.markdown, .code, .table-scroll) {
+  --r15-ink: var(--cr-semantic-text-primary);
+  --r15-muted: var(--cr-semantic-text-muted);
+  --r15-surface: var(--cr-semantic-surface-paper);
+  --r15-soft: var(--cr-semantic-surface-soft);
+  --r15-border: var(--cr-semantic-border-subtle);
+  color: var(--cr-semantic-text-primary);
+  background: var(--cr-semantic-surface-paper);
+}

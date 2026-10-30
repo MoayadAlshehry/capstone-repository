@@ -1,0 +1,75 @@
+'use client';
+
+import type { ComponentProps, ReactNode } from 'react';
+import { cn } from '@/lib/utils';
+import { mono, paper } from './surfaces';
+import { take } from '../utils/range';
+
+export interface SpecRow {
+  label: string;
+  value: ReactNode;
+  emphasis?: boolean;
+}
+
+export function SpecSheet({
+  title,
+  subtitle,
+  rows,
+  visibleCount,
+  className,
+  ...props
+}: Omit<
+  ComponentProps<'div'>,
+  'children' | 'title' | 'subtitle' | 'rows' | 'visibleCount'
+> & {
+  title: string;
+  subtitle?: string;
+  rows: readonly SpecRow[];
+  visibleCount: number;
+}) {
+  return (
+    <div
+      data-slot="spec-sheet"
+      className={cn(
+        paper,
+        'flex w-full max-w-sm flex-col gap-3 rounded-2xl p-4',
+        className,
+      )}
+
+      {...props}
+    >
+      <div className="flex flex-col gap-0.5">
+        <span className="text-[13.5px] font-medium">{title}</span>
+        {subtitle && (
+          <span className="text-muted-foreground text-xs">{subtitle}</span>
+        )}
+      </div>
+
+      <div className="flex flex-col">
+        {take(rows, visibleCount).map((row) => (
+          <div
+            key={row.label}
+            className="border-foreground/[0.06] fade-in animate-in fill-mode-both flex items-baseline gap-3 border-t py-1.5 duration-300 first:border-t-0 first:pt-0"
+          >
+            <span
+              dir="auto"
+              className={cn(mono, 'text-muted-foreground w-24 shrink-0')}
+            >
+              {row.label}
+            </span>
+            <span
+              className={cn(
+                'min-w-0 flex-1 text-start text-sm',
+                row.emphasis
+                  ? 'text-foreground/95 font-medium'
+                  : 'text-foreground/70',
+              )}
+            >
+              {row.value}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

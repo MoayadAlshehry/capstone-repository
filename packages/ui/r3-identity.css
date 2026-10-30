@@ -1,0 +1,186 @@
+/* Approved R3 Identity and Shared Account compositions, adapted to real fields. */
+.r3 .identity-convention {
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 64px;
+  padding: 40px 32px 64px;
+  margin: auto;
+  align-items: start;
+}
+.r3 .identity-art {
+  background: #174f45;
+  color: #e6f1e7;
+  padding: 44px;
+  border-radius: 28px;
+  min-height: 450px;
+}
+.r3 .identity-art > svg {
+  color: #c2ddc7;
+  margin-bottom: 72px;
+}
+.r3 .identity-art h2 {
+  font-size: 37px;
+  line-height: 1.15;
+  max-width: 330px;
+}
+.r3 .identity-art p {
+  font-size: 14px;
+  color: #c2d5c5;
+  line-height: 1.9;
+  margin-top: 24px;
+}
+.r3 .identity-art > a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 36px;
+  min-height: 44px;
+  font-size: 12px;
+}
+.r3 .identity-entry {
+  min-width: 0;
+}
+.r3 .identity-entry h1 {
+  font-size: 36px;
+  margin: 24px 0;
+}
+.r3 .identity-intro,
+.r3 .identity-help,
+.r3 .identity-session-note {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin: 16px 0 24px;
+}
+.r3 .identity-session-note {
+  padding: 16px;
+  background: var(--soft);
+  border-radius: 14px;
+}
+.r3 .identity-form {
+  display: grid;
+  gap: 18px;
+  margin: 24px 0;
+  max-width: 600px;
+}
+.r3 .identity-field {
+  min-width: 0;
+}
+.r3 .identity-field label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 9px;
+}
+.r3 .identity-field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  border: 1px solid var(--control);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 11px 14px;
+  font-size: 14px;
+}
+.r3 .identity-field input[readonly] {
+  background: var(--soft);
+}
+.r3 .password-control {
+  position: relative;
+}
+.r3 .password-control input {
+  padding-right: 58px;
+}
+.r3 .password-control button {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--muted);
+  border: 0;
+  border-radius: 10px;
+}
+.r3 .identity-primary {
+  width: 100%;
+}
+.r3 .identity-feedback {
+  padding: 16px;
+  background: var(--surface-raised);
+  border-radius: 14px;
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 16px 0;
+  overflow-wrap: anywhere;
+}
+.r3 .identity-feedback[role='alert'] {
+  color: var(--danger);
+  border-left: 3px solid var(--danger);
+}
+.r3 .identity-options {
+  margin: 28px 0;
+}
+.r3 .identity-options > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  min-height: 52px;
+  font-size: 12px;
+}
+@media (max-width: 850px) {
+  .r3 .identity-convention {
+    gap: 32px;
+    padding: 28px 24px;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+  .r3 .identity-art {
+    padding: 28px;
+    min-height: 420px;
+  }
+  .r3 .identity-art h2 {
+    font-size: 30px;
+  }
+}
+@media (max-width: 600px) {
+  .r3 .identity-convention {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 20px;
+    gap: 24px;
+  }
+  .r3 .identity-art {
+    min-height: 0;
+    padding: 24px;
+  }
+  .r3 .identity-art > svg {
+    margin-bottom: 16px;
+    width: 28px;
+    height: 28px;
+  }
+  .r3 .identity-art h2 {
+    font-size: 27px;
+  }
+  .r3 .identity-art p {
+    font-size: 12px;
+    margin-top: 12px;
+  }
+  .r3 .identity-art > a {
+    margin-top: 16px;
+  }
+  .r3 .identity-entry h1 {
+    font-size: 32px;
+    margin: 18px 0;
+  }
+  .r3 .password-control button {
+    width: 44px;
+  }
+  .r3 .identity-form {
+    gap: 18px;
+  }
+}

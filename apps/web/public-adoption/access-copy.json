@@ -1,0 +1,32 @@
+{
+  "en": {
+    "title": "Need additional file access?",
+    "description": "Eligible partners can request access. The project lead reviews each request.",
+    "signIn": "Sign in to request access",
+    "register": "Register as a partner",
+    "request": "Request access",
+    "requestAgain": "Request access again",
+    "viewRequest": "View request",
+    "openGranted": "Open permitted files",
+    "reviewEligibility": "Review eligibility",
+    "openWorkspace": "Open project workspace",
+    "pending": "Your access request is being reviewed.",
+    "expired": "Your previous access has ended.",
+    "failed": "Access options could not be loaded. Try again."
+  },
+  "ar": {
+    "title": "هل تحتاج إلى ملفات إضافية؟",
+    "description": "يمكن للشركاء المؤهلين طلب الوصول. يراجع قائد المشروع كل طلب.",
+    "signIn": "سجّل الدخول لطلب الوصول",
+    "register": "التسجيل كشريك",
+    "request": "طلب الوصول",
+    "requestAgain": "طلب الوصول مجددًا",
+    "viewRequest": "عرض الطلب",
+    "openGranted": "فتح الملفات المسموح بها",
+    "reviewEligibility": "مراجعة الأهلية",
+    "openWorkspace": "فتح مساحة المشروع",
+    "pending": "طلب الوصول قيد المراجعة.",
+    "expired": "انتهت صلاحية الوصول السابقة.",
+    "failed": "تعذّر تحميل خيارات الوصول. حاول مجددًا."
+  }
+}

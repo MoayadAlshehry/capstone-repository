@@ -1,0 +1,29 @@
+{
+  "name": "@capstone/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "default": "./dist/server.js"
+    },
+    "./account-mail": {
+      "types": "./dist/account-mail.d.ts",
+      "default": "./dist/account-mail.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@capstone/domain": "workspace:*",
+    "server-only": "0.0.1",
+    "zod": "4.6.6"
+  }
+}

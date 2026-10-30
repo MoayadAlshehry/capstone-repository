@@ -1,0 +1,4 @@
+# Conditional upstream terms
+First-party NoLicense/AllRightsReserved does not relicense dependencies. Preserve upstream source notices and attribution in shadcn/ui(MIT), copied shadcn/studio(MIT with CommonsClause conditions), OFL fonts, PDF.js and bundled PDF decoder notices. Component provenance/modification/competition conditions require human clearance before public distribution.
+
+GSAP retains its standard terms; native sharp/libvips(LGPL), ffmpeg-static(GPL), MPL tools, CC-BY metadata and all transitive notices/source obligations require distribution-mode review. Package installation is not blanket redistribution clearance. No node_modules, codec/model binaries or private originals are part of the source handover ZIP. Human permission/ownership questions stay explicit in the external audit matrix.

@@ -1,0 +1,156 @@
+{
+  "name": "@capstone/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./password-policy": {
+      "types": "./dist/password-policy.d.ts",
+      "default": "./dist/password-policy.js"
+    },
+    "./account-access": {
+      "types": "./dist/account-access.d.ts",
+      "default": "./dist/account-access.js"
+    },
+    "./administration": {
+      "types": "./dist/administration.d.ts",
+      "default": "./dist/administration.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./migration": {
+      "types": "./dist/migration.d.ts",
+      "default": "./dist/migration.js"
+    },
+    "./auth": {
+      "types": "./dist/auth.d.ts",
+      "default": "./dist/auth.js"
+    },
+    "./assignments": {
+      "types": "./dist/assignments.d.ts",
+      "default": "./dist/assignments.js"
+    },
+    "./drafts": {
+      "types": "./dist/drafts.d.ts",
+      "default": "./dist/drafts.js"
+    },
+    "./files": {
+      "types": "./dist/files.d.ts",
+      "default": "./dist/files.js"
+    },
+    "./uploads": {
+      "types": "./dist/uploads.d.ts",
+      "default": "./dist/uploads.js"
+    },
+    "./native-reads": {
+      "types": "./dist/native-reads.d.ts",
+      "default": "./dist/native-reads.js"
+    },
+    "./submissions": {
+      "types": "./dist/submissions.d.ts",
+      "default": "./dist/submissions.js"
+    },
+    "./evaluations": {
+      "types": "./dist/evaluations.d.ts",
+      "default": "./dist/evaluations.js"
+    },
+    "./publications": {
+      "types": "./dist/publications.d.ts",
+      "default": "./dist/publications.js"
+    },
+    "./editions": {
+      "types": "./dist/editions.d.ts",
+      "default": "./dist/editions.js"
+    },
+    "./discovery": {
+      "types": "./dist/discovery.d.ts",
+      "default": "./dist/discovery.js"
+    },
+    "./partners": {
+      "types": "./dist/partners.d.ts",
+      "default": "./dist/partners.js"
+    },
+    "./partner-types": {
+      "types": "./dist/partner-types.d.ts",
+      "default": "./dist/partner-types.js"
+    },
+    "./grants": {
+      "types": "./dist/grants.d.ts",
+      "default": "./dist/grants.js"
+    },
+    "./governance": {
+      "types": "./dist/governance.d.ts",
+      "default": "./dist/governance.js"
+    },
+    "./reviewers": {
+      "types": "./dist/reviewers.d.ts",
+      "default": "./dist/reviewers.js"
+    },
+    "./reviewer-types": {
+      "types": "./dist/reviewer-types.d.ts",
+      "default": "./dist/reviewer-types.js"
+    },
+    "./packets": {
+      "types": "./dist/packets.d.ts",
+      "default": "./dist/packets.js"
+    },
+    "./external-reviews": {
+      "types": "./dist/external-reviews.d.ts",
+      "default": "./dist/external-reviews.js"
+    },
+    "./allocation": {
+      "types": "./dist/allocation.d.ts",
+      "default": "./dist/allocation.js"
+    },
+    "./corrections": {
+      "types": "./dist/corrections.d.ts",
+      "default": "./dist/corrections.js"
+    },
+    "./showcase": {
+      "types": "./dist/showcase.d.ts",
+      "default": "./dist/showcase.js"
+    },
+    "./account-mail": {
+      "types": "./dist/account-mail.d.ts",
+      "default": "./dist/account-mail.js"
+    },
+    "./account-mail-crypto": {
+      "types": "./dist/account-mail-crypto.d.ts",
+      "default": "./dist/account-mail-crypto.js"
+    },
+    "./onboarding": {
+      "types": "./dist/onboarding.d.ts",
+      "default": "./dist/onboarding.js"
+    },
+    "./project-onboarding": {
+      "types": "./dist/project-onboarding.d.ts",
+      "default": "./dist/project-onboarding.js"
+    },
+    "./semester": {
+      "types": "./dist/semester.d.ts",
+      "default": "./dist/semester.js"
+    },
+    "./academic": {
+      "types": "./dist/academic.d.ts",
+      "default": "./dist/academic.js"
+    },
+    "./visual-media": {
+      "types": "./dist/visual-media.d.ts",
+      "default": "./dist/visual-media.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@better-auth/drizzle-adapter": "1.7.7",
+    "better-auth": "1.7.7",
+    "drizzle-orm": "0.45.3",
+    "pg": "8.23.1",
+    "server-only": "0.0.1"
+  },
+  "devDependencies": {}
+}

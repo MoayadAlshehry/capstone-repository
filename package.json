@@ -1,0 +1,50 @@
+{
+  "name": "capstone-repository",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.28.3",
+  "engines": {
+    "node": "24.21.0",
+    "pnpm": "11.28.3"
+  },
+  "scripts": {
+    "build:packages": "corepack pnpm --filter \"./packages/*\" -r build",
+    "build": "corepack pnpm build:packages && corepack pnpm --filter \"./apps/*\" --workspace-concurrency 1 -r build",
+    "auth:setup": "node --conditions=react-server --import tsx tools/auth/cli.ts setup",
+    "auth:bootstrap-platform-admin": "node --conditions=react-server --import tsx tools/auth/cli.ts bootstrap",
+    "test:release": "vitest run --config config/testing/vitest.release.config.ts"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@capstone/db": "workspace:*",
+    "@capstone/domain": "workspace:*",
+    "@capstone/infrastructure": "workspace:*",
+    "@capstone/storage": "workspace:*",
+    "@capstone/testing": "workspace:*",
+    "@capstone/ui": "workspace:*",
+    "@fontsource/ibm-plex-sans-arabic": "5.3.0",
+    "@fontsource/inter": "5.3.0",
+    "@playwright/test": "1.63.0",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "24.19.1",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "drizzle-kit": "0.31.11",
+    "esbuild": "0.28.2",
+    "eslint": "10.11.0",
+    "ffmpeg-static": "5.3.0",
+    "postcss": "8.5.28",
+    "prettier": "3.9.9",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "sharp": "0.35.5",
+    "tailwindcss": "4.3.3",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0",
+    "vitest": "5.0.3",
+    "yaml": "2.9.1"
+  }
+}

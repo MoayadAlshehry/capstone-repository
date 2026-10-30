@@ -1,0 +1,5 @@
+/* Floating modal only; no document width or scroll changes. */
+[data-ai-host] {
+  position: relative;
+  z-index: 60;
+}

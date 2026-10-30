@@ -1,0 +1,979 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791053394975,
+      "tag": "0000_infrastructure",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791104932293,
+      "tag": "0001_core_domain",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791105929474,
+      "tag": "0002_core_integrity",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791107003115,
+      "tag": "0003_core_runtime_privileges",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791107913528,
+      "tag": "0004_core_clock_precision",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1791116536682,
+      "tag": "0005_auth_foundation",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1791140000000,
+      "tag": "0006_manual_administration",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1791141000000,
+      "tag": "0007_lifecycle_clock",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1791142000000,
+      "tag": "0008_status_serialization",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1791143000000,
+      "tag": "0009_lifecycle_administration_state",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1791143000001,
+      "tag": "0010_audit_credential_shape",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1791145224031,
+      "tag": "0011_csv_provisioning",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1791149225610,
+      "tag": "0012_project_assignments",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1791149755578,
+      "tag": "0013_assignment_trigger_records",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1791150669389,
+      "tag": "0014_assignment_author_identity",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1791155740709,
+      "tag": "0015_private_drafts",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1791156223523,
+      "tag": "0016_draft_constraints_and_governance",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1791156613283,
+      "tag": "0017_draft_audit_hash",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1791166023692,
+      "tag": "0018_native_file_engine",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1791166362109,
+      "tag": "0019_file_finalize_audit",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1791166633138,
+      "tag": "0020_native_file_constraints",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1791166775362,
+      "tag": "0021_private_staging_keys",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1791167032134,
+      "tag": "0022_finalize_quota_recheck",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1791168443694,
+      "tag": "0023_editable_reservation_activity",
+      "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1791193880258,
+      "tag": "0024_tus_upload_sessions",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1791195796698,
+      "tag": "0025_upload_session_identity",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1791204072418,
+      "tag": "0026_native_file_reads",
+      "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1791213000000,
+      "tag": "0027_version_licenses",
+      "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1791223000000,
+      "tag": "0028_submission_rounds",
+      "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1791230000000,
+      "tag": "0029_internal_evaluations",
+      "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1791232000000,
+      "tag": "0030_internal_evaluation_text",
+      "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1791239000000,
+      "tag": "0031_supervised_publication",
+      "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1791245000000,
+      "tag": "0032_successor_editions",
+      "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1791247000000,
+      "tag": "0033_visibility_notices",
+      "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "7",
+      "when": 1791249000000,
+      "tag": "0034_visibility_denial_code",
+      "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "7",
+      "when": 1791250500000,
+      "tag": "0035_exact_round_policy_display",
+      "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1791275000000,
+      "tag": "0036_public_discovery",
+      "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "7",
+      "when": 1791292000000,
+      "tag": "0037_authorized_file_delivery",
+      "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "7",
+      "when": 1791302400000,
+      "tag": "0038_partner_eligibility",
+      "breakpoints": true
+    },
+    {
+      "idx": 39,
+      "version": "7",
+      "when": 1791312000000,
+      "tag": "0039_partner_grants",
+      "breakpoints": true
+    },
+    {
+      "idx": 40,
+      "version": "7",
+      "when": 1791398400000,
+      "tag": "0040_governance",
+      "breakpoints": true
+    },
+    {
+      "idx": 41,
+      "version": "7",
+      "when": 1791484800000,
+      "tag": "0041_reviewer_profiles",
+      "breakpoints": true
+    },
+    {
+      "idx": 42,
+      "version": "7",
+      "when": 1791571200000,
+      "tag": "0042_reviewer_material_predicate",
+      "breakpoints": true
+    },
+    {
+      "idx": 43,
+      "version": "7",
+      "when": 1791657600000,
+      "tag": "0043_reviewer_candidate_facts",
+      "breakpoints": true
+    },
+    {
+      "idx": 44,
+      "version": "7",
+      "when": 1791744000000,
+      "tag": "0044_academic_packets",
+      "breakpoints": true
+    },
+    {
+      "idx": 45,
+      "version": "7",
+      "when": 1791830400000,
+      "tag": "0045_external_reviews",
+      "breakpoints": true
+    },
+    {
+      "idx": 46,
+      "version": "7",
+      "when": 1791916800000,
+      "tag": "0046_evaluation_allocation",
+      "breakpoints": true
+    },
+    {
+      "idx": 47,
+      "version": "7",
+      "when": 1792003200000,
+      "tag": "0047_progressive_reviews",
+      "breakpoints": true
+    },
+    {
+      "idx": 48,
+      "version": "7",
+      "when": 1792089600000,
+      "tag": "0048_governed_corrections",
+      "breakpoints": true
+    },
+    {
+      "idx": 49,
+      "version": "7",
+      "when": 1792176000000,
+      "tag": "0049_public_showcase",
+      "breakpoints": true
+    },
+    {
+      "idx": 50,
+      "version": "7",
+      "when": 1792262400000,
+      "tag": "0050_account_email",
+      "breakpoints": true
+    },
+    {
+      "idx": 51,
+      "version": "7",
+      "when": 1792348800000,
+      "tag": "0051_account_access_context",
+      "breakpoints": true
+    },
+    {
+      "idx": 52,
+      "version": "7",
+      "when": 1792435200000,
+      "tag": "0052_institution_onboarding",
+      "breakpoints": true
+    },
+    {
+      "idx": 53,
+      "version": "7",
+      "when": 1792521600000,
+      "tag": "0053_onboarding_read_models",
+      "breakpoints": true
+    },
+    {
+      "idx": 54,
+      "version": "7",
+      "when": 1792608000000,
+      "tag": "0054_onboarding_command_refinement",
+      "breakpoints": true
+    },
+    {
+      "idx": 55,
+      "version": "7",
+      "when": 1792608000001,
+      "tag": "0055_guided_project_onboarding",
+      "breakpoints": true
+    },
+    {
+      "idx": 56,
+      "version": "7",
+      "when": 1792608000002,
+      "tag": "0056_guided_project_reads",
+      "breakpoints": true
+    },
+    {
+      "idx": 57,
+      "version": "7",
+      "when": 1792608000003,
+      "tag": "0057_project_receipt_tenant_constraint",
+      "breakpoints": true
+    },
+    {
+      "idx": 58,
+      "version": "7",
+      "when": 1792608000004,
+      "tag": "0058_semester_checkpoints",
+      "breakpoints": true
+    },
+    {
+      "idx": 59,
+      "version": "7",
+      "when": 1792608000005,
+      "tag": "0059_semester_read_models",
+      "breakpoints": true
+    },
+    {
+      "idx": 60,
+      "version": "7",
+      "when": 1792608000006,
+      "tag": "0060_checkpoint_zip_scope",
+      "breakpoints": true
+    },
+    {
+      "idx": 61,
+      "version": "7",
+      "when": 1792608000007,
+      "tag": "0061_academic_final_contract",
+      "breakpoints": true
+    },
+    {
+      "idx": 62,
+      "version": "7",
+      "when": 1792608000008,
+      "tag": "0062_academic_final_tasks",
+      "breakpoints": true
+    },
+    {
+      "idx": 63,
+      "version": "7",
+      "when": 1792608000009,
+      "tag": "0063_academic_resource_alignment",
+      "breakpoints": true
+    },
+    {
+      "idx": 64,
+      "version": "7",
+      "when": 1792608000010,
+      "tag": "0064_academic_final_flow",
+      "breakpoints": true
+    },
+    {
+      "idx": 65,
+      "version": "7",
+      "when": 1792608000011,
+      "tag": "0065_academic_collection_submitter",
+      "breakpoints": true
+    },
+    {
+      "idx": 66,
+      "version": "7",
+      "when": 1792608000012,
+      "tag": "0066_academic_screening_projection",
+      "breakpoints": true
+    },
+    {
+      "idx": 67,
+      "version": "7",
+      "when": 1792608000013,
+      "tag": "0067_independent_full_final",
+      "breakpoints": true
+    },
+    {
+      "idx": 68,
+      "version": "7",
+      "when": 1792608000014,
+      "tag": "0068_independent_native_projection",
+      "breakpoints": true
+    },
+    {
+      "idx": 69,
+      "version": "7",
+      "when": 1792608000015,
+      "tag": "0069_independent_assessment_interaction",
+      "breakpoints": true
+    },
+    {
+      "idx": 70,
+      "version": "7",
+      "when": 1792608000016,
+      "tag": "0070_independent_file_labels",
+      "breakpoints": true
+    },
+    {
+      "idx": 71,
+      "version": "7",
+      "when": 1792608000017,
+      "tag": "0071_independent_reminder_inbox",
+      "breakpoints": true
+    },
+    {
+      "idx": 72,
+      "version": "7",
+      "when": 1792608000018,
+      "tag": "0072_retire_unreadable_evidence",
+      "breakpoints": true
+    },
+    {
+      "idx": 73,
+      "version": "7",
+      "when": 1792608000019,
+      "tag": "0073_partner_request_recovery",
+      "breakpoints": true
+    },
+    {
+      "idx": 74,
+      "version": "7",
+      "when": 1792608000020,
+      "tag": "0074_current_lead_frozen_attribution",
+      "breakpoints": true
+    },
+    {
+      "idx": 75,
+      "version": "7",
+      "when": 1792608000021,
+      "tag": "0075_partner_contextual_reads",
+      "breakpoints": true
+    },
+    {
+      "idx": 76,
+      "version": "7",
+      "when": 1792608000022,
+      "tag": "0076_final_revision_authority",
+      "breakpoints": true
+    },
+    {
+      "idx": 77,
+      "version": "7",
+      "when": 1792608000023,
+      "tag": "0077_partner_clarification",
+      "breakpoints": true
+    },
+    {
+      "idx": 78,
+      "version": "7",
+      "when": 1792608000024,
+      "tag": "0078_allocation_presence_read",
+      "breakpoints": true
+    },
+    {
+      "idx": 79,
+      "version": "7",
+      "when": 1792608000025,
+      "tag": "0079_owned_assessment_context",
+      "breakpoints": true
+    },
+    {
+      "idx": 80,
+      "version": "7",
+      "when": 1792608000026,
+      "tag": "0080_owned_feedback_context",
+      "breakpoints": true
+    },
+    {
+      "idx": 81,
+      "version": "7",
+      "when": 1792608000027,
+      "tag": "0081_feedback_empty_locators",
+      "breakpoints": true
+    },
+    {
+      "idx": 82,
+      "version": "7",
+      "when": 1792608000028,
+      "tag": "0082_original_correction_policy",
+      "breakpoints": true
+    },
+    {
+      "idx": 83,
+      "version": "7",
+      "when": 1792608000029,
+      "tag": "0083_issue_head_compare",
+      "breakpoints": true
+    },
+    {
+      "idx": 84,
+      "version": "7",
+      "when": 1792608000030,
+      "tag": "0084_archived_privacy_tightening",
+      "breakpoints": true
+    },
+    {
+      "idx": 85,
+      "version": "7",
+      "when": 1792608000031,
+      "tag": "0085_internal_correction_locator_policy",
+      "breakpoints": true
+    },
+    {
+      "idx": 86,
+      "version": "7",
+      "when": 1792608000032,
+      "tag": "0086_owned_governance_receipts",
+      "breakpoints": true
+    },
+    {
+      "idx": 87,
+      "version": "7",
+      "when": 1792608000033,
+      "tag": "0087_governance_receipt_scope",
+      "breakpoints": true
+    },
+    {
+      "idx": 88,
+      "version": "7",
+      "when": 1792608000034,
+      "tag": "0088_governance_receipt_layer",
+      "breakpoints": true
+    },
+    {
+      "idx": 89,
+      "version": "7",
+      "when": 1792608000035,
+      "tag": "0089_feedback_identity_case",
+      "breakpoints": true
+    },
+    {
+      "idx": 90,
+      "version": "7",
+      "when": 1792608000036,
+      "tag": "0090_permitted_assessment_heads",
+      "breakpoints": true
+    },
+    {
+      "idx": 91,
+      "version": "7",
+      "when": 1792608000037,
+      "tag": "0091_academic_receipt_context",
+      "breakpoints": true
+    },
+    {
+      "idx": 92,
+      "version": "7",
+      "when": 1792608000038,
+      "tag": "0092_author_feedback_context",
+      "breakpoints": true
+    },
+    {
+      "idx": 93,
+      "version": "7",
+      "when": 1792608000039,
+      "tag": "0093_owned_governance_inbox",
+      "breakpoints": true
+    },
+    {
+      "idx": 94,
+      "version": "7",
+      "when": 1792608000040,
+      "tag": "0094_checkpoint_notice_target",
+      "breakpoints": true
+    },
+    {
+      "idx": 95,
+      "version": "7",
+      "when": 1792608000041,
+      "tag": "0095_owned_license_receipt",
+      "breakpoints": true
+    },
+    {
+      "idx": 96,
+      "version": "7",
+      "when": 1792608000042,
+      "tag": "0096_visual_media",
+      "breakpoints": true
+    },
+    {
+      "idx": 97,
+      "version": "7",
+      "when": 1792608000043,
+      "tag": "0097_public_catalogue_sort",
+      "breakpoints": true
+    },
+    {
+      "idx": 98,
+      "version": "7",
+      "when": 1792608000044,
+      "tag": "0098_filterable_assessment_view",
+      "breakpoints": true
+    },
+    {
+      "idx": 99,
+      "version": "7",
+      "when": 1792608000045,
+      "tag": "0099_full_final_lead_consent",
+      "breakpoints": true
+    },
+    {
+      "idx": 100,
+      "version": "7",
+      "when": 1792608000046,
+      "tag": "0100_preserve_accepted_review_scope",
+      "breakpoints": true
+    },
+    {
+      "idx": 101,
+      "version": "7",
+      "when": 1792608000047,
+      "tag": "0101_verified_committee",
+      "breakpoints": true
+    },
+    {
+      "idx": 102,
+      "version": "7",
+      "when": 1792608000048,
+      "tag": "0102_committee_projections",
+      "breakpoints": true
+    },
+    {
+      "idx": 103,
+      "version": "7",
+      "when": 1792608000049,
+      "tag": "0103_event_first_pair",
+      "breakpoints": true
+    },
+    {
+      "idx": 104,
+      "version": "7",
+      "when": 1792608000050,
+      "tag": "0104_final_scope_contract",
+      "breakpoints": true
+    },
+    {
+      "idx": 105,
+      "version": "7",
+      "when": 1792608000051,
+      "tag": "0105_guest_audit_attribution",
+      "breakpoints": true
+    },
+    {
+      "idx": 106,
+      "version": "7",
+      "when": 1792608000052,
+      "tag": "0106_committee_completion_projection",
+      "breakpoints": true
+    },
+    {
+      "idx": 107,
+      "version": "7",
+      "when": 1792608000053,
+      "tag": "0107_derived_archive_and_privileges",
+      "breakpoints": true
+    },
+    {
+      "idx": 108,
+      "version": "7",
+      "when": 1792608000054,
+      "tag": "0108_guest_amendments",
+      "breakpoints": true
+    },
+    {
+      "idx": 109,
+      "version": "7",
+      "when": 1792608000055,
+      "tag": "0109_committee_delivery_integrity",
+      "breakpoints": true
+    },
+    {
+      "idx": 110,
+      "version": "7",
+      "when": 1792608000056,
+      "tag": "0110_invitation_generation_cooldown",
+      "breakpoints": true
+    },
+    {
+      "idx": 111,
+      "version": "7",
+      "when": 1792608000057,
+      "tag": "0111_guest_race_and_assignment_scope",
+      "breakpoints": true
+    },
+    {
+      "idx": 112,
+      "version": "7",
+      "when": 1792608000058,
+      "tag": "0112_guest_metadata_minimization",
+      "breakpoints": true
+    },
+    {
+      "idx": 113,
+      "version": "7",
+      "when": 1792608000059,
+      "tag": "0113_retire_automatic_packet_registration",
+      "breakpoints": true
+    },
+    {
+      "idx": 114,
+      "version": "7",
+      "when": 1792608000060,
+      "tag": "0114_guest_metadata_operator_scope",
+      "breakpoints": true
+    },
+    {
+      "idx": 115,
+      "version": "7",
+      "when": 1792608000061,
+      "tag": "0115_committee_completion_notices",
+      "breakpoints": true
+    },
+    {
+      "idx": 116,
+      "version": "7",
+      "when": 1792608000062,
+      "tag": "0116_event_allocation_fairness",
+      "breakpoints": true
+    },
+    {
+      "idx": 117,
+      "version": "7",
+      "when": 1792608000063,
+      "tag": "0117_guest_reviewer_independence",
+      "breakpoints": true
+    },
+    {
+      "idx": 118,
+      "version": "7",
+      "when": 1792608000064,
+      "tag": "0118_guest_receipt_recovery",
+      "breakpoints": true
+    },
+    {
+      "idx": 119,
+      "version": "7",
+      "when": 1792608000065,
+      "tag": "0119_guest_session_audit_and_lookup_indexes",
+      "breakpoints": true
+    },
+    {
+      "idx": 120,
+      "version": "7",
+      "when": 1792608000066,
+      "tag": "0120_event_deadlines_and_visible_status",
+      "breakpoints": true
+    },
+    {
+      "idx": 121,
+      "version": "7",
+      "when": 1792608000067,
+      "tag": "0121_ambiguous_mail_delivery",
+      "breakpoints": true
+    },
+    {
+      "idx": 122,
+      "version": "7",
+      "when": 1792608000068,
+      "tag": "0122_derived_feedback_and_correction_markers",
+      "breakpoints": true
+    },
+    {
+      "idx": 123,
+      "version": "7",
+      "when": 1792608000069,
+      "tag": "0123_supervisor_independence_and_final_form_reads",
+      "breakpoints": true
+    },
+    {
+      "idx": 124,
+      "version": "7",
+      "when": 1792608000070,
+      "tag": "0124_committee_supervisor_email_boundary",
+      "breakpoints": true
+    },
+    {
+      "idx": 125,
+      "version": "7",
+      "when": 1792608000071,
+      "tag": "0125_governance_request_delivery",
+      "breakpoints": true
+    },
+    {
+      "idx": 126,
+      "version": "7",
+      "when": 1792608000072,
+      "tag": "0126_verified_round_correction_provenance",
+      "breakpoints": true
+    },
+    {
+      "idx": 127,
+      "version": "7",
+      "when": 1792608000073,
+      "tag": "0127_frozen_academic_final_zip",
+      "breakpoints": true
+    },
+    {
+      "idx": 128,
+      "version": "7",
+      "when": 1792608000074,
+      "tag": "0128_guest_final_ordinal",
+      "breakpoints": true
+    },
+    {
+      "idx": 129,
+      "version": "7",
+      "when": 1792608000075,
+      "tag": "0129_full_review_status",
+      "breakpoints": true
+    },
+    {
+      "idx": 130,
+      "version": "7",
+      "when": 1792608467941,
+      "tag": "0130_external_live_lock_order",
+      "breakpoints": true
+    },
+    {
+      "idx": 131,
+      "version": "7",
+      "when": 1792608467942,
+      "tag": "0131_retired_authoring_capabilities",
+      "breakpoints": true
+    },
+    {
+      "idx": 132,
+      "version": "7",
+      "when": 1792608467943,
+      "tag": "0132_versioned_assessment_entry",
+      "breakpoints": true
+    },
+    {
+      "idx": 133,
+      "version": "7",
+      "when": 1792608467944,
+      "tag": "0133_assessment_entry_absence_defaults",
+      "breakpoints": true
+    },
+    {
+      "idx": 134,
+      "version": "7",
+      "when": 1792608467945,
+      "tag": "0134_public_catalogue_metrics",
+      "breakpoints": true
+    },
+    {
+      "idx": 135,
+      "version": "7",
+      "when": 1792608467946,
+      "tag": "0135_truthful_aggregate_entry_metadata",
+      "breakpoints": true
+    },
+    {
+      "idx": 136,
+      "version": "7",
+      "when": 1792712207529,
+      "tag": "0136_score_only_correction_frozen_scope",
+      "breakpoints": true
+    },
+    {
+      "idx": 137,
+      "version": "7",
+      "when": 1792728004554,
+      "tag": "0137_committee_operation_receipts",
+      "breakpoints": true
+    },
+    {
+      "idx": 138,
+      "version": "7",
+      "when": 1793059200000,
+      "tag": "0138_exact_internal_eligibility_floor",
+      "breakpoints": true
+    }
+  ]
+}

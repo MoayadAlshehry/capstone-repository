@@ -1,0 +1,153 @@
+/* Text direction and structural order are independent. No shell, table column or reader pane is mirrored. */
+.ui-bidi-value {
+  unicode-bidi: isolate;
+  overflow-wrap: anywhere;
+}
+.ui-bidi-value:is(
+  [data-bidi-kind='number'],
+  [data-bidi-kind='range'],
+  [data-bidi-kind='date']
+) {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.wsv2
+  :is(
+    [data-slot='field-label'],
+    [data-slot='field-legend'],
+    [data-slot='field-description'],
+    [data-slot='dialog-title'],
+    [data-slot='dialog-description'],
+    [data-slot='sheet-title'],
+    [data-slot='sheet-description']
+  ) {
+  text-align: start;
+}
+.wsv2 [data-slot='field'][dir='rtl'] {
+  text-align: start;
+}
+.wsv2 [data-slot='field'][dir='rtl'] [data-slot='field-label'] {
+  align-self: flex-start;
+}
+.wsv2 [data-slot='field'] :is(input, textarea) {
+  min-inline-size: 0;
+}
+.wsv2 [data-slot='textarea']:not(.font-mono) {
+  font-family: inherit;
+}
+.wsv2 :is(th[dir='auto'], td[dir='auto']) {
+  text-align: start;
+}
+.native-markdown
+  :is(h1, h2, h3, h4, h5, h6, p, li, blockquote, th, td)[dir='auto'] {
+  text-align: start;
+}
+.native-markdown :is(pre, code) {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: start;
+}
+.public-refined[data-cr-ds][data-context='public'] .facts {
+  direction: ltr;
+}
+.public-refined[data-cr-ds][data-context='public'] .facts > div {
+  min-inline-size: 0;
+  display: grid;
+  gap: 8px;
+}
+.public-refined[data-cr-ds][data-context='public'] .facts :is(dt, dd) {
+  margin: 0;
+  text-align: start;
+}
+.public-refined[data-cr-ds][data-context='public'] .abstract[dir='auto'] {
+  text-align: start;
+}
+.public-refined[data-cr-ds][data-context='public'] .pav-display-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  direction: ltr;
+  min-inline-size: 0;
+}
+.public-refined[data-cr-ds][data-context='public']
+  .pav-display-controls
+  .view-switch {
+  min-block-size: 44px;
+  padding: 3px;
+  border-radius: 13px;
+}
+.public-refined[data-cr-ds][data-context='public']
+  .pav-display-controls
+  .view-switch
+  button {
+  min-block-size: 38px;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+.public-refined[data-cr-ds][data-context='public']
+  .pav-display-controls
+  .public-sort-trigger {
+  min-block-size: 46px;
+}
+@media (max-width: 760px) {
+  .public-refined[data-cr-ds][data-context='public'] .pav-display-controls {
+    inline-size: 100%;
+    justify-content: space-between;
+  }
+}
+
+.public-refined[data-cr-ds][data-context='public']
+  .ds-feature-credit-placeholder {
+  min-block-size: 80px;
+  inline-size: min(60%, 800px);
+}
+@media (max-width: 760px) {
+  .public-refined[data-cr-ds][data-context='public']
+    .ds-feature-credit-placeholder {
+    min-block-size: 128px;
+    inline-size: 100%;
+  }
+}
+
+:where(.wsv2, [data-cr-ds])
+  :is(h1, h2, h3, h4, h5, h6, p, label, legend, dt, dd, th, td)[dir='auto'] {
+  text-align: start;
+}
+[data-bidi-data],
+[data-bidi-facts] dt {
+  text-align: start;
+}
+[data-bidi-facts] {
+  direction: ltr;
+}
+[data-bidi-facts] :is(dt, dd) {
+  margin-inline: 0;
+}
+
+.public-refined[data-cr-ds][data-context='public'] .assessment-pair > article {
+  text-align: start;
+}
+.public-refined[data-cr-ds][data-context='public']
+  .assessment-pair
+  > article
+  > strong {
+  inline-size: max-content;
+  max-inline-size: 100%;
+  justify-self: start;
+  align-self: flex-start;
+}
+.public-refined[data-cr-ds][data-context='public'] .people .supervisor {
+  margin-block-start: 24px;
+  padding: 0;
+  display: block;
+}
+.public-refined[data-cr-ds][data-context='public'] .people .supervisor dt {
+  color: var(--r16-muted);
+  font-size: 13px;
+  margin-block-end: 8px;
+}
+.public-refined[data-cr-ds][data-context='public'] .people .supervisor dd {
+  margin: 0;
+}

@@ -1,0 +1,103 @@
+{
+  "$description": "P4.2 workspace-only appearance. Existing semantic colors, content regions and interaction owners are unchanged. Control/thumbnail radius binds accepted P2 Small10; region/panel refine the denser workspace context.",
+  "component": {
+    "workspace": {
+      "radius": {
+        "region": {
+          "$type": "dimension",
+          "$value": { "value": 18, "unit": "px" }
+        },
+        "panel": {
+          "$type": "dimension",
+          "$value": { "value": 14, "unit": "px" }
+        },
+        "control": {
+          "$type": "dimension",
+          "$value": "{reference.radius.Small}"
+        },
+        "thumbnail": {
+          "$type": "dimension",
+          "$value": "{reference.radius.Small}"
+        },
+        "chip": {
+          "$type": "dimension",
+          "$value": { "value": 999, "unit": "px" }
+        }
+      },
+      "type": {
+        "page": {
+          "$type": "dimension",
+          "$value": { "value": 2, "unit": "rem" }
+        },
+        "mobilePage": {
+          "$type": "dimension",
+          "$value": { "value": 1.75, "unit": "rem" }
+        },
+        "section": {
+          "$type": "dimension",
+          "$value": { "value": 1.25, "unit": "rem" }
+        },
+        "item": {
+          "$type": "dimension",
+          "$value": { "value": 1.0625, "unit": "rem" }
+        },
+        "body": {
+          "$type": "dimension",
+          "$value": { "value": 0.875, "unit": "rem" }
+        },
+        "meta": {
+          "$type": "dimension",
+          "$value": { "value": 0.8125, "unit": "rem" }
+        },
+        "caption": {
+          "$type": "dimension",
+          "$value": { "value": 0.75, "unit": "rem" }
+        }
+      },
+      "space": {
+        "one": { "$type": "dimension", "$value": { "value": 4, "unit": "px" } },
+        "two": { "$type": "dimension", "$value": { "value": 8, "unit": "px" } },
+        "three": {
+          "$type": "dimension",
+          "$value": { "value": 12, "unit": "px" }
+        },
+        "four": {
+          "$type": "dimension",
+          "$value": { "value": 16, "unit": "px" }
+        },
+        "five": {
+          "$type": "dimension",
+          "$value": { "value": 20, "unit": "px" }
+        },
+        "six": {
+          "$type": "dimension",
+          "$value": { "value": 24, "unit": "px" }
+        },
+        "eight": {
+          "$type": "dimension",
+          "$value": { "value": 32, "unit": "px" }
+        }
+      },
+      "motion": {
+        "feedback": {
+          "$type": "duration",
+          "$value": { "value": 150, "unit": "ms" }
+        }
+      },
+      "leading": {
+        "title": { "$type": "number", "$value": 1.35 },
+        "body": { "$type": "number", "$value": 1.55 }
+      },
+      "cover": {
+        "width": {
+          "$type": "dimension",
+          "$value": { "value": 104, "unit": "px" }
+        },
+        "compact": {
+          "$type": "dimension",
+          "$value": { "value": 72, "unit": "px" }
+        }
+      }
+    }
+  }
+}
