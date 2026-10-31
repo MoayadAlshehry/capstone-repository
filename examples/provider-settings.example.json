@@ -1,0 +1,9 @@
+{
+  "mode": "zoho",
+  "region": "US",
+  "endpoint": "https://api.zeptomail.com/v1.1/email",
+  "from_address": "authorized-sender@example.invalid",
+  "from_name": "Capstone Repository",
+  "app_origin": "https://your-existing-origin.example.invalid",
+  "agent_key": "REPLACE_WITH_YOUR_PRIVATE_AGENT_KEY"
+}

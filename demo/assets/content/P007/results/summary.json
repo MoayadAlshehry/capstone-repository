@@ -1,0 +1,315 @@
+{
+  "function": "integrity",
+  "kind": "deterministic synthetic simulation",
+  "seed_base": 53600,
+  "cases": [
+    {
+      "case": 1,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 2,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 3,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 4,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 5,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 6,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 7,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 8,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 9,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 10,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 11,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 12,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 13,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 14,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 15,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 16,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 17,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 18,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 19,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 20,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 21,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 22,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 23,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 24,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 25,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 26,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 27,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 28,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 29,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    },
+    {
+      "case": 30,
+      "mutations_detected": 12,
+      "mutation_cases": 12,
+      "ordering_invariant": 1,
+      "filename_only_misses": 12,
+      "path_rename_detected": 1,
+      "path_free_index_rename_misses": 1
+    }
+  ],
+  "summary": {
+    "mutations_detected": {
+      "min": 12,
+      "max": 12,
+      "mean": 12,
+      "valid_n": 30
+    },
+    "mutation_cases": {
+      "min": 12,
+      "max": 12,
+      "mean": 12,
+      "valid_n": 30
+    },
+    "ordering_invariant": {
+      "min": 1,
+      "max": 1,
+      "mean": 1,
+      "valid_n": 30
+    },
+    "filename_only_misses": {
+      "min": 12,
+      "max": 12,
+      "mean": 12,
+      "valid_n": 30
+    },
+    "path_rename_detected": {
+      "min": 1,
+      "max": 1,
+      "mean": 1,
+      "valid_n": 30
+    },
+    "path_free_index_rename_misses": {
+      "min": 1,
+      "max": 1,
+      "mean": 1,
+      "valid_n": 30
+    }
+  }
+}

@@ -10,17 +10,19 @@ import {
 const Environment = createContext(false);
 export function DemoEnvironment({
   active,
+  sharedReset = active,
   children,
   locale = 'en',
 }: {
   active: boolean;
+  sharedReset?: boolean;
   children: ReactNode;
   locale?: string;
 }) {
   const [blocked, setBlocked] = useState(false),
     modal = useRef<HTMLDialogElement>(null);
   useEffect(() => {
-    if (!active) return;
+    if (!sharedReset) return;
     let disposed = false,
       seen: number | undefined,
       interrupted = false;
@@ -67,7 +69,7 @@ export function DemoEnvironment({
       disposed = true;
       clearInterval(timer);
     };
-  }, [active]);
+  }, [sharedReset]);
   useEffect(() => {
     if (blocked && !modal.current?.open) modal.current?.showModal();
     else if (!blocked && modal.current?.open) modal.current.close();
@@ -76,7 +78,7 @@ export function DemoEnvironment({
   return (
     <Environment.Provider value={active}>
       {children}
-      {active && (
+      {sharedReset && (
         <dialog
           ref={modal}
           aria-labelledby="demo-reset-title"

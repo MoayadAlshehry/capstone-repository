@@ -1,0 +1,6 @@
+{
+  "kind": "demonstration restricted annex",
+  "scope": "P002",
+  "assumptions": "The curated corpus is small and unrepresentative of dialects or historical OCR. Relevance labels are demonstration judgments; no claim of national-scale retrieval accuracy is made.",
+  "containsPersonalData": false
+}

@@ -1,0 +1,6 @@
+{
+  "kind": "demonstration restricted annex",
+  "scope": "P008",
+  "assumptions": "The hydraulic model is an illustrative linear approximation. No plant measurements, critical-infrastructure access or real leak-detection performance is asserted.",
+  "containsPersonalData": false
+}

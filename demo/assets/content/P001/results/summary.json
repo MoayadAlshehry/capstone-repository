@@ -1,0 +1,315 @@
+{
+  "function": "routes",
+  "kind": "deterministic synthetic simulation",
+  "seed_base": 53000,
+  "cases": [
+    {
+      "case": 1,
+      "baseline_cost": 32,
+      "baseline_violations": 1,
+      "constrained_cost": -1,
+      "constrained_violations": 0,
+      "unreachable": 1,
+      "oracle_paths": 3
+    },
+    {
+      "case": 2,
+      "baseline_cost": 21,
+      "baseline_violations": 0,
+      "constrained_cost": 21,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 7
+    },
+    {
+      "case": 3,
+      "baseline_cost": 36,
+      "baseline_violations": 3,
+      "constrained_cost": -1,
+      "constrained_violations": 0,
+      "unreachable": 1,
+      "oracle_paths": 7
+    },
+    {
+      "case": 4,
+      "baseline_cost": 10,
+      "baseline_violations": 0,
+      "constrained_cost": 10,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 31
+    },
+    {
+      "case": 5,
+      "baseline_cost": 46,
+      "baseline_violations": 1,
+      "constrained_cost": -1,
+      "constrained_violations": 0,
+      "unreachable": 1,
+      "oracle_paths": 9
+    },
+    {
+      "case": 6,
+      "baseline_cost": 21,
+      "baseline_violations": 2,
+      "constrained_cost": 35,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 11
+    },
+    {
+      "case": 7,
+      "baseline_cost": 19,
+      "baseline_violations": 0,
+      "constrained_cost": 19,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 3
+    },
+    {
+      "case": 8,
+      "baseline_cost": 11,
+      "baseline_violations": 1,
+      "constrained_cost": 33,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 18
+    },
+    {
+      "case": 9,
+      "baseline_cost": 45,
+      "baseline_violations": 1,
+      "constrained_cost": 78,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 7
+    },
+    {
+      "case": 10,
+      "baseline_cost": 15,
+      "baseline_violations": 0,
+      "constrained_cost": 15,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 8
+    },
+    {
+      "case": 11,
+      "baseline_cost": 19,
+      "baseline_violations": 1,
+      "constrained_cost": -1,
+      "constrained_violations": 0,
+      "unreachable": 1,
+      "oracle_paths": 12
+    },
+    {
+      "case": 12,
+      "baseline_cost": 16,
+      "baseline_violations": 0,
+      "constrained_cost": 16,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 11
+    },
+    {
+      "case": 13,
+      "baseline_cost": 21,
+      "baseline_violations": 1,
+      "constrained_cost": 34,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 16
+    },
+    {
+      "case": 14,
+      "baseline_cost": 38,
+      "baseline_violations": 1,
+      "constrained_cost": -1,
+      "constrained_violations": 0,
+      "unreachable": 1,
+      "oracle_paths": 9
+    },
+    {
+      "case": 15,
+      "baseline_cost": 3,
+      "baseline_violations": 0,
+      "constrained_cost": 3,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 16
+    },
+    {
+      "case": 16,
+      "baseline_cost": 38,
+      "baseline_violations": 1,
+      "constrained_cost": 59,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 3
+    },
+    {
+      "case": 17,
+      "baseline_cost": 20,
+      "baseline_violations": 0,
+      "constrained_cost": 20,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 10
+    },
+    {
+      "case": 18,
+      "baseline_cost": 4,
+      "baseline_violations": 0,
+      "constrained_cost": 4,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 10
+    },
+    {
+      "case": 19,
+      "baseline_cost": 20,
+      "baseline_violations": 0,
+      "constrained_cost": 20,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 9
+    },
+    {
+      "case": 20,
+      "baseline_cost": 35,
+      "baseline_violations": 1,
+      "constrained_cost": -1,
+      "constrained_violations": 0,
+      "unreachable": 1,
+      "oracle_paths": 8
+    },
+    {
+      "case": 21,
+      "baseline_cost": 23,
+      "baseline_violations": 1,
+      "constrained_cost": -1,
+      "constrained_violations": 0,
+      "unreachable": 1,
+      "oracle_paths": 12
+    },
+    {
+      "case": 22,
+      "baseline_cost": 7,
+      "baseline_violations": 2,
+      "constrained_cost": -1,
+      "constrained_violations": 0,
+      "unreachable": 1,
+      "oracle_paths": 10
+    },
+    {
+      "case": 23,
+      "baseline_cost": 20,
+      "baseline_violations": 0,
+      "constrained_cost": 20,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 7
+    },
+    {
+      "case": 24,
+      "baseline_cost": 17,
+      "baseline_violations": 1,
+      "constrained_cost": 29,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 7
+    },
+    {
+      "case": 25,
+      "baseline_cost": 13,
+      "baseline_violations": 1,
+      "constrained_cost": 27,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 23
+    },
+    {
+      "case": 26,
+      "baseline_cost": 8,
+      "baseline_violations": 0,
+      "constrained_cost": 8,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 14
+    },
+    {
+      "case": 27,
+      "baseline_cost": 30,
+      "baseline_violations": 1,
+      "constrained_cost": 41,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 8
+    },
+    {
+      "case": 28,
+      "baseline_cost": 31,
+      "baseline_violations": 1,
+      "constrained_cost": 45,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 9
+    },
+    {
+      "case": 29,
+      "baseline_cost": 2,
+      "baseline_violations": 1,
+      "constrained_cost": -1,
+      "constrained_violations": 0,
+      "unreachable": 1,
+      "oracle_paths": 7
+    },
+    {
+      "case": 30,
+      "baseline_cost": 21,
+      "baseline_violations": 0,
+      "constrained_cost": 21,
+      "constrained_violations": 0,
+      "unreachable": 0,
+      "oracle_paths": 13
+    }
+  ],
+  "summary": {
+    "baseline_cost": {
+      "min": 2,
+      "max": 46,
+      "mean": 21.4,
+      "valid_n": 30
+    },
+    "baseline_violations": {
+      "min": 0,
+      "max": 3,
+      "mean": 0.7333333333333333,
+      "valid_n": 30
+    },
+    "constrained_cost": {
+      "min": 3,
+      "max": 78,
+      "mean": 26.571428571428573,
+      "valid_n": 21
+    },
+    "constrained_violations": {
+      "min": 0,
+      "max": 0,
+      "mean": 0,
+      "valid_n": 30
+    },
+    "unreachable": {
+      "min": 0,
+      "max": 1,
+      "mean": 0.3,
+      "valid_n": 30
+    },
+    "oracle_paths": {
+      "min": 3,
+      "max": 31,
+      "mean": 10.6,
+      "valid_n": 30
+    }
+  }
+}

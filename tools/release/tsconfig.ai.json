@@ -1,0 +1,6 @@
+{
+  "extends": "../../apps/web/tsconfig.json",
+  "compilerOptions": {"noEmit": true},
+  "include": ["ai-runtime.test.ts", "demo-marker.test.tsx"],
+  "exclude": ["node_modules"]
+}

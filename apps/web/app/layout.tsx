@@ -17,15 +17,18 @@ import { DemoEnvironment } from '../demo-environment';
 import { themeInitialization } from '@capstone/ui/theme';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
+const syntheticDemonstration = () =>
+  process.env['P53_DEMO_ENVIRONMENT'] === 'true' ||
+  process.env['CAPSTONE_SYNTHETIC_DEMO'] === 'true';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Shell');
   return {
     title:
-      process.env['P53_DEMO_ENVIRONMENT'] === 'true'
+      syntheticDemonstration()
         ? 'Demonstration · Capstone Repository'
         : 'Capstone Repository',
-    ...(process.env['P53_DEMO_ENVIRONMENT'] === 'true'
+    ...(syntheticDemonstration()
       ? { robots: { index: false, follow: false } }
       : {}),
     description: t('description'),
@@ -49,7 +52,8 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider>
           <DemoEnvironment
-            active={process.env['P53_DEMO_ENVIRONMENT'] === 'true'}
+            active={syntheticDemonstration()}
+            sharedReset={process.env['P53_DEMO_ENVIRONMENT'] === 'true'}
             locale={locale}
           >
             <VisualMediaRoot>{children}</VisualMediaRoot>

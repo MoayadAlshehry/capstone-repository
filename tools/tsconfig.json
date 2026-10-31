@@ -7,5 +7,5 @@
     "jsx": "react-jsx"
   },
   "include": ["**/*.ts", "../config/testing/*.ts", "**/*.tsx"],
-  "exclude": ["ai-v1/**/*.test.ts"]
+  "exclude": ["ai-v1/**/*.test.ts", "release/ai-runtime.test.ts", "release/demo-marker.test.tsx"]
 }

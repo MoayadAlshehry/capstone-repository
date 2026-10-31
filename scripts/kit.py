@@ -3,6 +3,8 @@
 from pathlib import Path
 import argparse,subprocess,os,json,secrets,socket,hashlib,time,signal,sys,shutil,fcntl
 from urllib.parse import urlparse
+sys.path.insert(0,str(Path(__file__).resolve().parent))
+import settings
 ROOT=Path(__file__).resolve().parent.parent;LOCAL=ROOT/'.local';STATE=LOCAL/'installation.json'
 os.umask(0o077)
 def fail(code):raise RuntimeError(code)
@@ -19,8 +21,24 @@ def dependency_environment():
  return env
 def run(args,tag,env=None):
  log=LOCAL/'installer-logs'/f'{tag}.log';log.parent.mkdir(parents=True,exist_ok=True,mode=0o700)
- with log.open('a') as f:r=subprocess.run(args,cwd=ROOT,env=env,stdout=f,stderr=subprocess.STDOUT)
- if r.returncode:fail(f'{tag.upper()}_FAILED_CHECK_PRIVATE_LOG')
+ with log.open('a') as f:
+  if tag=='demo-install':
+   out('Loading the existing synthetic Demo through real workflows; authentication rate limits may add short pauses.')
+   r=subprocess.Popen(args,cwd=ROOT,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True);reviews=0
+   for line in r.stdout:
+    f.write(line);f.flush()
+    if line.startswith(('DEMO_STAGE_COMPLETED | ','DEMO_PROJECT_COMPLETED | ','DEMO_READY | ','DEMO_ALREADY_INSTALLED | ')):out(line.strip())
+    elif line.startswith('{'):
+     try:
+      event=json.loads(line)
+      if event.get('stage')=='respecting-auth-rate-limit':out('Waiting for the unchanged authentication rate limit; installation remains resumable.')
+      if event.get('stage')=='external-completed':
+       reviews+=1
+       if reviews%10==0:out('Completed synthetic independent review forms: '+str(reviews))
+     except ValueError:pass
+   code=r.wait()
+  else:code=subprocess.run(args,cwd=ROOT,env=env,stdout=f,stderr=subprocess.STDOUT).returncode
+ if code:fail(f'{tag.upper()}_FAILED_CHECK_PRIVATE_LOG')
 def out(s):print(s,flush=True)
 def free(start):
  for port in range(start,start+100):
@@ -28,6 +46,21 @@ def free(start):
    try:s.bind(('127.0.0.1',port));return port
    except OSError:pass
  fail('NO_FREE_LOOPBACK_PORT')
+def application_port_available(port):
+ with socket.socket() as s:
+  try:s.bind(('127.0.0.1',port));return
+  except OSError:pass
+ # An exited HTTP server can leave only orphaned FIN_WAIT2/TIME_WAIT sockets.
+ # Reuse that kernel state without accepting any live socket/listener owner.
+ rows=[]
+ for line in Path('/proc/net/tcp').read_text().splitlines()[1:]:
+  f=line.split()
+  if int(f[1].split(':')[1],16)==port and f[1].split(':')[0] in ['0100007F','00000000']:rows.append(f)
+ if not rows or any(f[3] not in ['05','06'] or f[9]!='0' for f in rows):fail('OCCUPIED_APPLICATION_PORT_REFUSED')
+ with socket.socket() as s:
+  s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
+  try:s.bind(('127.0.0.1',port))
+  except OSError:fail('OCCUPIED_APPLICATION_PORT_REFUSED')
 def check(resources=True):
  if 'microsoft' not in Path('/proc/sys/kernel/osrelease').read_text().lower():fail('WSL2_REQUIRED_FOR_VERIFIED_HOST_PATH')
  if 'Ubuntu' not in Path('/etc/os-release').read_text():fail('UBUNTU_REQUIRED')
@@ -63,7 +96,7 @@ def runtime_contract(st):
  for name,role in [('DATABASE_URL','capstone_runtime'),('JOB_DATABASE_URL','capstone_jobs')]:
   u=urlparse(e.get(name,''))
   if u.scheme not in ['postgres','postgresql'] or u.hostname!='127.0.0.1' or u.port!=st['ports']['db'] or u.path!='/capstone_local' or u.username!=role or u.query or u.fragment:fail('NON_OWNED_DATABASE_TARGET_REFUSED')
- expected={'APP_ENV':'local','WORKSPACE_ROOT':str(ROOT),'AUTH_BASE_URL':'http://127.0.0.1:'+str(st['ports']['web']),'PRIVATE_STORAGE_ROOT':str(LOCAL/'storage'),'AI_ENABLED':'false','ACCOUNT_MAIL_MODE':'capture','CAPSTONE_AI_DATA_DIR':st['ai_root'],'UPLOAD_INTERNAL_URL':'http://127.0.0.1:'+str(st['ports']['upload'])}
+ expected={'APP_ENV':'local','WORKSPACE_ROOT':str(ROOT),'AUTH_BASE_URL':'http://127.0.0.1:'+str(st['ports']['web']),'PRIVATE_STORAGE_ROOT':str(LOCAL/'storage'),'UPLOAD_INTERNAL_URL':'http://127.0.0.1:'+str(st['ports']['upload']),**settings.runtime_settings(st,ROOT)}
  if any(e.get(k)!=v for k,v in expected.items()):fail('UNSUPPORTED_CHANGED_RUNTIME_CONFIG_REFUSED')
 def journal(st,step):
  if step not in st['completed']:st['completed'].append(step)
@@ -109,7 +142,11 @@ def listeners(st):
   else:fail('OWNED_LISTENER_TIMEOUT_'+role)
  save(LOCAL/'listener-proof.json',{'root_owner':st['owner'],'processes':proof})
 def start(st):
+ if st.get('demo') and 'DEMO' not in st['completed']:fail('DEMO_NOT_READY | Resume the opted-in installation before opening the application')
  runtime_contract(st)
+ if st['features']['ai']['enabled']:
+  try:settings.model_probe(st['features']['ai']['base_url'],settings.token_from(LOCAL/'ai-token'))
+  except (RuntimeError,ValueError) as e:settings.guidance(str(e));fail('AI_NOT_READY | Retry after loading models or explicitly configure --ai-off; no silent disable')
  run(['python3','scripts/verify-binary.py'],'binary-verification')
  compose(st,'up','-d','--no-recreate');ownership(st)
  deadline=time.monotonic()+45
@@ -121,15 +158,13 @@ def start(st):
  for role in ['upload','worker','web']:
   record=LOCAL/f'{role}.process.json'
   if record.exists() and running(read(record)):continue
-  with socket.socket() as s:
-   try:s.bind(('127.0.0.1',st['ports'][role]))
-   except OSError:fail('OCCUPIED_APPLICATION_PORT_REFUSED')
+  application_port_available(st['ports'][role])
   log=(LOCAL/'installer-logs'/f'{role}.log').open('ab');env=os.environ.copy();env['NEXT_TELEMETRY_DISABLED']='1'
   args=['node']+([] if role=='web' else ['--conditions=react-server'])+['scripts/launch.mjs',role]
   proc=subprocess.Popen(args,cwd=ROOT,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True);log.close()
   p=Path('/proc')/str(proc.pid);save(record,{'pid':proc.pid,'start':p.joinpath('stat').read_text().split()[21],'owner':st['owner']})
  listeners(st);node(st,'doctor')
-def stop(st):
+def stop_applications(st):
  ownership(st)
  for role in ['web','upload','worker']:
   f=LOCAL/f'{role}.process.json'
@@ -137,15 +172,18 @@ def stop(st):
    r=read(f)
    if r['owner']!=st['owner']:fail('PROCESS_OWNER_MISMATCH')
    if running(r):os.kill(r['pid'],signal.SIGTERM)
- time.sleep(3);compose(st,'stop');out('[PASS] Owned services stopped; database and originals retained')
+ time.sleep(3)
+def stop(st):
+ stop_applications(st);compose(st,'stop');out('[PASS] Owned services stopped; database and originals retained')
 def main():
- p=argparse.ArgumentParser(description='Capstone local installer candidate; publication not approved');p.add_argument('action',choices=['install','start','stop','doctor','status','uninstall','credentials']);p.add_argument('--yes',action='store_true');p.add_argument('--resume',action='store_true');p.add_argument('--admin-email');p.add_argument('--demo',action='store_true');p.add_argument('--ai',action='store_true');a=p.parse_args()
- out('CAPSTONE REPOSITORY | LOCAL SETUP CANDIDATE\n==========================================')
- if a.demo:fail('NOT_SUPPORTED_YET | --demo is not part of public v1 CLEAN scope; private Demo is never used; no state changed')
- if a.ai:fail('NOT_SUPPORTED_YET | --ai enablement requires verified supported local models; no service is started/downloaded; CLEAN AI-off remains supported')
+ p=argparse.ArgumentParser(description='Capstone full-platform local installer; exact release publication not approved')
+ p.add_argument('action',choices=['install','start','stop','doctor','status','uninstall','credentials','configure','demo-accounts']);p.add_argument('--yes',action='store_true');p.add_argument('--resume',action='store_true');p.add_argument('--admin-email');p.add_argument('--demo',action='store_true',default=None)
+ ai=p.add_mutually_exclusive_group();ai.add_argument('--ai',dest='ai',action='store_true',default=None);ai.add_argument('--ai-off',dest='ai',action='store_false');p.add_argument('--ai-base-url');p.add_argument('--ai-token-file');p.add_argument('--mail-config')
+ a=p.parse_args();out('CAPSTONE REPOSITORY | LOCAL SETUP CANDIDATE\n==========================================')
  if a.action=='install' and not a.yes:
   if not sys.stdin.isatty():fail('NONINTERACTIVE_REQUIRES_EXPLICIT_--yes_AND_--admin-email')
-  if input('Create a CLEAN, AI-off, local-capture instance? [y/N] ').lower()!='y':return
+  if input('Install the full platform with clean data and local services? [y/N] ').lower()!='y':return
+  if a.demo is None:a.demo=input('Load the existing synthetic Demo projects and role scenarios? [y/N] ').lower()=='y'
   if not a.admin_email:a.admin_email=input('Synthetic initial admin email (.local): ').strip()
  check(a.action=='install');safe(LOCAL)
  if STATE.exists():
@@ -153,14 +191,51 @@ def main():
   if a.admin_email and a.admin_email!=st['admin_email']:fail('ADMIN_IDENTITY_CHANGE_REFUSED')
  elif a.action=='install':st=init(a.admin_email)
  else:fail('NO_OWNED_INSTALLATION')
+ lock=(LOCAL/'installer.lock').open('a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+ st=read(STATE);ownership(st,True)
  ai_root=ROOT.parent/('.'+ROOT.name+'-ai-'+st['owner'])
  safe(ai_root)
  if ai_root.exists():
   if read(ai_root/'.owner.json')!={'owner':st['owner'],'root':str(ROOT)}:fail('FOREIGN_AI_CACHE_DIRECTORY')
  else:
   ai_root.mkdir(mode=0o700);save(ai_root/'.owner.json',{'owner':st['owner'],'root':str(ROOT)})
- st['ai_root']=str(ai_root);save(STATE,st)
- lock=(LOCAL/'installer.lock').open('a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+ st['ai_root']=str(ai_root)
+ previous_demo=st.get('demo',False)
+ if 'demo' not in st:st['demo']=False
+ if a.demo:st['demo']=True
+ save(STATE,st)
+ if a.action in ['install','configure']:
+  before=st.get('features');st['features']=settings.configure(ROOT,LOCAL,st,a,interactive=sys.stdin.isatty() and not a.yes);save(STATE,st)
+  if (LOCAL/'runtime.json').exists():
+   if before!=st['features']:stop_applications(st)
+   runtime=read(LOCAL/'runtime.json');runtime.update(settings.runtime_settings(st,ROOT))
+   if st['features']['mail']['mode']=='capture':
+    for key in ['ACCOUNT_MAIL_AGENT_KEY','ACCOUNT_MAIL_REGION','ACCOUNT_MAIL_ENDPOINT']:runtime.pop(key,None)
+   save(LOCAL/'runtime.json',runtime)
+  if a.action=='configure':
+   if not (LOCAL/'runtime.json').exists():fail('FINISH_INSTALL_BEFORE_CONFIGURE_ACTION')
+   node(st,'validate-config');start(st);return
+ if 'features' not in st:fail('RESUME_INSTALL_TO_CONFIGURE_FULL_PLATFORM_FEATURES')
+ if a.action=='demo-accounts':
+  if not sys.stdin.isatty():fail('DEMO_CREDENTIALS_REQUIRE_PRIVATE_INTERACTIVE_TTY')
+  if not st['demo']:fail('DEMO_NOT_INSTALLED')
+  identities=read(LOCAL/'demo/identities.json')
+  preferred=['admin-kku','reviewer-kku-01','s01-author-1','s05-author-1','s09-author-1','reviewer-pending','reviewer-suspended','partner-approved','partner-pending','closure-partner-active','closure-partner-revoked']
+  out('Initial synthetic Demo credentials only; user-changed passwords remain unchanged.')
+  for key in preferred:
+   if key in identities:
+    v=identities[key];out(key+' | '+v['role']+' | '+v['email'])
+  key=input('Account key to display privately, list for all keys, or blank to exit: ').strip()
+  if key=='list':
+   for k,v in identities.items():
+    if k!='platform':out(k+' | '+v['role']+' | '+v['email'])
+   key=input('Account key (blank exits): ').strip()
+  if key:
+   if key=='platform':fail('USE_YOUR_CURRENT_INSTALLER_ADMINISTRATOR_PASSWORD')
+   if key not in identities:fail('UNKNOWN_DEMO_ACCOUNT')
+   out('Email: '+identities[key]['email']+'\nPassword: '+identities[key]['password'])
+  return
+
  if a.action=='credentials':
   if not sys.stdin.isatty():fail('PRIVATE_ROTATION_REQUIRES_INTERACTIVE_TTY')
   if (LOCAL/'credential-handoff.json').exists():fail('HANDOFF_ALREADY_RECORDED_USE_ACCOUNT_SECURITY')
@@ -172,10 +247,11 @@ def main():
   if result.returncode:fail('CREDENTIAL_ROTATION_FAILED_NO_SECRET_PRINTED')
   out('[PASS] Initial bootstrap secret retired through normal authenticated change-password API');return
  if a.action in ['stop','uninstall']:stop(st);return
- if a.action=='status':out(json.dumps({'completed':st['completed'],'AI':'disabled','mail':'synthetic local capture','data_retained':True}));return
+ if a.action=='status':out(json.dumps({'completed':st['completed'],'AI':'enabled' if st['features']['ai']['enabled'] else 'explicitly disabled','mail':st['features']['mail']['mode'],'demo':'installed' if 'DEMO' in st['completed'] else 'not installed','data_retained':True}));return
  if a.action=='doctor':ownership(st);runtime_contract(st);listeners(st);node(st,'doctor');return
  if a.action=='start':start(st);return
- for step in ['INSTALL_DEPS','DATABASE_READY','MIGRATE','BOOTSTRAP_ADMIN','BUILD','ACCEPTANCE']:
+ started=False
+ for step in ['INSTALL_DEPS','DATABASE_READY','MIGRATE','BOOTSTRAP_ADMIN','DEMO','BUILD','ACCEPTANCE']:
   if step in st['completed']:continue
   if step=='INSTALL_DEPS':
    run(['corepack','pnpm','install','--frozen-lockfile'],'dependencies',env=dependency_environment());run(['python3','scripts/verify-binary.py'],'binary-verification');run(['corepack','pnpm','build:packages'],'build-packages')
@@ -188,12 +264,23 @@ def main():
    else:fail('DATABASE_NOT_READY')
   elif step=='MIGRATE':node(st,'migrate')
   elif step=='BOOTSTRAP_ADMIN':node(st,'bootstrap')
+  elif step=='DEMO':
+   if not st['demo']:continue
+   try:run(['node','--conditions=react-server','--import','tsx','scripts/demo/preflight.mts'],'demo-preflight')
+   except RuntimeError:
+    if not previous_demo:st['demo']=False;save(STATE,st)
+    raise
+   stop_applications(st)
+   run(['node','--conditions=react-server','--import','tsx','scripts/demo/run.mts'],'demo-install')
+   runtime=read(LOCAL/'runtime.json');runtime['CAPSTONE_SYNTHETIC_DEMO']='true';save(LOCAL/'runtime.json',runtime)
   elif step=='BUILD':
    run(['corepack','pnpm','--filter','./apps/web','--filter','./apps/upload','--filter','./apps/worker','--workspace-concurrency','1','-r','build'],'build-apps',env={**os.environ,'CAPSTONE_AI_DATA_DIR':st['ai_root']})
-  elif step=='ACCEPTANCE':start(st)
+  elif step=='ACCEPTANCE':start(st);started=True
   journal(st,step)
- if 'ACCEPTANCE' in st['completed']:start(st)
- out(f"READY | http://127.0.0.1:{st['ports']['web']}/en\nCommittee Mailpit: http://127.0.0.1:{st['ports']['mail_ui']}\nAccount capture: private .local/mail (single-use links; keep private).\nInitial administrator credential: private .local/accounts/bootstrap-admin.json (not printed); choose your password with scripts/credentials.sh.\nAI: disabled | Mail: synthetic account capture + committee Mailpit | Demo: unavailable\nUse bash scripts/doctor.sh; stop/uninstall retain all data.")
+ if 'ACCEPTANCE' in st['completed'] and not started:start(st)
+ out(f"READY | http://127.0.0.1:{st['ports']['web']}/en\nLocal Mailpit: http://127.0.0.1:{st['ports']['mail_ui']}\nInitial administrator credential: private .local/accounts/bootstrap-admin.json (not printed); choose your password with scripts/credentials.sh.\nAI: {'enabled and preflight verified' if st['features']['ai']['enabled'] else 'explicitly disabled; partial-feature profile'} | Mail: {st['features']['mail']['mode']} | Existing synthetic Demo: {'installed' if st['demo'] else 'not selected'}\nUse bash scripts/doctor.sh; stop/uninstall retain all data.")
+
 if __name__=='__main__':
  try:main()
+ except KeyboardInterrupt:out('STOPPED | Installation data retained. Rerun install --resume when ready.');sys.exit(130)
  except (RuntimeError,subprocess.SubprocessError,FileNotFoundError,BlockingIOError) as e:out('STOP | '+str(e));sys.exit(1)

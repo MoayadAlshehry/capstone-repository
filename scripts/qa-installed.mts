@@ -1,4 +1,6 @@
 import {semesterFixture} from '../tools/semester/release-installed-fixture.js';import{readFile,writeFile}from'node:fs/promises';import{randomUUID,createHash}from'node:crypto';
+import{verifyOwned}from'./verify-owned.mjs';
+await verifyOwned();
 const state=JSON.parse(await readFile('.local/installation.json','utf8')),base='http://127.0.0.1:'+state.ports.web;
 const f=await semesterFixture(4060,base),observations=[];
 try{
@@ -13,7 +15,7 @@ try{
  if(files.length!==1)throw Error('FINALIZED_ORIGINAL_REQUIRED');const file=files[0];const path='/api/native-files?'+new URLSearchParams({project:f.made.id,version:s.project.version,file:file.id,mode:'original'});
  for(const [label,cookie,expected]of [['own author',f.author.cookie,200],['anonymous','',404]]as const){const response=await fetch(base+path,{headers:{Cookie:cookie}});observations.push({test:label+' original',status:response.status,expected});if(response.status!==expected)throw Error('ORIGINAL_PERMISSION_FAILED');if(expected===200&&createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex')!==createHash('sha256').update(bytes).digest('hex'))throw Error('ORIGINAL_HASH_MISMATCH');}
  const pub=await fetch(base+'/api/public-files?'+new URLSearchParams({project:f.made.id,version:s.project.version,file:file.id,mode:'original'}));observations.push({test:'public cannot read private project original',status:pub.status,expected:404});if(pub.status!==404)throw Error('PUBLIC_PRIVATE_ORIGINAL_EXPOSURE');
- const ai=await fetch(base+'/api/ai');observations.push({test:'AI off truthful endpoint',status:ai.status,expected:404});if(ai.status!==404)throw Error('AI_OFF_FAILED');
+ const enabled=JSON.parse(await readFile('.local/runtime.json','utf8')).AI_ENABLED==='true';const ai=await fetch(base+'/api/ai?status=1');const aiState=await ai.json();observations.push({test:'configured AI state truthful endpoint',status:ai.status,expected:enabled?200:404});if(ai.status!==(enabled?200:404)||aiState.enabled!==enabled)throw Error('AI_CONFIGURATION_STATE_FAILED');
  await writeFile('.local/qa-private-record.json',JSON.stringify({project:f.made.id,version:s.project.version,file:file.id,authorCookie:f.author.cookie,leadCookie:f.lead.cookie,bytes_sha256:createHash('sha256').update(bytes).digest('hex'),path}),{mode:0o600});
  await writeFile('.local/qa-observations.json',JSON.stringify(observations,null,2));console.log('INSTALLED_APPLICATION_ORIGINAL_PERMISSIONS_AND_PROXY_VERIFIED');
 }finally{await f.disconnect();}

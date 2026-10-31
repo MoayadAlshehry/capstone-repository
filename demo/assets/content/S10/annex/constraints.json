@@ -1,0 +1,6 @@
+{
+  "kind": "demonstration restricted annex",
+  "scope": "S10",
+  "assumptions": "This is a bounded workflow exercise, not a separate field deployment. Its example data and assessments are fictional; it does not claim institutional endorsement or a human study.",
+  "containsPersonalData": false
+}

@@ -1,0 +1,6 @@
+{
+  "kind": "demonstration restricted annex",
+  "scope": "P004",
+  "assumptions": "No real visitor, location trace or operational crowd data is used. Simulation excludes emergency rules, human behavior and site-specific safety requirements.",
+  "containsPersonalData": false
+}

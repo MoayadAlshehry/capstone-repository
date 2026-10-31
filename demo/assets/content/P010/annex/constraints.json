@@ -1,0 +1,6 @@
+{
+  "kind": "demonstration restricted annex",
+  "scope": "P010",
+  "assumptions": "The bounded simulator is not a distributed-consensus implementation. No availability SLA, cloud deployment or field benchmark is asserted.",
+  "containsPersonalData": false
+}

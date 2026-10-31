@@ -1,0 +1,6 @@
+{
+  "kind": "demonstration restricted annex",
+  "scope": "P007",
+  "assumptions": "Integrity is not authenticity or malware detection. The artifact does not execute uploads, issue trusted signatures or replace institutional retention policies.",
+  "containsPersonalData": false
+}

@@ -17,3 +17,7 @@ The first-party No License / All Rights Reserved policy does not relicense these
 Source-only fetching describes what this publisher supplies; it is **not an exemption from licenses**. The release still contains copied source, fonts and PDF.js ancillary binaries whose notices/conditions must be met. Recipients receive dependency licenses with their downloads. No model weights, production/student files, database dumps, node_modules or codec executable are included. No private or paid asset is asserted to be first-party merely because it was installed.
 
 Upstream references: https://shadcnstudio.com/license ; https://shadcnstudio.com/docs/getting-started/how-to-use-shadcn-cli ; https://gsap.com/community/standard-license/ ; https://openfontlicense.org/ ; https://github.com/mozilla/pdf.js ; https://sharp.pixelplumbing.com/install/ ; https://www.ffmpeg.org/legal.html ; https://github.com/eugeneware/ffmpeg-static .
+
+## Final dependency security correction
+
+The release overrides minimatch to11.0.1 for GHSA-g3hv-75wg-m249/CVE-2026-118764. Its BlueOak1.0.0 terms and new dependency notices remain separate from first-party ARR/EVAL-1. Original notices are retained in third_party/licenses; exact installed Linux dependency versions/notice hashes are refreshed in DEPENDENCY_LICENSE_INVENTORY.csv. Dependencies are fetched by the installer, not bundled as node_modules. No minimum-release-age guard was disabled. See https://github.com/isaacs/minimatch/security/advisories/GHSA-g3hv-75wg-m249 .

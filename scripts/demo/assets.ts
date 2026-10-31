@@ -1,0 +1,4 @@
+import{readFile,lstat}from'node:fs/promises';import{resolve}from'node:path';import{createHash}from'node:crypto';import{sourceRoot,safePath}from'./store.js';
+export async function verifyAssetInputs(){const m=JSON.parse(await readFile(resolve(sourceRoot,'demo/ASSET_MANIFEST.json'),'utf8')) as {files:{path:string;bytes:number;sha256:string}[]};if(m.files.length!==540||new Set(m.files.map(f=>f.path)).size!==540)throw Error('DEMO_ASSET_COUNT');
+ for(const f of m.files){if(!/^[A-Za-z0-9_./-]+$/.test(f.path)||f.path.split('/').includes('..'))throw Error('DEMO_ASSET_PATH');const p=resolve(sourceRoot,'demo/assets',f.path);await safePath(p);const s=await lstat(p);if(!s.isFile()||s.size!==f.bytes||createHash('sha256').update(await readFile(p)).digest('hex')!==f.sha256)throw Error('DEMO_ASSET_FINGERPRINT');}
+ return{files:540,core:50,workflow:10};}

@@ -1,0 +1,6 @@
+{
+  "kind": "demonstration restricted annex",
+  "scope": "P006",
+  "assumptions": "The simplified battery and tariff model omits degradation chemistry, grid protection and real installation certification. No field cost saving is claimed.",
+  "containsPersonalData": false
+}

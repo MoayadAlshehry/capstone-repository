@@ -1,30 +1,45 @@
 # Capstone Repository
 
-The complete bilingual application and self-hosted installation source are here. The public-release goal is a viewable repository with a working visitor evaluation installer. **Receiving this tree or finding it online is not proof that a release or its evaluation permission has been approved.** Check the rights-holder approval record for the exact release manifest and permission-document hash. Until that approval exists, this is an unapproved candidate and users need separate authorization. Public source viewability and permission to run are separate.
+A bilingual English/Arabic capstone platform with public discovery, native files, student/lead workspaces, supervisor and independent assessments, event-driven reviewer allocation, exact-version partner grants, administration, audit and in-app notifications. AI Search uses published metadata; AI Brief uses title/abstract/keywords; Project Assistant reads only permitted Public originals. Existing scoring and authorization policies are unchanged.
 
-Original first-party source and branding remain **No License / All Rights Reserved**. The optional EVAL-1 proposal is nonoperative until expressly approved; it would permit personal noncommercial local download/build/run with limited build-only adaptations, while reserving ownership and broader redistribution/commercial rights. It is not an open-source license. Upstream dependencies/assets keep their own terms. See RIGHTS.md, PUBLIC_EVALUATION_PERMISSION_PROPOSAL.md and THIRD_PARTY_NOTICES.md.
+Original first-party source and branding remain **No License / All Rights Reserved**. The exact EVAL-1 wording is approved, but its evaluation grant activates only for an expressly approved release manifest/tree and public release. Check the release approval record before downloading/building/running beyond independently applicable rights. EVAL-1 permits limited personal noncommercial local evaluation; it is not an open-source license. Third-party materials retain their own terms. See RIGHTS.md, PUBLIC_EVALUATION_PERMISSION_PROPOSAL.md and THIRD_PARTY_NOTICES.md.
 
-## Supported clean installation
+## Install
 
-Verified baseline: Windows11 with WSL2Ubuntu, Linux-amd64 Node24.21.0, Corepack/pnpm11.28.3, Python3, DockerDesktop Linux engine and DockerCompose. Install those prerequisites yourself from official sources. The scripts never install/restart Docker, reconfigure Windows/WSL networking, issue a domain/certificate or touch an existing deployment. Hardware minima are unverified; the memory/disk/commit checks are execution guards only.
+Verified target: Windows 11, Ubuntu WSL2/Linux-amd64, Docker Desktop Linux integration/Compose, Linux Node 24.21.0, Corepack/pnpm 11.28.3 and Python3. Host prerequisites and model weights are supplied by the operator. The installer does not install Docker, change networking/firewalls, download model weights or expose services publicly.
 
-After verifying your permission and the trusted release checksums, extract the complete source into a NEW Linux directory. Inspect scripts before running; do not use `curl | bash`, a moving `main` URL, a serving checkout or an existing `.local` data directory.
+Verify the trusted release checksums and extract the complete source into a **new Linux directory**. Inspect the scripts, prepare the two supported models using [MODEL_REQUIREMENTS.md](MODEL_REQUIREMENTS.md), then run inside WSL:
 
 ```sh
-bash scripts/install.sh --yes --admin-email local.admin@capstone.local
+bash scripts/install.sh
 bash scripts/credentials.sh
 bash scripts/doctor.sh
 ```
 
-Installation creates a clean owned database/roles/secrets, applies current migrations, builds Web/Upload/Worker, starts loopback services and verifies all3health endpoints plus real admin login and a permitted read. It prints the actual web and Mailpit URLs. The initial administrator secret is randomly generated in a0600private file and never printed. The hidden-entry credentials procedure uses the normal authenticated password-change API, retires the initial secret and verifies the new login; it is not server-enforced first-login rotation. Use the chosen password and synthetic admin identity to sign in.
+The installer asks for a synthetic initial administrator, optional existing Demo data and mail mode. AI is **on by default** and requires a successful real generation/embedding preflight. Missing models produce Retry / Configure / Explicitly Disable / Exit choices; AI is never silently disabled. A noninteractive clean-data installation is:
 
-The supported v1 default is CLEAN, AI disabled, local account-mail capture and a localhost-only Mailpit sink for synthetic committee invitations/OTP. Use synthetic `.local` accounts during evaluation. Mailpit captures mail locally; it is not an external provider. Routine notifications remain in-app. Actual current scoring/publication/permissions are preserved; these are not official course grades.
+```sh
+bash scripts/install.sh --yes --admin-email local.admin@capstone.local
+```
 
-## Optional flags and limits
+It creates fresh owned database/roles/secrets, installs frozen dependencies, verifies the codec hash/license, applies migrations, builds Web/Upload/Worker and checks loopback readiness, actual login and authorized reads. READY prints the selected Web/Mailpit URLs. The random initial password stays in a private file with mode 0600. `credentials.sh` takes a hidden password and uses the normal authenticated password-change API, verifies the new login and retires the initial secret; this is not server-enforced first-login rotation.
 
-`--ai` and `--demo` return **NOT_SUPPORTED_YET** before changing state. They do not pretend to enable a feature. No model download/start or canonical private Demo operation is performed. The v1 implementation is CLEAN-only; enabling these optional modes requires separate implementation and verification, not merely a model already running. Source model contracts remain documented in OPTIONAL_MODES.md; real inference is NOT_VERIFIED. Real Zoho/ZeptoMail inbox delivery, public TLS/DNS hosting, arbitrary OS support, HA and post-reboot supervision are not established by the local clean profile.
+## Existing synthetic Demo
 
-## Repeat, resume and retain data
+Opt in during the prompt or add `--demo`. This loads the **existing**50 showcase projects and10 workflow examples with their original content, teams, relationships, native files, rubrics and intended scenarios. It uses normal application services, including real local committee SMTP/OTP and reviewer allocation. It can take several minutes and respects authentication rate limits; progress and resumable stages are shown.
+
+```sh
+bash scripts/install.sh --yes --demo --admin-email local.admin@capstone.local
+bash scripts/demo-accounts.sh
+```
+
+Demo loading is limited to a new blank owned installation. A completed Demo is never reseeded: reruns retain user edits and do not duplicate records. It does not execute/distribute private reset/checkpoint/recovery tools or copy production data. Credentials are generated per installation and remain private. See [demo/README.md](demo/README.md).
+
+## Configuration and operation
+
+For an existing private model endpoint or authenticated service, use `--ai-base-url` and `--ai-token-file` with a private file with mode 0600. `bash scripts/configure.sh` updates supported settings without resetting data. `--ai-off` is an explicit **partial-feature** choice, not full-parity acceptance. See MODEL_REQUIREMENTS.md and MAIL_CONFIGURATION.md.
+
+Default mail is local account capture plus loopback Mailpit for synthetic committee invitations/OTP. This is not real inbox delivery. The existing approved Zoho/ZeptoMail adapter is available through a private provider JSON file; no new provider is introduced. Routine notifications remain in-app. Actual external delivery and an existing HTTPS mail application origin require operator configuration/verification.
 
 ```sh
 bash scripts/install.sh --yes --resume --admin-email local.admin@capstone.local
@@ -34,8 +49,6 @@ bash scripts/start.sh
 bash scripts/uninstall.sh
 ```
 
-Completed stages are journaled and not replayed as resets. Unknown state/foreign labels, nonowned DB targets, symlinks, unsafe permissions and collisions are refused. Stop/uninstall affect only verified owned resources and retain database, originals and private configuration/cache. There is no purge command. Account capture files contain single-use secrets; keep `.local` private. Do not paste production configuration into an evaluation instance.
+Repeat/resume preserves completed stages and data. Stop/uninstall affect only verified owned resources and retain volumes, originals and private configuration; no purge exists. Unsafe/foreign targets, symlinks, collisions and altered codec bytes are refused. AI-enabled restart verifies model readiness and fails clearly if unavailable. Read INSTALLER_OPERATIONS.md before backup or moving an instance. Never upload `.local`, captures, credentials or model caches.
 
-Dependencies remain pinned in the lockfile. The FFmpeg installer downloads the upstream executable; its exact approved Linux-amd64 bytes and license are checked against third_party/binary-fingerprints.json. An altered download fails before use. This source ZIP contains no codec executable or node_modules; source-only fetching does not waive upstream obligations.
-
-The release target is `MoayadAlshehry/capstone-repository`, with intended version tag `v1.0.0`. These identifiers are not proof of publication or permission activation: check the actual release, its checksums and its approval record. The approval packet defines the immutable source/hash plan. A pinned public download/install command must be verified after authorized publication; do not substitute a moving `main` URL. Publishing this source does not deploy or modify the separate production application.
+The intended public target is `MoayadAlshehry/capstone-repository`, tag`v1.0.0`. Those names do not prove publication or permission activation. Use the exact approved release/checksums, never a moving-main installer or curl-pipe-shell. Public release does not deploy the separate production application. AI remains BETA: outputs may be refused when unsupported and are not official academic grades.

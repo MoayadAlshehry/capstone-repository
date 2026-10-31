@@ -1,0 +1,279 @@
+{
+  "function": "irrigation",
+  "kind": "deterministic synthetic simulation",
+  "seed_base": 53400,
+  "cases": [
+    {
+      "case": 1,
+      "fixed_timer_units": 90,
+      "threshold_units": 36,
+      "budgeted_units": 24,
+      "remaining_units": 21,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 2,
+      "fixed_timer_units": 90,
+      "threshold_units": 54,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 3,
+      "fixed_timer_units": 90,
+      "threshold_units": 39,
+      "budgeted_units": 27,
+      "remaining_units": 18,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 4,
+      "fixed_timer_units": 90,
+      "threshold_units": 36,
+      "budgeted_units": 39,
+      "remaining_units": 6,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 5,
+      "fixed_timer_units": 90,
+      "threshold_units": 48,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 6,
+      "fixed_timer_units": 90,
+      "threshold_units": 51,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 7,
+      "fixed_timer_units": 90,
+      "threshold_units": 51,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 8,
+      "fixed_timer_units": 90,
+      "threshold_units": 45,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 9,
+      "fixed_timer_units": 90,
+      "threshold_units": 45,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 10,
+      "fixed_timer_units": 90,
+      "threshold_units": 48,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 11,
+      "fixed_timer_units": 90,
+      "threshold_units": 63,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 12,
+      "fixed_timer_units": 90,
+      "threshold_units": 45,
+      "budgeted_units": 42,
+      "remaining_units": 3,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 13,
+      "fixed_timer_units": 90,
+      "threshold_units": 57,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 14,
+      "fixed_timer_units": 90,
+      "threshold_units": 48,
+      "budgeted_units": 36,
+      "remaining_units": 9,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 15,
+      "fixed_timer_units": 90,
+      "threshold_units": 45,
+      "budgeted_units": 42,
+      "remaining_units": 3,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 16,
+      "fixed_timer_units": 90,
+      "threshold_units": 54,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 17,
+      "fixed_timer_units": 90,
+      "threshold_units": 42,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 18,
+      "fixed_timer_units": 90,
+      "threshold_units": 36,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 19,
+      "fixed_timer_units": 90,
+      "threshold_units": 45,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 20,
+      "fixed_timer_units": 90,
+      "threshold_units": 48,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 21,
+      "fixed_timer_units": 90,
+      "threshold_units": 51,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 22,
+      "fixed_timer_units": 90,
+      "threshold_units": 27,
+      "budgeted_units": 33,
+      "remaining_units": 12,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 23,
+      "fixed_timer_units": 90,
+      "threshold_units": 48,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 24,
+      "fixed_timer_units": 90,
+      "threshold_units": 42,
+      "budgeted_units": 15,
+      "remaining_units": 30,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 25,
+      "fixed_timer_units": 90,
+      "threshold_units": 51,
+      "budgeted_units": 42,
+      "remaining_units": 3,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 26,
+      "fixed_timer_units": 90,
+      "threshold_units": 51,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 27,
+      "fixed_timer_units": 90,
+      "threshold_units": 42,
+      "budgeted_units": 39,
+      "remaining_units": 6,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 28,
+      "fixed_timer_units": 90,
+      "threshold_units": 66,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 29,
+      "fixed_timer_units": 90,
+      "threshold_units": 33,
+      "budgeted_units": 36,
+      "remaining_units": 9,
+      "explainable_decisions": 30
+    },
+    {
+      "case": 30,
+      "fixed_timer_units": 90,
+      "threshold_units": 45,
+      "budgeted_units": 45,
+      "remaining_units": 0,
+      "explainable_decisions": 30
+    }
+  ],
+  "summary": {
+    "fixed_timer_units": {
+      "min": 90,
+      "max": 90,
+      "mean": 90,
+      "valid_n": 30
+    },
+    "threshold_units": {
+      "min": 27,
+      "max": 66,
+      "mean": 46.4,
+      "valid_n": 30
+    },
+    "budgeted_units": {
+      "min": 15,
+      "max": 45,
+      "mean": 41,
+      "valid_n": 30
+    },
+    "remaining_units": {
+      "min": 0,
+      "max": 30,
+      "mean": 4,
+      "valid_n": 30
+    },
+    "explainable_decisions": {
+      "min": 30,
+      "max": 30,
+      "mean": 30,
+      "valid_n": 30
+    }
+  }
+}

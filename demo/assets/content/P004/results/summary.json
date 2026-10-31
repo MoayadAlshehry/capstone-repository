@@ -1,0 +1,279 @@
+{
+  "function": "queues",
+  "kind": "deterministic synthetic simulation",
+  "seed_base": 53300,
+  "cases": [
+    {
+      "case": 1,
+      "fifo_mean_wait": 81.33333333333333,
+      "shortest_mean_wait": 50.416666666666664,
+      "bounded_mean_wait": 65.08333333333333,
+      "bounded_max_wait": 137,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 2,
+      "fifo_mean_wait": 54.166666666666664,
+      "shortest_mean_wait": 36.583333333333336,
+      "bounded_mean_wait": 40.375,
+      "bounded_max_wait": 111,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 3,
+      "fifo_mean_wait": 69.79166666666667,
+      "shortest_mean_wait": 51,
+      "bounded_mean_wait": 55.5,
+      "bounded_max_wait": 141,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 4,
+      "fifo_mean_wait": 67.58333333333333,
+      "shortest_mean_wait": 45.916666666666664,
+      "bounded_mean_wait": 54.875,
+      "bounded_max_wait": 121,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 5,
+      "fifo_mean_wait": 86,
+      "shortest_mean_wait": 64.125,
+      "bounded_mean_wait": 72.33333333333333,
+      "bounded_max_wait": 167,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 6,
+      "fifo_mean_wait": 79.83333333333333,
+      "shortest_mean_wait": 60,
+      "bounded_mean_wait": 68.375,
+      "bounded_max_wait": 168,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 7,
+      "fifo_mean_wait": 82.91666666666667,
+      "shortest_mean_wait": 51.125,
+      "bounded_mean_wait": 67.08333333333333,
+      "bounded_max_wait": 140,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 8,
+      "fifo_mean_wait": 81.33333333333333,
+      "shortest_mean_wait": 53,
+      "bounded_mean_wait": 63.75,
+      "bounded_max_wait": 153,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 9,
+      "fifo_mean_wait": 64.29166666666667,
+      "shortest_mean_wait": 34.291666666666664,
+      "bounded_mean_wait": 44.625,
+      "bounded_max_wait": 107,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 10,
+      "fifo_mean_wait": 86.29166666666667,
+      "shortest_mean_wait": 56.041666666666664,
+      "bounded_mean_wait": 69.54166666666667,
+      "bounded_max_wait": 152,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 11,
+      "fifo_mean_wait": 55.458333333333336,
+      "shortest_mean_wait": 40.708333333333336,
+      "bounded_mean_wait": 45.416666666666664,
+      "bounded_max_wait": 118,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 12,
+      "fifo_mean_wait": 71.54166666666667,
+      "shortest_mean_wait": 49.083333333333336,
+      "bounded_mean_wait": 56.875,
+      "bounded_max_wait": 140,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 13,
+      "fifo_mean_wait": 86.20833333333333,
+      "shortest_mean_wait": 65.75,
+      "bounded_mean_wait": 75,
+      "bounded_max_wait": 171,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 14,
+      "fifo_mean_wait": 85.375,
+      "shortest_mean_wait": 60.041666666666664,
+      "bounded_mean_wait": 73.875,
+      "bounded_max_wait": 162,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 15,
+      "fifo_mean_wait": 77.33333333333333,
+      "shortest_mean_wait": 47.5,
+      "bounded_mean_wait": 65.20833333333333,
+      "bounded_max_wait": 135,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 16,
+      "fifo_mean_wait": 70.58333333333333,
+      "shortest_mean_wait": 55.375,
+      "bounded_mean_wait": 60.5,
+      "bounded_max_wait": 152,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 17,
+      "fifo_mean_wait": 89.66666666666667,
+      "shortest_mean_wait": 60.875,
+      "bounded_mean_wait": 77.5,
+      "bounded_max_wait": 161,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 18,
+      "fifo_mean_wait": 80,
+      "shortest_mean_wait": 56.833333333333336,
+      "bounded_mean_wait": 67.125,
+      "bounded_max_wait": 142,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 19,
+      "fifo_mean_wait": 63,
+      "shortest_mean_wait": 48.291666666666664,
+      "bounded_mean_wait": 53.125,
+      "bounded_max_wait": 139,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 20,
+      "fifo_mean_wait": 72.375,
+      "shortest_mean_wait": 58.125,
+      "bounded_mean_wait": 63.458333333333336,
+      "bounded_max_wait": 157,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 21,
+      "fifo_mean_wait": 81.66666666666667,
+      "shortest_mean_wait": 55.791666666666664,
+      "bounded_mean_wait": 64.58333333333333,
+      "bounded_max_wait": 153,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 22,
+      "fifo_mean_wait": 82.125,
+      "shortest_mean_wait": 59.833333333333336,
+      "bounded_mean_wait": 70.16666666666667,
+      "bounded_max_wait": 157,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 23,
+      "fifo_mean_wait": 77.70833333333333,
+      "shortest_mean_wait": 47.333333333333336,
+      "bounded_mean_wait": 60.791666666666664,
+      "bounded_max_wait": 143,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 24,
+      "fifo_mean_wait": 72.58333333333333,
+      "shortest_mean_wait": 44.708333333333336,
+      "bounded_mean_wait": 54.791666666666664,
+      "bounded_max_wait": 135,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 25,
+      "fifo_mean_wait": 73.79166666666667,
+      "shortest_mean_wait": 49,
+      "bounded_mean_wait": 59.375,
+      "bounded_max_wait": 138,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 26,
+      "fifo_mean_wait": 75.91666666666667,
+      "shortest_mean_wait": 51.708333333333336,
+      "bounded_mean_wait": 63.541666666666664,
+      "bounded_max_wait": 149,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 27,
+      "fifo_mean_wait": 58.291666666666664,
+      "shortest_mean_wait": 43.333333333333336,
+      "bounded_mean_wait": 48.333333333333336,
+      "bounded_max_wait": 123,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 28,
+      "fifo_mean_wait": 64.25,
+      "shortest_mean_wait": 51.458333333333336,
+      "bounded_mean_wait": 55.583333333333336,
+      "bounded_max_wait": 131,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 29,
+      "fifo_mean_wait": 85.58333333333333,
+      "shortest_mean_wait": 63.416666666666664,
+      "bounded_mean_wait": 73.54166666666667,
+      "bounded_max_wait": 169,
+      "jobs_conserved": 24
+    },
+    {
+      "case": 30,
+      "fifo_mean_wait": 70,
+      "shortest_mean_wait": 41.75,
+      "bounded_mean_wait": 51.208333333333336,
+      "bounded_max_wait": 127,
+      "jobs_conserved": 24
+    }
+  ],
+  "summary": {
+    "fifo_mean_wait": {
+      "min": 54.166666666666664,
+      "max": 89.66666666666667,
+      "mean": 74.9,
+      "valid_n": 30
+    },
+    "shortest_mean_wait": {
+      "min": 34.291666666666664,
+      "max": 65.75,
+      "mean": 51.78055555555556,
+      "valid_n": 30
+    },
+    "bounded_mean_wait": {
+      "min": 40.375,
+      "max": 77.5,
+      "mean": 61.38472222222222,
+      "valid_n": 30
+    },
+    "bounded_max_wait": {
+      "min": 107,
+      "max": 171,
+      "mean": 143.3,
+      "valid_n": 30
+    },
+    "jobs_conserved": {
+      "min": 24,
+      "max": 24,
+      "mean": 24,
+      "valid_n": 30
+    }
+  }
+}

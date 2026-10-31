@@ -1,0 +1,6 @@
+{
+  "kind": "demonstration restricted annex",
+  "scope": "P003",
+  "assumptions": "The time series is simulated, not field coral measurements. The device image is conceptual; no biological inference, protected-site access or deployed instrument is asserted.",
+  "containsPersonalData": false
+}

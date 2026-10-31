@@ -1,0 +1,315 @@
+{
+  "function": "edge_jobs",
+  "kind": "deterministic synthetic simulation",
+  "seed_base": 53900,
+  "cases": [
+    {
+      "case": 1,
+      "fifo_deadlines_met": 4,
+      "deadline_order_met": 2,
+      "admitted_deadlines_met": 9,
+      "explicitly_rejected_jobs": 7,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 2,
+      "fifo_deadlines_met": 5,
+      "deadline_order_met": 1,
+      "admitted_deadlines_met": 9,
+      "explicitly_rejected_jobs": 7,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 3,
+      "fifo_deadlines_met": 9,
+      "deadline_order_met": 7,
+      "admitted_deadlines_met": 12,
+      "explicitly_rejected_jobs": 4,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 4,
+      "fifo_deadlines_met": 8,
+      "deadline_order_met": 3,
+      "admitted_deadlines_met": 12,
+      "explicitly_rejected_jobs": 4,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 5,
+      "fifo_deadlines_met": 4,
+      "deadline_order_met": 1,
+      "admitted_deadlines_met": 10,
+      "explicitly_rejected_jobs": 6,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 6,
+      "fifo_deadlines_met": 6,
+      "deadline_order_met": 2,
+      "admitted_deadlines_met": 11,
+      "explicitly_rejected_jobs": 5,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 7,
+      "fifo_deadlines_met": 7,
+      "deadline_order_met": 5,
+      "admitted_deadlines_met": 10,
+      "explicitly_rejected_jobs": 6,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 8,
+      "fifo_deadlines_met": 4,
+      "deadline_order_met": 3,
+      "admitted_deadlines_met": 12,
+      "explicitly_rejected_jobs": 4,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 9,
+      "fifo_deadlines_met": 3,
+      "deadline_order_met": 1,
+      "admitted_deadlines_met": 11,
+      "explicitly_rejected_jobs": 5,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 10,
+      "fifo_deadlines_met": 7,
+      "deadline_order_met": 3,
+      "admitted_deadlines_met": 11,
+      "explicitly_rejected_jobs": 5,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 11,
+      "fifo_deadlines_met": 4,
+      "deadline_order_met": 1,
+      "admitted_deadlines_met": 10,
+      "explicitly_rejected_jobs": 6,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 12,
+      "fifo_deadlines_met": 4,
+      "deadline_order_met": 2,
+      "admitted_deadlines_met": 11,
+      "explicitly_rejected_jobs": 5,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 13,
+      "fifo_deadlines_met": 3,
+      "deadline_order_met": 5,
+      "admitted_deadlines_met": 11,
+      "explicitly_rejected_jobs": 5,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 14,
+      "fifo_deadlines_met": 6,
+      "deadline_order_met": 1,
+      "admitted_deadlines_met": 10,
+      "explicitly_rejected_jobs": 6,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 15,
+      "fifo_deadlines_met": 4,
+      "deadline_order_met": 1,
+      "admitted_deadlines_met": 9,
+      "explicitly_rejected_jobs": 7,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 16,
+      "fifo_deadlines_met": 3,
+      "deadline_order_met": 1,
+      "admitted_deadlines_met": 9,
+      "explicitly_rejected_jobs": 7,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 17,
+      "fifo_deadlines_met": 3,
+      "deadline_order_met": 2,
+      "admitted_deadlines_met": 9,
+      "explicitly_rejected_jobs": 7,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 18,
+      "fifo_deadlines_met": 6,
+      "deadline_order_met": 9,
+      "admitted_deadlines_met": 12,
+      "explicitly_rejected_jobs": 4,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 19,
+      "fifo_deadlines_met": 4,
+      "deadline_order_met": 5,
+      "admitted_deadlines_met": 11,
+      "explicitly_rejected_jobs": 5,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 20,
+      "fifo_deadlines_met": 3,
+      "deadline_order_met": 1,
+      "admitted_deadlines_met": 10,
+      "explicitly_rejected_jobs": 6,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 21,
+      "fifo_deadlines_met": 7,
+      "deadline_order_met": 1,
+      "admitted_deadlines_met": 12,
+      "explicitly_rejected_jobs": 4,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 22,
+      "fifo_deadlines_met": 8,
+      "deadline_order_met": 11,
+      "admitted_deadlines_met": 12,
+      "explicitly_rejected_jobs": 4,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 23,
+      "fifo_deadlines_met": 5,
+      "deadline_order_met": 2,
+      "admitted_deadlines_met": 10,
+      "explicitly_rejected_jobs": 6,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 24,
+      "fifo_deadlines_met": 7,
+      "deadline_order_met": 2,
+      "admitted_deadlines_met": 9,
+      "explicitly_rejected_jobs": 7,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 25,
+      "fifo_deadlines_met": 4,
+      "deadline_order_met": 3,
+      "admitted_deadlines_met": 10,
+      "explicitly_rejected_jobs": 6,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 26,
+      "fifo_deadlines_met": 5,
+      "deadline_order_met": 6,
+      "admitted_deadlines_met": 11,
+      "explicitly_rejected_jobs": 5,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 27,
+      "fifo_deadlines_met": 8,
+      "deadline_order_met": 7,
+      "admitted_deadlines_met": 12,
+      "explicitly_rejected_jobs": 4,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 28,
+      "fifo_deadlines_met": 6,
+      "deadline_order_met": 3,
+      "admitted_deadlines_met": 8,
+      "explicitly_rejected_jobs": 8,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 29,
+      "fifo_deadlines_met": 5,
+      "deadline_order_met": 1,
+      "admitted_deadlines_met": 10,
+      "explicitly_rejected_jobs": 6,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    },
+    {
+      "case": 30,
+      "fifo_deadlines_met": 5,
+      "deadline_order_met": 3,
+      "admitted_deadlines_met": 9,
+      "explicitly_rejected_jobs": 7,
+      "unique_effects": 16,
+      "replayed_inputs": 32
+    }
+  ],
+  "summary": {
+    "fifo_deadlines_met": {
+      "min": 3,
+      "max": 9,
+      "mean": 5.233333333333333,
+      "valid_n": 30
+    },
+    "deadline_order_met": {
+      "min": 1,
+      "max": 11,
+      "mean": 3.1666666666666665,
+      "valid_n": 30
+    },
+    "admitted_deadlines_met": {
+      "min": 8,
+      "max": 12,
+      "mean": 10.4,
+      "valid_n": 30
+    },
+    "explicitly_rejected_jobs": {
+      "min": 4,
+      "max": 8,
+      "mean": 5.6,
+      "valid_n": 30
+    },
+    "unique_effects": {
+      "min": 16,
+      "max": 16,
+      "mean": 16,
+      "valid_n": 30
+    },
+    "replayed_inputs": {
+      "min": 32,
+      "max": 32,
+      "mean": 32,
+      "valid_n": 30
+    }
+  }
+}

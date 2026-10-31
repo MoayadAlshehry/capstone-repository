@@ -1,0 +1,243 @@
+{
+  "function": "retrieval",
+  "kind": "deterministic synthetic simulation",
+  "seed_base": 53100,
+  "cases": [
+    {
+      "case": 1,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 2,
+      "literal_recall": 0.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 3,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 4,
+      "literal_recall": 0.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 5,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 6,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 7,
+      "literal_recall": 0.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 8,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 9,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 10,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 11,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 12,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 13,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 14,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 15,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 16,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 17,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 18,
+      "literal_recall": 0.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 19,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 20,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 21,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 22,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 23,
+      "literal_recall": 0.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 24,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 25,
+      "literal_recall": 0.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 26,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 27,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 28,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 29,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    },
+    {
+      "case": 30,
+      "literal_recall": 1.0,
+      "normalized_recall": 1.0,
+      "normalized_precision": 1.0,
+      "relevant_documents": 8
+    }
+  ],
+  "summary": {
+    "literal_recall": {
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.8,
+      "valid_n": 30
+    },
+    "normalized_recall": {
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0,
+      "valid_n": 30
+    },
+    "normalized_precision": {
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0,
+      "valid_n": 30
+    },
+    "relevant_documents": {
+      "min": 8,
+      "max": 8,
+      "mean": 8,
+      "valid_n": 30
+    }
+  }
+}

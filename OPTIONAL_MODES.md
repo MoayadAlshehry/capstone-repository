@@ -1,4 +1,5 @@
-# Supported local scope
-AI off; actual-model inference NOT_VERIFIED. Generation qwen/qwen3.5-9b; embeddings text-embedding-qwen3-embedding-0.6b,1024finite components. No weights or endpoints started; --ai refuses. --demo unsupported; private canonical Demo excluded.
+# Supported feature profiles
 
-Account capture and committee Mailpit use new synthetic.local identities/owned loopback ports only. No SMTP relay/provider messages. Existing Zoho/approved ZeptoMail adapter remains unchanged and requires its allowlisted endpoint/region/sender/key, appropriate HTTPS origin and separately verified delivery. No arbitrary provider, model manager, public TLS installer or redistributable license is introduced.
+Normal installation: complete source and AI enabled after real supported-model preflight, with fresh clean data. Optional `--demo` loads the existing synthetic dataset on a blank owned target. No private Demo Setup/Reset is shipped or executed. Existing supported approved mail configuration is available; local capture/Mailpit is explicit when no provider credentials are supplied.
+
+`--ai-off` explicitly selects a partial-feature profile and is labelled as such. Missing models do not silently choose it. Generation/embedding contracts and setup are in MODEL_REQUIREMENTS.md; mail modes/limitations are in MAIL_CONFIGURATION.md. Source-only fetching is not a license exemption. No weights, production/student objects or private configuration are included.
