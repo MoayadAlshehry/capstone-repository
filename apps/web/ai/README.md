@@ -1,37 +1,33 @@
-# Search constraints/cache/shared motion checkpoint — 25 October 2026
+# Public project AI
 
-Current owner-review continuation: [closeout](../../../docs/engineering/SEARCH_MOTION_CLOSEOUT.md), [actual source/component map](../../../docs/engineering/SEARCH_MOTION_COMPONENT_MAP.md), [handoff](../../../docs/engineering/SEARCH_MOTION_HANDOFF.md). Earlier sections below are historical where behavior differs. No Apply action, silent filter broadening, workspace restyle or deployment.
+The platform provides three source-bound AI features:
 
-Search uses validated six-facet authoritative adapters plus independent Boolean topic evidence, cached full membership and canonical server sort orders. `searchView` only rechecks authority/metadata and projects the stored set; actual transport counters prove READY presentation reuse. Inferred constraint suppression is an explicit URL override. Source previews live in a dedicated themed ShadowRoot overlay layer, outside clipped chat. Installed Motion14.3.0 handles keyed public result/chip/Brief changes with reduced motion. File scope precedes topK; requested method coverage follows documented subjects. Scope, source, generation and single-lease guards remain. Stop for owner review.
+- **AI Search** interprets a query and combines lexical/semantic retrieval over published project metadata. Canonical filters and current publication authority remain authoritative. It does not inspect private originals or introduce a per-project generative judge.
+- **AI Brief** creates an on-demand short description from the project title, abstract and keywords. It does not add file content to that metadata boundary.
+- **Project Assistant** answers questions about the current project's permitted Public originals using bounded read tools and validated citations. Quick, Balanced and Deep retain their existing reasoning, evidence and deadline budgets. A user's access to restricted academic evidence does not expand the Assistant's Public-source scope.
 
-# Adaptive Repair checkpoint — 25 October 2026
+## Installation and use
 
-Current source/limits: [closeout](../../../docs/engineering/AI_ADAPTIVE_REPAIR_CLOSEOUT.md), [component/source map](../../../docs/engineering/AI_ADAPTIVE_COMPONENT_MAP.md), [handoff](../../../docs/engineering/AI_ADAPTIVE_HANDOFF.md). Earlier text below remains historical.
+Follow the [installation README](../../../README.md) and [model requirements](../../../MODEL_REQUIREMENTS.md). The operator supplies the supported generation and embedding models; model weights and credentials are not included. Normal installation preflights actual inference. Missing models produce setup instructions and an explicit retry/configure/disable/exit choice rather than silently disabling AI.
 
-`service.ts::ask` delegates to adaptive-answer.ts with existing retrieval/citation services. project-tools.ts/typed-file.ts provide four server-bound reads; tool-model.ts uses the existing authenticated endpoint/queue/lease. No MCP/framework, arbitrary filesystem or code execution. Ordinary answers have no forced academic section enum. Question language/format and explicitly requested validation facets are preserved; all factual paragraphs need admitted sources. Numeric/semantic checks and one bounded regeneration remain; known missing validation markers normalize to null rather than display as content.
+Search is available on public Home and Catalogue. AI Brief is opened from its project/card control. Open Project Assistant on a published project, choose an effort and ask a question about its Public evidence. Source links lead back to permitted native originals and their locations. Users can cancel a request and retry or rephrase an unsupported question. Ordinary catalogue and file workflows remain available in an explicitly AI-disabled profile.
 
-Balanced/Deep genuinely run native on with task-specific finite budgets, then compatible source-bound composition. Planning-budget exhaustion is labelled, never called a secret Quick selection. Hybrid discovery retains verified positive metadata matches independently of semantic rank and rehydrates through current filters/sort. One existing floating modal/composer/launcher, 64px desktop trigger, neutral header, Arabic per-answer direction and viewport clamp retain native reader geometry. No deployment; stop for owner review.
+## Boundaries and limitations
 
-# Focused quality closure checkpoint —24October2026
+AI remains BETA. A request may return no supported result, abstain, time out or reject an unsupported claim; these outcomes do not establish statistical accuracy. The Assistant does not generate academic grades or explain evaluators' decisions. Uploaded documents/code and user text are untrusted data, never instructions to execute code or broaden authority. Arbitrary filesystem access, cross-project evidence access and generated executable UI are not supported.
 
-Current as-built mapping and source/verification limits: [AI_FOCUSED_COMPONENTS](../../../docs/engineering/AI_FOCUSED_COMPONENTS.md), [AI_FOCUSED_CLOSURE](../../../docs/engineering/AI_FOCUSED_CLOSURE.md). Prior text below remains historical.
+The current source scope, publication/version and citation checks remain authoritative before delivery. Queue/rate limits, cancellation, private derived storage and bounded validation/repair are preserved. Derived indexes are regenerable, installation-managed private data and are excluded from source distribution. They are not a model-weight bundle or a substitute for original records.
 
-One floating official modal/runtime/composer,560×up to720px,52px launcher; no mounted ThreadList/history or page Ask. Current-turn reset and compatible close/reopen remain. Search displays authorized semantic results directly and preserves the original query, explicit scope/sort and navigation; obsolete pages and runtime-context changes are fenced. Natural file tables and Markdown/text headings are server-owned data. Generated facets/citations remain strictly validated; complete CSV arithmetic additionally requires exact current original SHA reconstruction. Brief trigger/panel states are exclusive. Scope/read/reset authority and pinned models remain unchanged; no deployment or next phase.
+## Implementation references
 
-# AI_V1 candidate integration
+- [Model IDs, limits and request contracts](core.ts)
+- [AI HTTP entry points and streaming authorization](server.ts)
+- [Model transport, queue, cancellation and derived store](runtime.ts)
+- [Search execution and canonical projections](search-execution.ts)
+- [Published metadata adapters and canonical filters](search-services.ts)
+- [Metadata Brief and source retrieval](service.ts)
+- [Current Public-source authorization and extraction](sources.ts)
+- [Bounded project read tools](project-tools.ts)
+- [Assistant composition and validation](adaptive-answer.ts)
 
-The current owner assignment continues the public shadcn candidate in place: five public corrections first, followed by AI resumption. Deployment and owner visual acceptance remain pending.
-
-One existing assistant-ui runtime owns the thread, suggestions, composer, message actions and cancellation. The source-installed AssistantModal floats over the page; its single modal trigger is the Launcher. The project and native reader remain in normal document flow. Only the assistant is inside the existing shadow style boundary. Scoped blue action gradients, white/charcoal surfaces and portal containers cannot style authenticated workspaces.
-
-The source Thread composer also serves the source Empty State, conditionally, so there is exactly one live composer. The official Reasoning Effort selector controls the existing Quick/Balanced/Deep setting from its footer. Unsupported usage meters are hidden. Loader, Thinking Indicator, Typing Indicator and Streaming Text follow actual request/stage/verified-text arrival; there is no replay timer. Stopped partial answers, copy, retry, follow-ups, scroll anchoring and native citations retain their runtime behavior.
-
-Inline Brief is independent of conversation. It starts only on click and uses a versioned, size-specific short cache: compact 25–40 English words, standard 35–55, hero up to 60; comparable concise Arabic. It uses the existing authenticated non-reasoning structured-completion path and never inherits Deep. Each complete received sentence object passes the existing evidence boundary before display. A warm result reveals immediately. Incompatible old summary keys do not replace the original description or invalidate the RAG index.
-
-Unified search keeps the ordinary server response authoritative. Only successful zero results trigger one automatic assisted attempt; explicit refinement retains ordinary results while working. A bounded validated discovery plan supplies candidate IDs from authorized retrieval. Current server queries resolve and order all delivered project records within unchanged explicit filters. Proposed changes require the visible Apply action. Empty topic interpretation cannot promote an unfiltered catalogue into matches. Request identity/abort guards reject stale replies; source/version/generation keys fence the derived cache.
-
-Structured answers admit only the application-owned Spec Sheet / Evidence Table shapes. Schema, unique labels, source membership, numeric/path/technical support, exact source quotations and current authorization are checked before a complete block renders. One repair is bounded. If adequate supported rows remain, unsupported rows are omitted with an explicit notice; invalid shapes/HTML/URLs remain fatal. Missing evidence stays unknown. No generated JSX, arbitrary URL, academic grading or cross-project comparison is admitted.
-
-Balanced/Deep structured planning uses the existing native reasoning path with a bounded 5,000-token outline, followed by a separately budgeted non-reasoning structured composition; its deadline is 120 seconds. This narrowly corrects observed 3,500-token Arabic planning exhaustion. Normal Ask profiles, model selection, provider configuration, one-generation lease, queue, file index, original-source authorization and reset authority are retained.
-
-Current verification is deliberately focused. Older Arabic paraphrase abstention and shorter-than-aspirational Deep answers remain carry-forward limits, not universally solved claims. Canonical unfinished notes at <external-owned-private-directory> and strict-default/FINAL_HANDOFF_STATE.md, the original AI source checkpoint, PRE_AI and previous evidence remain unchanged. See docs/engineering/PUBLIC_POLISH_AI_CLOSEOUT.md and COMPONENT_USAGE.md for the current build/evidence scope. Do not deploy before owner visual acceptance.
+These links describe the included implementation. Release-specific validation results and limitations must be read with their recorded source/build/environment identities; source presence alone is not an executed test result.
