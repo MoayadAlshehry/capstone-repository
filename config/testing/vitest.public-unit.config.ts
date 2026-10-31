@@ -6,6 +6,7 @@ export const publicUnitFiles = [
   'tools/release/demo-marker.test.tsx',
   'tools/allocation/policy.test.ts',
   'tools/testing/public-policy.test.ts',
+  'tools/testing/installed-account-setup.test.ts',
 ];
 export default defineConfig({
   ...base,

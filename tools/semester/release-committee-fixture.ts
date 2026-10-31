@@ -1,8 +1,8 @@
 import { randomBytes, randomUUID } from 'node:crypto';
 import { join } from 'node:path';
 import { createServer } from 'node:http';
-import { mkdir, rm, readFile } from 'node:fs/promises';
-import { resetFixture } from '../auth/local.js';
+import { mkdir, readFile } from 'node:fs/promises';
+import { installedAccountSetupToken } from '../testing/installed-account-setup.js';
 import { root } from '../automation/core.js';
 import {
   databaseUrl,
@@ -11,7 +11,6 @@ import {
 import { createAuthentication, type AccountView } from '@capstone/db/auth';
 import { createOnboarding } from '@capstone/db/onboarding';
 import { createAccountMail } from '@capstone/db/account-mail';
-import { decryptAccountMail } from '@capstone/db/account-mail-crypto';
 import { createProjectOnboarding } from '@capstone/db/project-onboarding';
 import { withMigrationConnection } from '@capstone/db/migration';
 import { createNativeStorage } from '@capstone/storage/native';
@@ -22,12 +21,25 @@ export async function semesterFixture(
   uploadPort = 3194,
   baseURL = 'http://localhost:3193',
 ) {
-  const f = {run:randomUUID(),database:'capstone_local',secret:(await readFile('.local/auth/secret','utf8')).trim(),accounts:{accounts:[JSON.parse(await readFile('.local/accounts/bootstrap-admin.json','utf8'))]}},
+  const f = {
+      run: randomUUID(),
+      database: 'capstone_local',
+      secret: (await readFile('.local/auth/secret', 'utf8')).trim(),
+      accounts: {
+        accounts: [
+          JSON.parse(
+            await readFile('.local/accounts/bootstrap-admin.json', 'utf8'),
+          ),
+        ],
+      },
+    },
     config = await loadLocalDatabaseConfig(),
     runtime = databaseUrl(config, 'runtime', true, f.database),
     migration = databaseUrl(config, 'migration', true, f.database),
     base = baseURL,
-    key = JSON.parse(await readFile('.local/runtime.json','utf8')).ACCOUNT_MAIL_ENCRYPTION_KEY,
+    key = JSON.parse(
+      await readFile('.local/runtime.json', 'utf8'),
+    ).ACCOUNT_MAIL_ENCRYPTION_KEY,
     password = randomBytes(24).toString('base64url'),
     storageRoot = join(root, '.local/storage');
   await mkdir(storageRoot, { recursive: true, mode: 0o700 });
@@ -77,12 +89,13 @@ export async function semesterFixture(
         [id],
       )
     )[0]!;
-    const content = decryptAccountMail(
-      m.ciphertext,
+    const token = await installedAccountSetupToken(
+      m,
       key,
-      `${m.id}|ACCOUNT_SETUP|${id}`,
-    ) as { link: string };
-    const token = new URL(content.link).hash.slice(7);
+      id,
+      base,
+      join(root, '.local/mail'),
+    );
     if (
       !(await mail.complete(token, 'ACCOUNT_SETUP', password, 'r05-' + id))
         .completed
@@ -243,8 +256,7 @@ export async function semesterFixture(
     disconnect,
     async close() {
       await disconnect();
-      await resetFixture(f.run);
-      await rm(storageRoot, { recursive: true, force: true });
+      // An installed fixture shares retained originals: close must never purge it.
     },
   };
 }
