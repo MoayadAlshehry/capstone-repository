@@ -7,6 +7,7 @@ export const publicUnitFiles = [
   'tools/allocation/policy.test.ts',
   'tools/testing/public-policy.test.ts',
   'tools/testing/installed-account-setup.test.ts',
+  'tools/testing/published-bindings.test.ts',
 ];
 export default defineConfig({
   ...base,

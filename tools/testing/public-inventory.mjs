@@ -9,6 +9,7 @@ const selected = new Set([
   'tools/allocation/policy.test.ts',
   'tools/testing/public-policy.test.ts',
   'tools/testing/installed-account-setup.test.ts',
+  'tools/testing/published-bindings.test.ts',
 ]);
 const ignored = new Set([
   '.git',
