@@ -1,0 +1,44 @@
+name: Safe static and unit checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: safe-checks-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  safe-static-unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.21.0
+      - name: Frozen dependencies
+        env:
+          FFMPEG_BINARY_RELEASE: b6.1.1
+          FFMPEG_BINARIES_URL: https://github.com/eugeneware/ffmpeg-static/releases/download
+        run: corepack pnpm install --frozen-lockfile
+      - name: Build shared packages
+        run: corepack pnpm build:packages
+      - name: Explicit test inventory
+        run: corepack pnpm test:inventory
+      - name: Static release and source checks
+        run: corepack pnpm check:public
+      - name: Safe unit suite
+        run: corepack pnpm test:unit:public
+      - name: Installer and settings contracts (owned loopback mocks only)
+        run: |
+          python3 tools/release/installer_guard_test.py
+          python3 tools/release/feature_settings_test.py
+      - name: AI source type check
+        run: corepack pnpm exec tsc --project tools/release/tsconfig.ai.json
+      - name: Whitespace errors
+        run: git diff --check

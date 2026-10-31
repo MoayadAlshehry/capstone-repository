@@ -2,10 +2,10 @@
 
 The current application requires exactly these API identifiers:
 
-| Purpose | Identifier | Contract |
-|---|---|---|
-| Generation | `qwen/qwen3.5-9b` | Structured OpenAI-compatible Chat Completions and native LM Studio streaming chat;16384-token context; reasoning off/on |
-| Embeddings | `text-embedding-qwen3-embedding-0.6b` |1024 finite, nonzero components through `/v1/embeddings` |
+| Purpose    | Identifier                            | Contract                                                                                                                |
+| ---------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Generation | `qwen/qwen3.5-9b`                     | Structured OpenAI-compatible Chat Completions and native LM Studio streaming chat;16384-token context; reasoning off/on |
+| Embeddings | `text-embedding-qwen3-embedding-0.6b` | 1024 finite, nonzero components through `/v1/embeddings`                                                                |
 
 No reranker is required. Quick uses reasoning off; Balanced/Deep use on with the existing different source/output/deadline budgets. The installer does not change these policies, download weights, load/unload models through management APIs or copy another machine's cache. Model weights/terms and adequate hardware are operator prerequisites; there is no universal RAM/VRAM or throughput guarantee.
 

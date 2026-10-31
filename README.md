@@ -1,14 +1,43 @@
 # Capstone Repository
 
-A bilingual English/Arabic capstone platform with public discovery, native files, student/lead workspaces, supervisor and independent assessments, event-driven reviewer allocation, exact-version partner grants, administration, audit and in-app notifications. AI Search uses published metadata; AI Brief uses title/abstract/keywords; Project Assistant reads only permitted Public originals. Existing scoring and authorization policies are unchanged.
+A bilingual capstone platform that connects published research with the academic work needed to produce it. Students prepare projects and native files; supervisors and independent evaluators assess frozen submissions; partners request access to specific published versions.
 
-Original first-party source and branding remain **No License / All Rights Reserved**. The exact EVAL-1 wording is approved, but its evaluation grant activates only for an expressly approved release manifest/tree and public release. Check the release approval record before downloading/building/running beyond independently applicable rights. EVAL-1 permits limited personal noncommercial local evaluation; it is not an open-source license. Third-party materials retain their own terms. See RIGHTS.md, PUBLIC_EVALUATION_PERMISSION_PROPOSAL.md and THIRD_PARTY_NOTICES.md.
+![Capstone Repository public discovery with fictional demonstration projects](docs/images/platform-overview.png)
 
-## Install
+The image is an authentic local application capture using the existing synthetic Demo. It does not depict real students or a human evaluation study.
 
-Verified target: Windows 11, Ubuntu WSL2/Linux-amd64, Docker Desktop Linux integration/Compose, Linux Node 24.21.0, Corepack/pnpm 11.28.3 and Python3. Host prerequisites and model weights are supplied by the operator. The installer does not install Docker, change networking/firewalls, download model weights or expose services publicly.
+## What the platform does
 
-Verify the trusted release checksums and extract the complete source into a **new Linux directory**. Inspect the scripts, prepare the two supported models using [MODEL_REQUIREMENTS.md](MODEL_REQUIREMENTS.md), then run inside WSL:
+| Workspace        | Capabilities                                                                                                                                                    |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Public discovery | Catalogue, project details and permitted originals; English/Arabic, light/dark and responsive layouts                                                           |
+| AI               | Metadata Search, metadata Brief, and Quick/Balanced/Deep Project Assistant grounded in permitted Public originals, with source citations and refusal boundaries |
+| Student and lead | Project editing, resumable native uploads, immutable submissions, lead consent and exact-version access decisions                                               |
+| Academic review  | Assigned-supervisor review and publication; independent committee assessments; eligible external-review offers, packets and assessments                         |
+| Partner          | Requests, exact-edition grants, restricted originals, revocation and access history                                                                             |
+| Administration   | Institutions, accounts, eligibility, scoped audit and in-app notifications                                                                                      |
+
+The system preserves independent scores, exact/unrounded evaluation policy, bounded reviewer allocation and server-side file permissions. AI is BETA, may refuse unsupported requests, and does not award academic grades. Uploaded code is treated as data and is never executed.
+
+## A five-minute orientation
+
+This is a short reading path, not a five-minute installation promise. Building and loading the original Demo can take substantially longer.
+
+1. Read the [release and permission status](RELEASE_STATUS.md). First-party source and branding remain **No License / All Rights Reserved**. EVAL-1 allows only its approved limited personal noncommercial local evaluation; it is not an open-source license. Third-party terms remain independent.
+2. Use a pinned release and verify its checksum before extraction. The current published distribution is [v1.0.0](https://github.com/MoayadAlshehry/capstone-repository/releases/tag/v1.0.0), with [source ZIP](https://github.com/MoayadAlshehry/capstone-repository/releases/download/v1.0.0/capstone-repository-v1.0.0-source.zip), [SHA256SUMS](https://github.com/MoayadAlshehry/capstone-repository/releases/download/v1.0.0/SHA256SUMS), and [EVAL-1 receipt](https://github.com/MoayadAlshehry/capstone-repository/releases/download/v1.0.0/EVAL-1_ACTIVATION_RECEIPT.json). This version 1.0.1 checkout requires its own exact approval before public publication; a moving branch is not a pinned installer.
+3. Prepare the documented host and two models below. Extract the complete source into a new Linux directory inside WSL.
+4. Run the installer; choose clean data or the optional existing Demo.
+5. Set your administrator password privately, run doctor and sign in to the printed loopback address.
+
+## Supported environment
+
+The verified host path is **Windows 11 + Ubuntu WSL2/Linux-amd64 + Docker Desktop Linux integration/Compose**, Linux Node **24.21.0**, Corepack/pnpm **11.28.3**, and Python 3. Universal Linux, macOS and other host combinations are not claimed. Host prerequisites and model weights are operator supplied. The installer checks memory/disk and Windows commit, verifies its pinned codec bytes, and does not alter networking/firewalls or install/download models.
+
+Architecture: the Next.js Web application calls shared domain services; the Upload service handles native resumable files; the Worker processes jobs; PostgreSQL holds transactional state and private storage retains originals. A separately configured local model service provides generation and embeddings. Local Mailpit captures synthetic committee mail; ordinary notifications remain in-app.
+
+## Install and operate
+
+Run inside the extracted Linux directory:
 
 ```sh
 bash scripts/install.sh
@@ -16,39 +45,47 @@ bash scripts/credentials.sh
 bash scripts/doctor.sh
 ```
 
-The installer asks for a synthetic initial administrator, optional existing Demo data and mail mode. AI is **on by default** and requires a successful real generation/embedding preflight. Missing models produce Retry / Configure / Explicitly Disable / Exit choices; AI is never silently disabled. A noninteractive clean-data installation is:
+The default is a new clean database, a securely generated initial administrator and AI enabled after real preflight. A noninteractive clean installation is:
 
 ```sh
 bash scripts/install.sh --yes --admin-email local.admin@capstone.local
 ```
 
-It creates fresh owned database/roles/secrets, installs frozen dependencies, verifies the codec hash/license, applies migrations, builds Web/Upload/Worker and checks loopback readiness, actual login and authorized reads. READY prints the selected Web/Mailpit URLs. The random initial password stays in a private file with mode 0600. `credentials.sh` takes a hidden password and uses the normal authenticated password-change API, verifies the new login and retires the initial secret; this is not server-enforced first-login rotation.
-
-## Existing synthetic Demo
-
-Opt in during the prompt or add `--demo`. This loads the **existing**50 showcase projects and10 workflow examples with their original content, teams, relationships, native files, rubrics and intended scenarios. It uses normal application services, including real local committee SMTP/OTP and reviewer allocation. It can take several minutes and respects authentication rate limits; progress and resumable stages are shown.
-
-```sh
-bash scripts/install.sh --yes --demo --admin-email local.admin@capstone.local
-bash scripts/demo-accounts.sh
-```
-
-Demo loading is limited to a new blank owned installation. A completed Demo is never reseeded: reruns retain user edits and do not duplicate records. It does not execute/distribute private reset/checkpoint/recovery tools or copy production data. Credentials are generated per installation and remain private. See [demo/README.md](demo/README.md).
-
-## Configuration and operation
-
-For an existing private model endpoint or authenticated service, use `--ai-base-url` and `--ai-token-file` with a private file with mode 0600. `bash scripts/configure.sh` updates supported settings without resetting data. `--ai-off` is an explicit **partial-feature** choice, not full-parity acceptance. See MODEL_REQUIREMENTS.md and MAIL_CONFIGURATION.md.
-
-Default mail is local account capture plus loopback Mailpit for synthetic committee invitations/OTP. This is not real inbox delivery. The existing approved Zoho/ZeptoMail adapter is available through a private provider JSON file; no new provider is introduced. Routine notifications remain in-app. Actual external delivery and an existing HTTPS mail application origin require operator configuration/verification.
+The initial secret stays in a private 0600 file. `credentials.sh` asks for a hidden new password and uses the real authenticated password-change API; this is not a forced-first-login policy. The installer builds packages before Web/Upload/Worker and verifies real login and authorized reads. Services bind to loopback. Keep `.local`, browser state, mail captures, tokens and backups private.
 
 ```sh
 bash scripts/install.sh --yes --resume --admin-email local.admin@capstone.local
 bash scripts/status.sh
 bash scripts/stop.sh
 bash scripts/start.sh
-bash scripts/uninstall.sh
 ```
 
-Repeat/resume preserves completed stages and data. Stop/uninstall affect only verified owned resources and retain volumes, originals and private configuration; no purge exists. Unsafe/foreign targets, symlinks, collisions and altered codec bytes are refused. AI-enabled restart verifies model readiness and fails clearly if unavailable. Read INSTALLER_OPERATIONS.md before backup or moving an instance. Never upload `.local`, captures, credentials or model caches.
+Repeat/resume and stop retain data. Foreign resources, symlinks and occupied application listeners are refused. Read [INSTALLER_OPERATIONS.md](INSTALLER_OPERATIONS.md) for lifecycle, backup and recovery limits; no purge or public deployment is implied.
 
-The intended public target is `MoayadAlshehry/capstone-repository`, tag`v1.0.0`. Those names do not prove publication or permission activation. Use the exact approved release/checksums, never a moving-main installer or curl-pipe-shell. Public release does not deploy the separate production application. AI remains BETA: outputs may be refused when unsupported and are not official academic grades.
+## Existing synthetic Demo
+
+Choose Demo in the prompt or add `--demo`:
+
+```sh
+bash scripts/install.sh --yes --demo --admin-email local.admin@capstone.local
+bash scripts/demo-accounts.sh
+```
+
+This reuses the original **50 showcase projects + 10 workflow examples** and **540 unchanged input assets** (480 native files and 60 covers). It preserves their content, relationships and academic scenarios. It runs real onboarding, hashing/login, local committee SMTP/OTP and allocation workflows; rate limits add pauses. Loading requires a new blank owned installation. Once completed, reruns keep user edits and do not duplicate records. It never runs or distributes the private canonical Demo Setup. See [demo/README.md](demo/README.md).
+
+## AI and mail
+
+Prepare `qwen/qwen3.5-9b` and `text-embedding-qwen3-embedding-0.6b` with **1024-dimensional** embeddings using [MODEL_REQUIREMENTS.md](MODEL_REQUIREMENTS.md). A reranker is not required. No weights are bundled. Private endpoint/token-file options are documented there; never put credentials in chat, source or public logs.
+
+AI is on by default. Missing/unavailable models produce explicit Retry / Configure / Disable / Exit choices; the installer never silently disables AI. `--ai-off` is an explicit partial-feature profile. Search and Brief use published metadata; Assistant reads only currently permitted Public originals and validates source support.
+
+Default mail is local account capture plus loopback Mailpit, not delivery to real inboxes. The existing approved transactional adapter can be configured privately as described in [MAIL_CONFIGURATION.md](MAIL_CONFIGURATION.md). External delivery requires an authorized sender/inbox and separate verification; it is not claimed by local capture tests. No unwanted email-notification channel is added.
+
+## Testing, rights and limits
+
+- [TESTING.md](TESTING.md): exact safe CI scope, inventory of nonselected tests and guarded isolated engineering commands. A passing selected suite is not a claim that every historical thesis scenario ran.
+- [SECURITY.md](SECURITY.md): bounded disclosure guidance without a security guarantee.
+- [RIGHTS.md](RIGHTS.md), [FILE_RIGHTS.csv](FILE_RIGHTS.csv), [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md): first-party and independent upstream obligations.
+- [MODEL_REQUIREMENTS.md](MODEL_REQUIREMENTS.md), [MAIL_CONFIGURATION.md](MAIL_CONFIGURATION.md), [OPTIONAL_MODES.md](OPTIONAL_MODES.md): external prerequisites and profile limits.
+
+Release identity is read from [RELEASE.json](RELEASE.json), not the npm-private workspace `0.0.0` versions. Cite a verified immutable release/commit and URL when referencing this software; no paper, DOI or university endorsement is asserted. No remote CI badge, universal host support, cross-host restore, measured superiority or user-satisfaction claim is made without corresponding evidence.

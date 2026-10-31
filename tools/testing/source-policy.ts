@@ -9,7 +9,17 @@ const policy = JSON.parse(
   ),
 ) as { sourceExecution: string };
 export const sourceExecutionDeferred = policy.sourceExecution === 'deferred';
-// Full thesis scenarios stay available for the owner's dedicated validation pass.
+// Historical scenario exclusions are explicit in TESTING.md and test:inventory.
+// Selected engineering results never promote the historical academic registry.
+if (
+  sourceExecutionDeferred &&
+  process.env.CAPSTONE_TEST_POLICY_NOTICE !== 'shown'
+) {
+  process.env.CAPSTONE_TEST_POLICY_NOTICE = 'shown';
+  process.stderr.write(
+    '[test-policy] Historical TC-numbered scenarios are NOT_RUN by this engineering profile. Run corepack pnpm test:inventory and read TESTING.md; selected suite counts are not the full source count.\n',
+  );
+}
 export const engineeringTestNames = sourceExecutionDeferred
   ? /^(?!.*\bTC[-_ ]?\d+\b).*$/i
   : undefined;

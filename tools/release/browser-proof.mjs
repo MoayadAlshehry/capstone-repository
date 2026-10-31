@@ -1,5 +1,5 @@
 /** Actual Chromium UI checks in isolated profiles; no production/browser state. */
-import{chromium}from'@playwright/test';import{readFile,writeFile,mkdir}from'node:fs/promises';import assert from'node:assert/strict';import{verifyOwned}from'../../scripts/verify-owned.mjs';
+import{chromium,expect}from'@playwright/test';import{readFile,writeFile,mkdir}from'node:fs/promises';import assert from'node:assert/strict';import{verifyOwned}from'../../scripts/verify-owned.mjs';
 const{base,state}=await verifyOwned(),out='.local/release-browser';await mkdir(out,{recursive:true,mode:0o700});const browser=await chromium.launch({headless:true,chromiumSandbox:true});const cases=[];const hasDemo=state.completed.includes('DEMO');
 try{
  for(const width of (process.argv.includes('--roles-only')?[]:[1280,360]))for(const theme of ['light','dark'])for(const locale of ['en','ar']){
@@ -26,7 +26,7 @@ try{
   for(const [label,person,project]of [['student-lead',book['s01-author-1'],'AtlasDesk: Study Planning Workspace'],['supervisor',book[faculty],'DataBridge: Supervisor Assessment'],['partner',book['closure-partner-active'],null],['university-admin',book['admin-kku'],null],['platform-admin',admin,null]]){
    const context=await browser.newContext({viewport:{width:1280,height:900},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
    try{
-    await page.goto(base+'/en/login',{waitUntil:'domcontentloaded'});await page.getByRole('textbox',{name:/email/i}).fill(person.email);await page.getByLabel('Password',{exact:true}).fill(person.password);
+    await page.goto(base+'/en/login',{waitUntil:'domcontentloaded'});await expect(page.getByRole('button',{name:/^Sign in/})).toBeEnabled();await page.getByRole('textbox',{name:/email/i}).fill(person.email);await page.getByLabel('Password',{exact:true}).fill(person.password);
     await Promise.all([page.waitForURL(u=>!u.pathname.includes('/login'),{timeout:30000}),page.getByRole('button',{name:/^Sign in/}).click()]);await page.getByRole('main').waitFor({state:'visible'});
     let openedProject=false;
     if(project){const link=page.getByRole('link',{name:new RegExp(project.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'))}).first();try{await link.waitFor({state:'visible',timeout:10000});await link.click();openedProject=true;}catch{}}

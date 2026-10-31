@@ -1,6 +1,6 @@
 # Owned local operation and retention
 
-Run all Node/pnpm/application commands inside WSL from the extracted Linux root, using the pinned Linux runtime. No Windows Node against a UNC path. The kit verifies WSLUbuntu/Linux-amd64, Node 24.21.0, pnpm 11.28.3, DockerLinux/Compose and resource guards. These guards are not measured minimum hardware requirements.
+Run all Node/pnpm/application commands inside WSL from the extracted Linux root, using the pinned Linux runtime. No Windows Node against a UNC path. The kit verifies WSL Ubuntu/Linux-amd64, Node 24.21.0, pnpm 11.28.3, DockerLinux/Compose and resource guards. These guards are not measured minimum hardware requirements.
 
 `.local/installation.json` is theprivate owned instance journal; private roles/secrets/runtime/account capture/original storage stay under `.local`. AI derived data is private and outside the source tree. Do not copy production settings into this installation or edit arbitrary DB targets. Supported advanced configuration uses the documented model endpoint/token and provider JSON. Runtime drift/foreign labels, unsafe files, symlinks, occupied ports and altered codec bytes are refused.
 
@@ -9,3 +9,5 @@ Run all Node/pnpm/application commands inside WSL from the extracted Linux root,
 Retention is not a backup. A consistent backup requires stopping owned application writers, a PostgreSQL logical backup plus the matching original files and private configuration/credential/encryption-key set, protected from disclosure. Restore testing must use a separately owned new blank database/storage target. Never point a restore at production or an existing user installation. No private recovery/reset utility or recovery secret is distributed. The release evidence distinguishes any executed isolated backup/recovery rehearsal from these operational conditions; source claims alone are not a successful restore.
 
 Post-reboot supervision, publicTLS/DNS, arbitrary OS/CPU support and external inbox delivery are outside localhost readiness and must not be inferred from it. The kit does not modify host adapters, WSL/Docker networking, DNS, VPN, firewall or existing deployments. Inspect private logs locally and export only redacted evidence; no cookies, one-use links, OTPs, tokens, private originals or dumps belong in a bug report.
+
+The Windows free-commit measurement has one bounded retry for a transient WSL helper failure, before installation data changes. A valid measurement below the existing minimum stops immediately. If both helper attempts fail, `WINDOWS_COMMIT_MEASUREMENT_UNAVAILABLE` stops setup; no guard is skipped and no host/WSL/network configuration is changed.

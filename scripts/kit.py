@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local candidate controller. No production or arbitrary database target options."""
+"""Owned-instance self-hosted installation and lifecycle controller. No production or arbitrary database target options."""
 from pathlib import Path
 import argparse,subprocess,os,json,secrets,socket,hashlib,time,signal,sys,shutil,fcntl
 from urllib.parse import urlparse
@@ -39,6 +39,10 @@ def run(args,tag,env=None):
    code=r.wait()
   else:code=subprocess.run(args,cwd=ROOT,env=env,stdout=f,stderr=subprocess.STDOUT).returncode
  if code:fail(f'{tag.upper()}_FAILED_CHECK_PRIVATE_LOG')
+def release_version():
+ value=read(ROOT/'RELEASE.json').get('version')
+ if not isinstance(value,str) or not __import__('re').fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.-]+)?',value):fail('INVALID_RELEASE_IDENTITY')
+ return value
 def out(s):print(s,flush=True)
 def free(start):
  for port in range(start,start+100):
@@ -61,6 +65,21 @@ def application_port_available(port):
   s.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
   try:s.bind(('127.0.0.1',port))
   except OSError:fail('OCCUPIED_APPLICATION_PORT_REFUSED')
+def windows_commit():
+ # One bounded retry for a transient WSL interop failure, before data mutation.
+ # A successful measurement below the existing threshold is never retried.
+ ps='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
+ for attempt in range(2):
+  try:
+   value=subprocess.check_output([ps,'-NoProfile','-NonInteractive','-Command','(Get-CimInstance Win32_OperatingSystem).FreeVirtualMemory'],text=True,timeout=15).strip()
+   if not value.isdigit():raise ValueError('Invalid memory measurement')
+   commit=int(value)
+  except (subprocess.SubprocessError,OSError,ValueError):
+   if attempt==0:out('Retrying the Windows memory measurement once; no installation data has changed.')
+   continue
+  if commit<900000:fail('LOW_WINDOWS_COMMIT_BEFORE_BUILD')
+  return commit
+ fail('WINDOWS_COMMIT_MEASUREMENT_UNAVAILABLE | Retry after the Windows/WSL helper is available; no resource guard was bypassed')
 def check(resources=True):
  if 'microsoft' not in Path('/proc/sys/kernel/osrelease').read_text().lower():fail('WSL2_REQUIRED_FOR_VERIFIED_HOST_PATH')
  if 'Ubuntu' not in Path('/etc/os-release').read_text():fail('UBUNTU_REQUIRED')
@@ -73,9 +92,7 @@ def check(resources=True):
  if resources and available<1500000:fail('LOW_MEMORY_BEFORE_BUILD')
  if resources and shutil.disk_usage(ROOT).free<4*1024**3:fail('LOW_DISK_BEFORE_BUILD')
  if resources:
-  ps='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
-  commit=int(subprocess.check_output([ps,'-NoProfile','-NonInteractive','-Command','(Get-CimInstance Win32_OperatingSystem).FreeVirtualMemory'],text=True).strip())
-  if commit<900000:fail('LOW_WINDOWS_COMMIT_BEFORE_BUILD')
+  windows_commit()
  out('[PASS] WSL Ubuntu, pinned Node/pnpm, Docker and Compose')
  if resources:out('[PASS] WSL memory, Windows commit and disk guards')
 def ownership(st,absent_ok=False):
@@ -176,10 +193,10 @@ def stop_applications(st):
 def stop(st):
  stop_applications(st);compose(st,'stop');out('[PASS] Owned services stopped; database and originals retained')
 def main():
- p=argparse.ArgumentParser(description='Capstone full-platform local installer; exact release publication not approved')
+ p=argparse.ArgumentParser(description='Capstone Repository self-hosted installer for the documented evaluation environment')
  p.add_argument('action',choices=['install','start','stop','doctor','status','uninstall','credentials','configure','demo-accounts']);p.add_argument('--yes',action='store_true');p.add_argument('--resume',action='store_true');p.add_argument('--admin-email');p.add_argument('--demo',action='store_true',default=None)
  ai=p.add_mutually_exclusive_group();ai.add_argument('--ai',dest='ai',action='store_true',default=None);ai.add_argument('--ai-off',dest='ai',action='store_false');p.add_argument('--ai-base-url');p.add_argument('--ai-token-file');p.add_argument('--mail-config')
- a=p.parse_args();out('CAPSTONE REPOSITORY | LOCAL SETUP CANDIDATE\n==========================================')
+ a=p.parse_args();out('CAPSTONE REPOSITORY '+release_version()+' | LOCAL SELF-HOSTED SETUP\n==========================================')
  if a.action=='install' and not a.yes:
   if not sys.stdin.isatty():fail('NONINTERACTIVE_REQUIRES_EXPLICIT_--yes_AND_--admin-email')
   if input('Install the full platform with clean data and local services? [y/N] ').lower()!='y':return

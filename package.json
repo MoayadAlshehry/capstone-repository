@@ -13,7 +13,11 @@
     "build": "corepack pnpm build:packages && corepack pnpm --filter \"./apps/*\" --workspace-concurrency 1 -r build",
     "auth:setup": "node --conditions=react-server --import tsx tools/auth/cli.ts setup",
     "auth:bootstrap-platform-admin": "node --conditions=react-server --import tsx tools/auth/cli.ts bootstrap",
-    "test:release": "vitest run --config config/testing/vitest.release.config.ts"
+    "test:release": "vitest run --config config/testing/vitest.release.config.ts",
+    "test:inventory": "node tools/testing/public-inventory.mjs",
+    "test:unit:public": "vitest run --config config/testing/vitest.public-unit.config.ts",
+    "check:public": "node tools/release/public-checks.mjs",
+    "test:isolated:release": "node tools/testing/isolated-release.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
