@@ -13,3 +13,14 @@ __pycache__/
 playwright-report/
 test-results/
 *.zip
+
+# Ephemeral developer/test output; source and legal inventories remain tracked.
+coverage/
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+.envrc
+.vscode/
+.idea/

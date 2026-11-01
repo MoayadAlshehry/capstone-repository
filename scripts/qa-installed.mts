@@ -18,4 +18,12 @@ try{
  const enabled=JSON.parse(await readFile('.local/runtime.json','utf8')).AI_ENABLED==='true';const ai=await fetch(base+'/api/ai?status=1');const aiState=await ai.json();observations.push({test:'configured AI state truthful endpoint',status:ai.status,expected:enabled?200:404});if(ai.status!==(enabled?200:404)||aiState.enabled!==enabled)throw Error('AI_CONFIGURATION_STATE_FAILED');
  await writeFile('.local/qa-private-record.json',JSON.stringify({project:f.made.id,version:s.project.version,file:file.id,authorCookie:f.author.cookie,leadCookie:f.lead.cookie,bytes_sha256:createHash('sha256').update(bytes).digest('hex'),path}),{mode:0o600});
  await writeFile('.local/qa-observations.json',JSON.stringify(observations,null,2));console.log('INSTALLED_APPLICATION_ORIGINAL_PERMISSIONS_AND_PROXY_VERIFIED');
-}finally{await f.disconnect();}
+}finally{await f.close();}
+// Installed-fixture close must retain the entire existing storage, including this original.
+const retained=JSON.parse(await readFile('.local/qa-private-record.json','utf8'));
+const afterClose=await fetch(base+retained.path,{headers:{Cookie:retained.authorCookie}});
+if(afterClose.status!==200||createHash('sha256').update(Buffer.from(await afterClose.arrayBuffer())).digest('hex')!==retained.bytes_sha256)throw Error('INSTALLED_FIXTURE_CLOSE_LOST_ORIGINAL');
+observations.push({test:'installed fixture close retains original',status:afterClose.status,expected:200});
+const anonymousAfterClose=await fetch(base+retained.path);if(anonymousAfterClose.status!==404)throw Error('INSTALLED_FIXTURE_CLOSE_CHANGED_PERMISSION');
+observations.push({test:'anonymous denial after installed fixture close',status:anonymousAfterClose.status,expected:404});
+await writeFile('.local/qa-observations.json',JSON.stringify(observations,null,2));

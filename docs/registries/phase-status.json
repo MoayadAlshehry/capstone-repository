@@ -1,1 +1,5 @@
-{"current_phase": "LOCAL_RELEASE"}
+{
+  "current_phase": "PUBLIC_RELEASE",
+  "release_identity": "RELEASE.json",
+  "meaning": "Current public-source engineering; historical academic acceptance is not promoted."
+}

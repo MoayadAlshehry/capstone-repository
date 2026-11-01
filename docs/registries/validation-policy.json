@@ -1,1 +1,9 @@
-{"sourceExecution": "deferred"}
+{
+  "profile": "public-engineering",
+  "sourceExecution": "deferred",
+  "meaning": "Historical TC-numbered integration scenarios remain opt-in and are explicitly inventoried as NOT_RUN, not counted as passing. This field preserves historical evidence protection; it does not mean public engineering tests are unavailable.",
+  "safe_ci_config": "config/testing/vitest.public-unit.config.ts",
+  "isolated_engineering_config": "config/testing/vitest.release.config.ts",
+  "inventory_command": "corepack pnpm test:inventory",
+  "historical_scenario_policy": "Read TESTING.md. No bulk flag is provided to bypass target ownership or silently enable legacy fixture targets."
+}

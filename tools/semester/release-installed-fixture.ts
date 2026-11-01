@@ -1,8 +1,8 @@
 import { randomBytes, randomUUID } from 'node:crypto';
 import { join } from 'node:path';
 import { createServer } from 'node:http';
-import { mkdir, rm, readFile } from 'node:fs/promises';
-import { resetFixture } from '../auth/local.js';
+import { mkdir, readFile } from 'node:fs/promises';
+import { installedAccountSetupToken } from '../testing/installed-account-setup.js';
 import { root } from '../automation/core.js';
 import {
   databaseUrl,
@@ -11,7 +11,6 @@ import {
 import { createAuthentication, type AccountView } from '@capstone/db/auth';
 import { createOnboarding } from '@capstone/db/onboarding';
 import { createAccountMail } from '@capstone/db/account-mail';
-import { decryptAccountMail } from '@capstone/db/account-mail-crypto';
 import { createProjectOnboarding } from '@capstone/db/project-onboarding';
 import { withMigrationConnection } from '@capstone/db/migration';
 import { createNativeStorage } from '@capstone/storage/native';
@@ -22,12 +21,25 @@ export async function semesterFixture(
   uploadPort = 3194,
   baseURL = 'http://localhost:3193',
 ) {
-  const f = {run:randomUUID(),database:'capstone_local',secret:(await readFile('.local/auth/secret','utf8')).trim(),accounts:{accounts:[JSON.parse(await readFile('.local/accounts/bootstrap-admin.json','utf8'))]}},
+  const f = {
+      run: randomUUID(),
+      database: 'capstone_local',
+      secret: (await readFile('.local/auth/secret', 'utf8')).trim(),
+      accounts: {
+        accounts: [
+          JSON.parse(
+            await readFile('.local/accounts/bootstrap-admin.json', 'utf8'),
+          ),
+        ],
+      },
+    },
     config = await loadLocalDatabaseConfig(),
     runtime = databaseUrl(config, 'runtime', true, f.database),
     migration = databaseUrl(config, 'migration', true, f.database),
     base = baseURL,
-    key = JSON.parse(await readFile('.local/runtime.json','utf8')).ACCOUNT_MAIL_ENCRYPTION_KEY,
+    key = JSON.parse(
+      await readFile('.local/runtime.json', 'utf8'),
+    ).ACCOUNT_MAIL_ENCRYPTION_KEY,
     password = randomBytes(24).toString('base64url'),
     storageRoot = join(root, '.local/storage');
   await mkdir(storageRoot, { recursive: true, mode: 0o700 });
@@ -77,12 +89,13 @@ export async function semesterFixture(
         [id],
       )
     )[0]!;
-    const content = decryptAccountMail(
-      m.ciphertext,
+    const token = await installedAccountSetupToken(
+      m,
       key,
-      `${m.id}|ACCOUNT_SETUP|${id}`,
-    ) as { link: string };
-    const token = new URL(content.link).hash.slice(7);
+      id,
+      base,
+      join(root, '.local/mail'),
+    );
     if (
       !(await mail.complete(token, 'ACCOUNT_SETUP', password, 'r05-' + id))
         .completed
@@ -94,9 +107,10 @@ export async function semesterFixture(
       (x) => x.role === 'platform_admin',
     )!,
     platform = (await login(bootstrap.email, bootstrap.password)).actor;
+  const namespace = f.run.replace(/-/g, '').slice(0, 6);
   const uni = (
     await on.command(platform, randomUUID(), 'university.create', {
-      code: 'SEMESTER_R05',
+      code: 'QASEM_' + namespace.toUpperCase(),
       name_en: 'Academic Studio Semester University',
       name_ar: 'جامعة الاستوديو الأكاديمي للفصل',
     })
@@ -105,28 +119,32 @@ export async function semesterFixture(
       await on.command(platform, randomUUID(), 'administrator.invite', {
         university: uni,
         name: 'Semester institutional administrator',
-        email: 'admin.semester.r05@capstone.local',
+        email: 'admin.semester.r05.' + namespace + '@capstone.local',
         locale: 'en',
       })
     ).id,
-    admin = (await activate(adminId, 'admin.semester.r05@capstone.local'))
-      .actor;
+    admin = (
+      await activate(
+        adminId,
+        'admin.semester.r05.' + namespace + '@capstone.local',
+      )
+    ).actor;
   const dept = (
     await on.read<{ id: string; code: string }[]>(admin, 'departments')
   ).find((x) => x.code === 'CS')!.id;
   const supervisor = {
       name: 'Dr. Lina العبدالله — Semester Supervision',
-      email: 'faculty.semester.r05@capstone.local',
+      email: 'faculty.semester.r05.' + namespace + '@capstone.local',
     },
     students = [
       {
         name: 'Omar منصور — Collaborative Systems',
-        email: 'lead.semester.r05@capstone.local',
+        email: 'lead.semester.r05.' + namespace + '@capstone.local',
         lead: true,
       },
       {
         name: 'Maha إبراهيم — Applied Research',
-        email: 'author.semester.r05@capstone.local',
+        email: 'author.semester.r05.' + namespace + '@capstone.local',
         lead: false,
       },
     ];
@@ -243,8 +261,7 @@ export async function semesterFixture(
     disconnect,
     async close() {
       await disconnect();
-      await resetFixture(f.run);
-      await rm(storageRoot, { recursive: true, force: true });
+      // An installed fixture shares retained originals: close must never purge it.
     },
   };
 }
