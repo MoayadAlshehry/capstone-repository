@@ -1,10 +1,10 @@
 # Capstone Repository
 
-A bilingual capstone platform that connects published research with the academic work needed to produce it. Students prepare projects and native files; supervisors and independent evaluators assess frozen submissions; partners request access to specific published versions.
+Capstone Repository integrates public discovery, supervised academic review and version-specific project access in one bilingual platform. Students prepare projects and native files; supervisors and independent evaluators assess frozen submissions; partners request access to specific published versions.
 
 ![Capstone Repository public discovery with fictional demonstration projects](docs/images/platform-overview.png)
 
-The image is an authentic local application capture using the existing synthetic Demo. It does not depict real students or a human evaluation study.
+The screenshot shows the working platform with its original synthetic Demo projects.
 
 ## What the platform does
 
@@ -17,11 +17,11 @@ The image is an authentic local application capture using the existing synthetic
 | Partner          | Requests, exact-edition grants, restricted originals, revocation and access history                                                                             |
 | Administration   | Institutions, accounts, eligibility, scoped audit and in-app notifications                                                                                      |
 
-The system preserves independent scores, exact/unrounded evaluation policy, bounded reviewer allocation and server-side file permissions. AI is BETA, may refuse unsupported requests, and does not award academic grades. Uploaded code is treated as data and is never executed.
+The platform preserves independent scores, exact evaluation arithmetic, bounded reviewer allocation and server-side file permissions. Its BETA AI features support discovery and evidence reading with source-linked responses; academic judgement remains with authorized evaluators. Unsupported AI requests may be declined. Uploaded code is stored and read as evidence and is never executed.
 
-## A five-minute orientation
+## Getting started
 
-This is a short reading path, not a five-minute installation promise. Building and loading the original Demo can take substantially longer.
+The steps below introduce the supported installation path. Allow time for dependency installation, the application build and optional Demo generation.
 
 1. Read the [release and permission status](RELEASE_STATUS.md). First-party source and branding remain **No License / All Rights Reserved**. EVAL-1 allows only its approved limited personal noncommercial local evaluation; it is not an open-source license. Third-party terms remain independent.
 2. Choose a pinned version from [GitHub Releases](https://github.com/MoayadAlshehry/capstone-repository/releases). Download that version's complete source ZIP and SHA256SUMS, verify the checksum before extraction, and check its exact EVAL-1 activation receipt using [release and permission status](RELEASE_STATUS.md). A moving branch or version field alone establishes neither a published release nor activated evaluation permission.
@@ -31,7 +31,7 @@ This is a short reading path, not a five-minute installation promise. Building a
 
 ## Supported environment
 
-The verified host path is **Windows 11 + Ubuntu WSL2/Linux-amd64 + Docker Desktop Linux integration/Compose**, Linux Node **24.21.0**, Corepack/pnpm **11.28.3**, and Python 3. Universal Linux, macOS and other host combinations are not claimed. Host prerequisites and model weights are operator supplied. The installer checks memory/disk and Windows commit, verifies its pinned codec bytes, and does not alter networking/firewalls or install/download models.
+The verified environment is **Windows 11 + Ubuntu WSL2/Linux-amd64 + Docker Desktop Linux integration/Compose**, Linux Node **24.21.0**, Corepack/pnpm **11.28.3**, and Python 3. Supply these prerequisites and the supported model weights before installation. The installer checks memory, disk and Windows commit availability, and verifies its pinned codec bytes. Host networking and model provisioning remain under the operator’s control.
 
 Architecture: the Next.js Web application calls shared domain services; the Upload service handles native resumable files; the Worker processes jobs; PostgreSQL holds transactional state and private storage retains originals. A separately configured local model service provides generation and embeddings. Local Mailpit captures synthetic committee mail; ordinary notifications remain in-app.
 
@@ -51,7 +51,7 @@ The default is a new clean database, a securely generated initial administrator 
 bash scripts/install.sh --yes --admin-email local.admin@capstone.local
 ```
 
-The initial secret stays in a private 0600 file. `credentials.sh` asks for a hidden new password and uses the real authenticated password-change API; this is not a forced-first-login policy. The installer builds packages before Web/Upload/Worker and verifies real login and authorized reads. Services bind to loopback. Keep `.local`, browser state, mail captures, tokens and backups private.
+The initial secret is stored in a private file with mode 0600. Use `credentials.sh` to choose a password through the authenticated password-change API before handing the installation to its user. This is an operator handoff step rather than a forced-first-login mechanism. The installer builds packages before Web/Upload/Worker and verifies real login and authorized reads. Services bind to loopback. Keep `.local`, browser state, mail captures, tokens and backups private.
 
 ```sh
 bash scripts/install.sh --yes --resume --admin-email local.admin@capstone.local
@@ -60,7 +60,7 @@ bash scripts/stop.sh
 bash scripts/start.sh
 ```
 
-Repeat/resume and stop retain data. Foreign resources, symlinks and occupied application listeners are refused. Read [INSTALLER_OPERATIONS.md](INSTALLER_OPERATIONS.md) for lifecycle, backup and recovery limits; no purge or public deployment is implied.
+Repeat/resume and stop preserve application data. Ownership, path and listener checks protect existing resources. Read [INSTALLER_OPERATIONS.md](INSTALLER_OPERATIONS.md) for lifecycle operations, consistent backups and restoration prerequisites.
 
 ## Existing synthetic Demo
 
@@ -79,13 +79,13 @@ Prepare `qwen/qwen3.5-9b` and `text-embedding-qwen3-embedding-0.6b` with **1024-
 
 AI is on by default. Missing/unavailable models produce explicit Retry / Configure / Disable / Exit choices; the installer never silently disables AI. `--ai-off` is an explicit partial-feature profile. Search and Brief use published metadata; Assistant reads only currently permitted Public originals and validates source support.
 
-Default mail is local account capture plus loopback Mailpit, not delivery to real inboxes. The existing approved transactional adapter can be configured privately as described in [MAIL_CONFIGURATION.md](MAIL_CONFIGURATION.md). External delivery requires an authorized sender/inbox and separate verification; it is not claimed by local capture tests. No unwanted email-notification channel is added.
+Default mail uses private account-message capture and loopback Mailpit. Configure the supported transactional adapter using [MAIL_CONFIGURATION.md](MAIL_CONFIGURATION.md) when an authorized sender and recipients are available. Verify external delivery separately; ordinary application notifications remain in-app.
 
-## Testing, rights and limits
+## Verification and supporting guides
 
-- [TESTING.md](TESTING.md): exact safe CI scope, inventory of nonselected tests and guarded isolated engineering commands. A passing selected suite is not a claim that every historical thesis scenario ran.
-- [SECURITY.md](SECURITY.md): bounded disclosure guidance without a security guarantee.
+- [TESTING.md](TESTING.md): automated checks, recorded test scope and isolated engineering procedures.
+- [SECURITY.md](SECURITY.md): confidential vulnerability reporting and responsible assessment procedures.
 - [RIGHTS.md](RIGHTS.md), [FILE_RIGHTS.csv](FILE_RIGHTS.csv), [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md): first-party and independent upstream obligations.
 - [MODEL_REQUIREMENTS.md](MODEL_REQUIREMENTS.md), [MAIL_CONFIGURATION.md](MAIL_CONFIGURATION.md), [OPTIONAL_MODES.md](OPTIONAL_MODES.md): external prerequisites and profile limits.
 
-Release identity is read from [RELEASE.json](RELEASE.json), not the npm-private workspace `0.0.0` versions. Cite a verified immutable release/commit and URL when referencing this software; no paper, DOI or university endorsement is asserted. No remote CI badge, universal host support, cross-host restore, measured superiority or user-satisfaction claim is made without corresponding evidence.
+The published v1.0.1 source passed its [GitHub Actions checks](https://github.com/MoayadAlshehry/capstone-repository/actions/runs/41266061780). See [TESTING.md](TESTING.md) for what that workflow verifies and how installation and real-model evidence are recorded separately. [RELEASE.json](RELEASE.json) identifies the checkout version. When citing the project, include the immutable release or commit and its repository URL.

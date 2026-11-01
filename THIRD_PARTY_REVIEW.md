@@ -1,6 +1,6 @@
 # Third-party distribution review
 
-Original first-party application source and branding remain **No License / All Rights Reserved**. The owner has confirmed first-party publication authority and approved the exact EVAL-1 wording. That exception still requires release-specific manifest/tree and publication approval before activation. No blanket open-source project license is added, and no additional generic first-party ownership approval is requested here.
+Original first-party application source and branding remain **No License / All Rights Reserved**. The unchanged EVAL-1 wording provides a limited evaluation exception for exact releases identified by their completed public activation receipts. See [RELEASE_STATUS.md](RELEASE_STATUS.md) for that release-specific scope.
 
 Third-party materials retain their own grants, attribution, notices and conditions. See the [per-file rights inventory](FILE_RIGHTS.csv), [third-party notices](THIRD_PARTY_NOTICES.md) and [installed dependency inventory](third_party/DEPENDENCY_LICENSE_INVENTORY.csv). The release asset set also supplies a supplemental inventory of fetched vendor-bundled package notices; the declared Node dependency graph alone does not enumerate every bundled metadata record.
 
@@ -8,4 +8,4 @@ The identified free adapted Studio footer retains its original modification/comp
 
 This source distribution contains descriptors and installer code rather than node_modules, the FFmpeg executable or model weights. Dependencies are fetched during installation; this does not waive upstream obligations. Copied source, fonts and PDF.js assets already included in the tree remain subject to their own terms. Any later binary bundling, covered modification, competing component resale or different redistribution mode requires review of the specific affected obligations.
 
-The recorded review identifies no unresolved concrete third-party prohibition for the described candidate mode, subject to those retained conditions. It is not an independent legal opinion or a claim that an unrecorded third-party approval was obtained. Private consent narratives and raw operational evidence must not be published. Exact public release approval remains a separate owner decision under EVAL-1.
+For the described source-distribution mode, the recorded review identifies no unresolved concrete third-party distribution prohibition, subject to the retained terms and conditions. This review documents identified materials, distribution modes and notices. Reassess affected obligations when the bundled materials or distribution mode changes. Keep personal consent records and private operational evidence outside the public repository.

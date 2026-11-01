@@ -12,9 +12,9 @@ Follow the [installation README](../../../README.md) and [model requirements](..
 
 Search is available on public Home and Catalogue. AI Brief is opened from its project/card control. Open Project Assistant on a published project, choose an effort and ask a question about its Public evidence. Source links lead back to permitted native originals and their locations. Users can cancel a request and retry or rephrase an unsupported question. Ordinary catalogue and file workflows remain available in an explicitly AI-disabled profile.
 
-## Boundaries and limitations
+## Source scope and response handling
 
-AI remains BETA. A request may return no supported result, abstain, time out or reject an unsupported claim; these outcomes do not establish statistical accuracy. The Assistant does not generate academic grades or explain evaluators' decisions. Uploaded documents/code and user text are untrusted data, never instructions to execute code or broaden authority. Arbitrary filesystem access, cross-project evidence access and generated executable UI are not supported.
+The BETA AI features support project understanding within their admitted source scope. They can return an insufficient-evidence response, decline an unsupported claim or report a timeout. Evaluation records distinguish these outcomes from accepted answers. Academic grading and evaluator decisions remain with the authorized academic roles. Uploaded documents, code and user text are treated as evidence; they do not authorize code execution, arbitrary filesystem access or cross-project retrieval.
 
 The current source scope, publication/version and citation checks remain authoritative before delivery. Queue/rate limits, cancellation, private derived storage and bounded validation/repair are preserved. Derived indexes are regenerable, installation-managed private data and are excluded from source distribution. They are not a model-weight bundle or a substitute for original records.
 
