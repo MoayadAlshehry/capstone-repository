@@ -25,3 +25,5 @@ Installed proof adapters are development-only and add synthetic QA records outsi
 ## Search request lifecycle
 
 On a running owned Demo installation with the actual supported models, run `node tools/release/search-request-count.mjs`. This optional browser regression checks changed queries, explicit AI refinement and semantic-link reload while recording the number of inference requests. Run it sequentially with other AI checks so the existing rate limits remain meaningful. The check does not change model settings, ranking, permissions or rate limits. Its private result record is `.local/public-checks/search-dispatch/RESULT.json`.
+
+For input-direction presentation, `node tools/release/search-field-spacing.mjs` checks 24 combinations of locale, theme, viewport and entered-text direction against actual rendered icon clearance. It submits no search requests. Its screenshots and results remain in `.local/public-checks/search-spacing`.

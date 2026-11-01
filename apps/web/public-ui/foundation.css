@@ -673,8 +673,7 @@
   max-height: 116px;
   line-height: 22px;
   font-size: 14px;
-  padding: 19px 10px 19px;
-  padding-inline-start: 38px;
+  padding: 19px 10px 19px 38px;
   overflow-y: auto;
   background: transparent;
   box-shadow: none;
@@ -682,6 +681,10 @@
   border-radius: 0;
   resize: none;
   transition: height 160ms;
+}
+/* Icon placement follows the form locale while entered text keeps dir=auto. */
+[data-public-ui] [data-ui='search'][dir='rtl'] textarea {
+  padding: 19px 38px 19px 10px;
 }
 [data-public-ui] [data-ui='search'] .pu-search-leading {
   position: absolute;
