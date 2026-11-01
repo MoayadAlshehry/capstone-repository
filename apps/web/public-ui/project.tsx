@@ -117,7 +117,11 @@ function Facts({ p }: { p: Project }) {
           <dt>{t(label!)}</dt>
           <dd>
             {label === 'Academic year' || label === 'Publication date' ? (
-              <bdi dir="ltr">{value}</bdi>
+              <bdi dir="ltr">
+                {label === 'Publication date'
+                  ? value?.replace(/[\u200e\u200f\u061c]/g, '')
+                  : value}
+              </bdi>
             ) : (
               <bdi>{value || l('Not recorded', 'غير مسجَّل')}</bdi>
             )}
@@ -146,7 +150,10 @@ function ProjectPage() {
           <Badge variant="secondary">
             {t('Published')} ·{' '}
             <bdi dir="ltr">
-              {integration?.publishedLabel ?? p.publicationDate}
+              {(integration?.publishedLabel ?? p.publicationDate ?? '').replace(
+              /[\u200e\u200f\u061c]/g,
+              '',
+            )}
             </bdi>
           </Badge>
           <h1 dir="auto">{p.title}</h1>

@@ -17,7 +17,7 @@ assert.equal(
   (await readdir(root + '/packages/db/migrations')).filter((n) =>
     n.endsWith('.sql'),
   ).length,
-  139,
+  140,
 );
 const assets = JSON.parse(await read('demo/ASSET_MANIFEST.json')).files;
 assert.equal(assets.length, 540);
@@ -72,7 +72,7 @@ console.log(
       outcome: 'PASS_SAFE_STATIC_SCOPE',
       release_version: release.version,
       EVAL_1_wording_unchanged: true,
-      migrations: 139,
+      migrations: 140,
       original_demo_input_hashes_verified: 540,
       local_document_links_checked: links,
       browser_readiness_guard_before_fill: true,

@@ -1,5 +1,7 @@
 # Release identity and evaluation permission
 
+This checkout is the **unpublished v1.0.2-rc.1 maintenance candidate**. No Git tag or public release has been created for it, and it has no EVAL-1 activation receipt. Published v1.0.0 and v1.0.1 retain their original identities and permissions. See [candidate notes](CANDIDATE_NOTES.md) for the focused changes.
+
 The version for this checkout is recorded in [RELEASE.json](RELEASE.json) and displayed by installer, start, status and doctor. It is a version identifier, not evidence of publication or permission activation. The private npm workspaces deliberately retain `0.0.0`; no workspace is published to npm and no dependency versions are changed for cosmetic numbering.
 
 ## Pinned releases and exact receipts

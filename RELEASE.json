@@ -1,6 +1,6 @@
 {
-  "version": "1.0.1",
-  "tag": "v1.0.1",
+  "version": "1.0.2-rc.1",
+  "tag": "v1.0.2-rc.1",
   "workspace_package_policy": "Private npm workspaces retain version 0.0.0; they are not separately published.",
-  "publication_and_permission_status": "Consult RELEASE_STATUS.md and the exact release activation receipt."
+  "publication_and_permission_status": "Unpublished local maintenance candidate. Consult RELEASE_STATUS.md; no activation receipt for this candidate has been issued."
 }
