@@ -21,6 +21,15 @@ const journal = JSON.parse(
   await read('packages/db/migrations/meta/_journal.json'),
 );
 assert.equal(journal.entries.length, 141);
+const demoSchema = (await read('scripts/demo/release.ts')).match(
+  /^export const DEMO_SCHEMA_VERSION = (\d+);$/m,
+);
+assert(demoSchema, 'Demo schema declaration is required');
+assert.equal(
+  Number(demoSchema[1]),
+  migrationNames.length,
+  'Demo schema must match the release migrations',
+);
 assert.deepEqual(
   journal.entries.map((entry) => entry.tag + '.sql'),
   migrationNames,

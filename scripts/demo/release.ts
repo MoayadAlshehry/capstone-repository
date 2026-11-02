@@ -1,1 +1,1 @@
-export const DEMO_SCHEMA_VERSION = 140;
+export const DEMO_SCHEMA_VERSION = 141;
