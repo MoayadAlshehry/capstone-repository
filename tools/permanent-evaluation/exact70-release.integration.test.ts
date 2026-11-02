@@ -1,13 +1,11 @@
 import { it, expect } from 'vitest';
 import { randomUUID } from 'node:crypto';
-import { writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { permanentFixture } from './fixture.js';
 import { createReviewers } from '@capstone/db/reviewers';
 import { createExternalReviewEngine } from '@capstone/domain/external-reviews-engine';
 import { createEvaluationEventWorker } from '@capstone/infrastructure/evaluation-events';
-import {
-  withMigrationConnection,
-} from '@capstone/db/migration';
+import { withMigrationConnection } from '@capstone/db/migration';
 import {
   emptyExternalForm,
   declarationKeys,
@@ -211,7 +209,16 @@ it('release exact-70 committee, independent allocation, strict below-floor and p
     const rows = await x.f.seed(
       'SELECT count(*)::int n FROM drizzle.__drizzle_migrations',
     );
-    expect(rows[0]!.n).toBe(140);
+    const migrationJournal = JSON.parse(
+      await readFile(
+        new URL(
+          '../../packages/db/migrations/meta/_journal.json',
+          import.meta.url,
+        ),
+        'utf8',
+      ),
+    ) as { entries: unknown[] };
+    expect(rows[0]!.n).toBe(migrationJournal.entries.length);
     const high = [3, 3, 3, 3, 2, 2, 2];
     const close260 = [4, 3, 2, 2, 3, 2, 3],
       close265 = [4, 4, 2, 2, 2, 2, 3];
@@ -805,38 +812,57 @@ it('release exact-70 committee, independent allocation, strict below-floor and p
     await withMigrationConnection(x.f.migration, async (c) => {
       await c.query('BEGIN');
       try {
-        const snapshot = (await c.query('SELECT app.first_pair_snapshot(true) value')).rows[0].value as {
-          cases: { id: string; project: string; eventLane: string | null; gateReasons: string[]; reviewers: { id: string; committeeConflict: boolean }[] }[];
+        const snapshot = (
+          await c.query('SELECT app.first_pair_snapshot(true) value')
+        ).rows[0].value as {
+          cases: {
+            id: string;
+            project: string;
+            eventLane: string | null;
+            gateReasons: string[];
+            reviewers: { id: string; committeeConflict: boolean }[];
+          }[];
         };
         expect(snapshot.cases.length).toBeGreaterThan(0);
         let compared = 0;
         for (const item of snapshot.cases) {
-          const expected = (await c.query(
-            'SELECT app.event_allocation_lane($1) lane,app.first_pair_reasons($1) reasons', [item.id],
-          )).rows[0];
+          const expected = (
+            await c.query(
+              'SELECT app.event_allocation_lane($1) lane,app.first_pair_reasons($1) reasons',
+              [item.id],
+            )
+          ).rows[0];
           expect(item.eventLane).toBe(expected.lane);
           expect(item.gateReasons).toEqual(expected.reasons);
           for (const reviewer of item.reviewers) {
-            const oracle = (await c.query(
-              `SELECT coalesce((SELECT committee_conflict FROM app.evaluation_reviewer_relations WHERE case_id=$1 AND reviewer_id=$2),false)
+            const oracle = (
+              await c.query(
+                `SELECT coalesce((SELECT committee_conflict FROM app.evaluation_reviewer_relations WHERE case_id=$1 AND reviewer_id=$2),false)
                 OR EXISTS(SELECT 1 FROM app.committee_invitations i JOIN app.evaluation_cases ec ON ec.id=i.case_id
                   JOIN app.users u ON lower(u.email)=i.email WHERE ec.project_id=$3 AND u.id=$2) excluded`,
-              [item.id, reviewer.id, item.project],
-            )).rows[0];
+                [item.id, reviewer.id, item.project],
+              )
+            ).rows[0];
             expect(reviewer.committeeConflict).toBe(oracle.excluded);
             compared++;
           }
         }
         expect(compared).toBeGreaterThan(0);
-        expect(snapshot.cases.find(item => item.project === exact.project)?.reviewers
-          .find(reviewer => reviewer.id === conflicted.id)?.committeeConflict).toBe(true);
+        expect(
+          snapshot.cases
+            .find((item) => item.project === exact.project)
+            ?.reviewers.find((reviewer) => reviewer.id === conflicted.id)
+            ?.committeeConflict,
+        ).toBe(true);
       } finally {
         await c.query('ROLLBACK');
       }
       expect((await c.query('SELECT 1 value')).rows[0].value).toBe(1);
     });
-    await mark('SNAPSHOT-01',
-      'Batched snapshot matched original lane, eligibility and guest-identity oracles for every fixture case/reviewer; the known guest-faculty conflict remained excluded; the diagnostic transaction rolled back and its connection remained usable.');
+    await mark(
+      'SNAPSHOT-01',
+      'Batched snapshot matched original lane, eligibility and guest-identity oracles for every fixture case/reviewer; the known guest-faculty conflict remained excluded; the diagnostic transaction rolled back and its connection remained usable.',
+    );
     const gradeTables = await x.f.seed(
       "SELECT count(*)::int n FROM information_schema.tables WHERE table_schema='app' AND table_name IN ('official_grades','course_grades')",
     );
