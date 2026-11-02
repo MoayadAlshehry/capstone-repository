@@ -25,7 +25,7 @@ import {
 import { SharedWork } from './shared-work';
 import { searchCount, searchCounters } from './search-observer';
 // Membership computed before subject-preserving admission must not be reused.
-const VERSION = 'public-search-metadata-v3-subject-bound';
+const VERSION = 'public-search-metadata-v4-affirmative-subject';
 type Plan = {
   version: string;
   authority: string;

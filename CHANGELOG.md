@@ -7,6 +7,9 @@ This version improves allocation responsiveness, concurrent upload error handlin
 - Allocation snapshots compute shared cohort ranks and committee-identity exclusions once per transaction. Forward migration 0139 preserves authority checks, capacity constraints and scoring rules.
 - The allocation worker verifies immutable original bytes outside reviewer and project transactions. It then rechecks the current lawful selection and exact file identities before issuing an offer. Changed selections are retried through the existing durable queue.
 - Competing upload reservations return the controlled HTTP 409 conflict response instead of an internal-error response. Existing path, quota and file-authorization rules remain in force.
+- Demo original-file uploads retain private operation identities across interruptions. The loader reuses staged bytes only after exact size/hash verification and removes only that recorded upload’s abandoned temporary writes; normal format and permission checks remain in force.
+- Signature-validation diagnostics retain the underlying detector cause privately without changing admission rules or time limits.
+- Unqualified negative capability statements such as “not implemented” do not supply affirmative metadata evidence; qualified conditions are kept distinct.
 - Qualified metadata requirements cannot be satisfied solely by generic procedural alternatives. Existing cached search memberships are invalidated so the corrected admission rule applies consistently.
 - An accepted AI Search result does not issue another inference request solely because its URL changes to semantic mode. Changed queries, explicit refinement and context revalidation remain supported.
 - Search fields reserve icon space according to interface language while preserving automatic direction for entered text. Public publication dates retain their intended numeric order in Arabic.

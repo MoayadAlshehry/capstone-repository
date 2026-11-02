@@ -31,6 +31,7 @@ export interface NativeStorage {
     signal?: AbortSignal,
   ): Promise<boolean>;
   removeStaging(key: string): Promise<void>;
+  removePartialStaging?(key: string): Promise<void>;
 }
 export async function createNativeStorage(
   input: string,
@@ -94,8 +95,19 @@ export async function createNativeStorage(
       await h.close();
     }
   }
+  async function removePartialStaging(key: string) {
+    await guard();
+    path(key); // Validate the owned storage key before matching temporary names.
+    for (const name of await readdir(root))
+      if (
+        name.startsWith(`.partial-${key}-`) &&
+        /^\.partial-[a-f0-9-]{36}-[a-f0-9-]{36}$/.test(name)
+      )
+        await unlink(join(root, name));
+  }
   await guard();
   return {
+    removePartialStaging,
     guardRoot: guard,
     async write(key, bytes, expected) {
       if (
@@ -182,12 +194,7 @@ export async function createNativeStorage(
         if (!(e && typeof e === 'object' && 'code' in e && e.code === 'ENOENT'))
           throw new StorageError('WRITE_FAILED');
       }
-      for (const name of await readdir(root))
-        if (
-          name.startsWith(`.partial-${key}-`) &&
-          /^\.partial-[a-f0-9-]{36}-[a-f0-9-]{36}$/.test(name)
-        )
-          await unlink(join(root, name));
+      await removePartialStaging(key);
     },
   };
 }

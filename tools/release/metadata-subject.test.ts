@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   rankMetadata,
+  sourceSupport,
   safeAlternatives,
   type MetadataRecord,
   type SoftGroup,
@@ -120,4 +121,104 @@ describe('qualified metadata interests retain their subject', () => {
       ),
     ).toEqual([]);
   });
+});
+
+describe('postposed negative capability statements', () => {
+  const negative = row(
+    'negative',
+    'Heat Pump Prototype',
+    'Heat recovery is not implemented. Temperature measurement is implemented.',
+  );
+  const affirmative = row(
+    'affirmative',
+    'Heat Recovery Prototype',
+    'The prototype implements heat recovery.',
+  );
+  it('does not use a not-implemented clause as positive subject evidence', () => {
+    expect(sourceSupport(negative, 'heat recovery')).toEqual([]);
+    expect(
+      sourceSupport(negative, 'temperature measurement').length,
+    ).toBeGreaterThan(0);
+    expect(
+      rank(
+        [negative, affirmative],
+        [{ text: 'heat recovery', alternatives: [] }],
+      ),
+    ).toEqual(['affirmative']);
+  });
+  it('retains a specific not-implemented clause as explicit absence evidence', () => {
+    expect(sourceSupport(negative, 'heat recovery', true)).toEqual([
+      'Heat recovery is not implemented.',
+    ]);
+  });
+  it('distinguishes not-included or not-provided from a nonexclusive description', () => {
+    expect(
+      sourceSupport(
+        row('a', 'Prototype', 'Acoustic sensing is not included.'),
+        'acoustic sensing',
+      ),
+    ).toEqual([]);
+    expect(
+      sourceSupport(
+        row('b', 'Prototype', 'Acoustic sensing is not provided.'),
+        'acoustic sensing',
+      ),
+    ).toEqual([]);
+    expect(
+      sourceSupport(
+        row('c', 'Prototype', 'Acoustic sensing is not excluded.'),
+        'acoustic sensing',
+        true,
+      ),
+    ).toEqual([]);
+  });
+});
+
+it('does not mistake a qualified condition for a declaration of total absence', () => {
+  expect(
+    sourceSupport(
+      row(
+        'paid',
+        'Acoustic Prototype',
+        'Acoustic sensing is not provided free of charge.',
+      ),
+      'acoustic sensing',
+      true,
+    ),
+  ).toEqual([]);
+  expect(
+    sourceSupport(
+      row(
+        'conditional',
+        'Thermal Prototype',
+        'Heat recovery is not implemented without operator approval.',
+      ),
+      'heat recovery',
+      true,
+    ),
+  ).toEqual([]);
+});
+
+it('recognizes current or not-yet implementation absence without a conditional qualifier', () => {
+  expect(
+    sourceSupport(
+      row(
+        'pending',
+        'Thermal Prototype',
+        'Heat recovery is not yet implemented.',
+      ),
+      'heat recovery',
+    ),
+  ).toEqual([]);
+  expect(
+    sourceSupport(
+      row(
+        'current',
+        'Thermal Prototype',
+        'Heat recovery is not currently provided.',
+      ),
+      'heat recovery',
+      true,
+    ),
+  ).toEqual(['Heat recovery is not currently provided.']);
 });

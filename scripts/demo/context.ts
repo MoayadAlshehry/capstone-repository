@@ -1,11 +1,15 @@
-import { randomUUID } from 'node:crypto';
-import {readFile} from 'node:fs/promises';
+import { randomUUID, createHash } from 'node:crypto';
+import {
+  prepareDemoUploadIntent,
+  resumableDemoStorage,
+  type DemoUploadIntent,
+  type DemoUploadReservation,
+} from './upload-recovery.js';
+import type { NativeDescriptor } from '@capstone/storage/native';
+import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import type pg from 'pg';
-import {
-  createAuthentication,
-  type AccountView,
-} from '@capstone/db/auth';
+import { createAuthentication, type AccountView } from '@capstone/db/auth';
 import { createAccountMail } from '@capstone/db/account-mail';
 import { decryptAccountMail } from '@capstone/db/account-mail-crypto';
 import { createOnboarding } from '@capstone/db/onboarding';
@@ -23,18 +27,26 @@ import { createEvaluationEventWorker } from '@capstone/infrastructure/evaluation
 import { createCommitteeMailWorker } from '@capstone/infrastructure/committee-mail';
 import { createVisualMedia } from '@capstone/infrastructure/visual-media';
 import { parseAccountMailConfig } from '../../packages/config/src/account-mail.js';
-import { privateJson,savePrivate,type DemoIdentity } from './store.js';
+import { privateJson, savePrivate, type DemoIdentity } from './store.js';
 import { ownedInstallation } from './ownership.js';
 import { verifyAssetInputs } from './assets.js';
 import { demoMailpitApi, capturedCommitteeLink } from './captured-mail.js';
 
 export async function demoContext() {
   const owned = await ownedInstallation(true);
-  const env: NodeJS.ProcessEnv = {...process.env,...owned.runtime, APP_ENV:'test',ACCOUNT_MAIL_MODE:'capture',COMMITTEE_MAIL_MODE:'mailpit',ACCOUNT_MAIL_APP_ORIGIN:owned.runtime.AUTH_BASE_URL,ACCOUNT_MAIL_FROM_ADDRESS:'accounts@capstone.local'};
-  Object.assign(process.env,env);
+  const env: NodeJS.ProcessEnv = {
+    ...process.env,
+    ...owned.runtime,
+    APP_ENV: 'test',
+    ACCOUNT_MAIL_MODE: 'capture',
+    COMMITTEE_MAIL_MODE: 'mailpit',
+    ACCOUNT_MAIL_APP_ORIGIN: owned.runtime.AUTH_BASE_URL,
+    ACCOUNT_MAIL_FROM_ADDRESS: 'accounts@capstone.local',
+  };
+  Object.assign(process.env, env);
   await verifyAssetInputs();
-  const host={mailpitPort:owned.state.ports.mail_ui};
-  const migration=owned.migration;
+  const host = { mailpitPort: owned.state.ports.mail_ui };
+  const migration = owned.migration;
   const pgRuntime = createRequire(
     new URL('../../packages/db/package.json', import.meta.url),
   )('pg') as typeof pg;
@@ -59,7 +71,15 @@ export async function demoContext() {
     process.cwd(),
     'test',
   );
-  const files = createFileEngine(runtime, storage),
+  const expectedWrites = new Map<string, NativeDescriptor>();
+  const uploadIntents = await privateJson<Record<string, DemoUploadIntent>>(
+    'file-upload-intents.json',
+    () => ({}),
+  );
+  const files = createFileEngine(
+      runtime,
+      resumableDemoStorage(storage, expectedWrites),
+    ),
     semester = createSemesterEngine(runtime, storage),
     academic = createAcademicEngine(runtime, storage),
     packets = createPacketEngine(runtime, storage);
@@ -158,11 +178,35 @@ export async function demoContext() {
     return login(person);
   }
   async function bootstrap() {
-    const bootstrap = JSON.parse(await readFile(new URL('../../.local/accounts/bootstrap-admin.json',import.meta.url),'utf8')) as {email:string;password:string};
-    const found=await sql("SELECT id,email,full_name FROM app.users WHERE role_code='platform_admin'");
-    if(found.length!==1||found[0]!.email!==owned.state.admin_email||bootstrap.email!==owned.state.admin_email)throw Error('INSTALLER_INITIAL_ADMIN_REQUIRED');
-    const person:DemoIdentity={key:'platform',email:bootstrap.email,password:bootstrap.password,name:found[0]!.full_name,role:'platform_admin',id:found[0]!.id};
-    const identities=await privateJson<Record<string,DemoIdentity>>('identities.json',()=>({}));identities.platform=person;await savePrivate('identities.json',identities);
+    const bootstrap = JSON.parse(
+      await readFile(
+        new URL('../../.local/accounts/bootstrap-admin.json', import.meta.url),
+        'utf8',
+      ),
+    ) as { email: string; password: string };
+    const found = await sql(
+      "SELECT id,email,full_name FROM app.users WHERE role_code='platform_admin'",
+    );
+    if (
+      found.length !== 1 ||
+      found[0]!.email !== owned.state.admin_email ||
+      bootstrap.email !== owned.state.admin_email
+    )
+      throw Error('INSTALLER_INITIAL_ADMIN_REQUIRED');
+    const person: DemoIdentity = {
+      key: 'platform',
+      email: bootstrap.email,
+      password: bootstrap.password,
+      name: found[0]!.full_name,
+      role: 'platform_admin',
+      id: found[0]!.id,
+    };
+    const identities = await privateJson<Record<string, DemoIdentity>>(
+      'identities.json',
+      () => ({}),
+    );
+    identities.platform = person;
+    await savePrivate('identities.json', identities);
     return login(person);
   }
   async function add(
@@ -172,21 +216,63 @@ export async function demoContext() {
     data: Uint8Array,
   ) {
     const state = await semester.state(actor, project);
+    const identity = {
+      project,
+      version: state.project.version,
+      uploader: actor.id,
+      path,
+      bytes: data.length,
+      sha256: createHash('sha256').update(data).digest('hex'),
+    };
+    const reservationColumns =
+      'id,project_id AS project,version_id AS version,uploader_id AS uploader,relative_path AS path,expected_bytes AS bytes,correlation_id AS correlation,staging_key AS "stagingKey",status';
+    const intent = await prepareDemoUploadIntent(identity, uploadIntents, {
+      save: () => savePrivate('file-upload-intents.json', uploadIntents),
+      known: async (correlation) =>
+        (
+          await sql(
+            `SELECT ${reservationColumns} FROM app.file_reservations WHERE uploader_id=$1 AND correlation_id=$2`,
+            [actor.id, correlation],
+          )
+        )[0] as DemoUploadReservation | undefined,
+      pending: async () =>
+        (
+          await sql(
+            `SELECT ${reservationColumns} FROM app.file_reservations WHERE project_id=$1 AND version_id=$2 AND uploader_id=$3 AND canonical_path=lower(normalize($4,NFC)) AND status='active'`,
+            [project, state.project.version, actor.id, path],
+          )
+        )[0] as DemoUploadReservation | undefined,
+      verify: storage.verify,
+    });
     const r = await files.reserve(actor, {
       project,
       version: state.project.version,
       path,
       expectedBytes: data.length,
-      correlationId: randomUUID(),
+      correlationId: intent.correlation,
     });
-    return files.finalize(
-      actor,
-      r.id,
-      (async function* () {
-        yield data;
-      })(),
-    );
+    const reservation = (
+      await sql(
+        'SELECT staging_key FROM app.file_reservations WHERE id=$1 AND uploader_id=$2 AND project_id=$3 AND version_id=$4',
+        [r.id, actor.id, project, state.project.version],
+      )
+    )[0];
+    if (!reservation) throw Error('DEMO_UPLOAD_RESERVATION_REQUIRED');
+    const key = String(reservation.staging_key);
+    expectedWrites.set(key, { size: identity.bytes, sha256: identity.sha256 });
+    try {
+      return await files.finalize(
+        actor,
+        r.id,
+        (async function* () {
+          yield data;
+        })(),
+      );
+    } finally {
+      expectedWrites.delete(key);
+    }
   }
+
   const seen = new Set<string>();
   async function rememberCaptured(address: string, subject: string) {
     const list = (await (

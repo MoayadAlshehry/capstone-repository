@@ -7,8 +7,11 @@ import { createInflateRaw } from 'node:zlib';
 import { Readable } from 'node:stream';
 import type { NativeStorage } from './native.js';
 export class ContentError extends Error {
-  constructor(readonly code: string) {
-    super('File content does not match the admitted format: ' + code);
+  constructor(
+    readonly code: string,
+    options?: ErrorOptions,
+  ) {
+    super('File content does not match the admitted format: ' + code, options);
     this.name = 'ContentError';
   }
 }
@@ -44,8 +47,8 @@ export async function validateContent(
   let detected: { ext: string; mime: string } | undefined;
   try {
     detected = await detect(prefix);
-  } catch {
-    throw new ContentError('MALFORMED_SIGNATURE');
+  } catch (cause) {
+    throw new ContentError('MALFORMED_SIGNATURE', { cause });
   }
   if (extension === 'docx' || extension === 'pptx') {
     if (!detected || !['zip', extension].includes(detected.ext))

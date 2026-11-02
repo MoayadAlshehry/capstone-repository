@@ -4,6 +4,7 @@ import base from './vitest.config.ts';
 export const publicUnitFiles = [
   'tools/release/ai-runtime.test.ts',
   'tools/release/owned-model-failures.test.ts',
+  'tools/release/demo-upload-recovery.test.ts',
   'tools/release/metadata-subject.test.ts',
   'tools/release/allocation-preparation.test.ts',
   'tools/release/demo-marker.test.tsx',

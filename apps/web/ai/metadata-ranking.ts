@@ -170,11 +170,17 @@ function negatedClaim(clause: string, wanted: string[]) {
     if (negation) {
       const after = part.slice(negation.index + negation[0].length);
       if (negativeSubjectMatches(after, wanted)) return true;
+      // Unqualified postposed absence (for example, "is not implemented")
+      // also negates its subject. Qualified conditions such as "not provided
+      // free of charge" do not establish global absence.
       // "Field deployment is not claimed" is explicit, but "not limited
       // to field deployment" and "not excluded" are not absence evidence.
       if (
         /^not$/iu.test(negation[0]) &&
-        /^(?:claimed|asserted|reported|stated)\b/iu.test(after.trim()) &&
+        (/^(?:claimed|asserted|reported|stated)\b/iu.test(after.trim()) ||
+          /^(?:(?:yet|currently)\s+)?(?:implemented|included|provided)(?:\s+(?:yet|here|in\s+this\s+(?:project|prototype|system)))?[.!?؟]*$/iu.test(
+            after.trim(),
+          )) &&
         negativeSubjectMatches(part.slice(0, negation.index), wanted)
       )
         return true;
