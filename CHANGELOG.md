@@ -9,6 +9,7 @@ This version improves allocation responsiveness, concurrent upload error handlin
 - The allocation worker verifies immutable original bytes outside reviewer and project transactions. It then rechecks the current lawful selection and exact file identities before issuing an offer. Changed selections are retried through the existing durable queue.
 - Competing upload reservations return the controlled HTTP 409 conflict response instead of an internal-error response. Existing path, quota and file-authorization rules remain in force.
 - Demo original-file uploads retain private operation identities across interruptions. The loader reuses staged bytes only after exact size/hash verification and removes only that recorded upload’s abandoned temporary writes; normal format and permission checks remain in force.
+- Bulk Demo generation makes one reported retry of a transient committee-status or external-review state read. It retains existing query deadlines and never automatically replays an academic command.
 - Signature-validation diagnostics retain the underlying detector cause privately without changing admission rules or time limits.
 - Unqualified negative capability statements such as “not implemented” do not supply affirmative metadata evidence; qualified conditions are kept distinct.
 - Qualified metadata requirements cannot be satisfied solely by generic procedural alternatives. Existing cached search memberships are invalidated so the corrected admission rule applies consistently.

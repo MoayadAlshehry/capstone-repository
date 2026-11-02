@@ -28,6 +28,7 @@ import { createCommitteeMailWorker } from '@capstone/infrastructure/committee-ma
 import { createVisualMedia } from '@capstone/infrastructure/visual-media';
 import { parseAccountMailConfig } from '../../packages/config/src/account-mail.js';
 import { privateJson, savePrivate, type DemoIdentity } from './store.js';
+import { readDemoState } from './read-retry.js';
 import { ownedInstallation } from './ownership.js';
 import { verifyAssetInputs } from './assets.js';
 import { demoMailpitApi, capturedCommitteeLink } from './captured-mail.js';
@@ -84,11 +85,30 @@ export async function demoContext() {
     academic = createAcademicEngine(runtime, storage),
     packets = createPacketEngine(runtime, storage);
   const profiles = createReviewers(runtime),
-    reviews = createExternalReviewEngine(runtime, storage),
+    reviewService = createExternalReviewEngine(runtime, storage),
     editions = createEditionEngine(runtime, storage);
-  const committee = createCommitteeService(runtime, mailConfig, (f) =>
+  const committeeService = createCommitteeService(runtime, mailConfig, (f) =>
     storage.verify(f.key, { size: Number(f.size), sha256: f.sha256 }),
   );
+  const readState = <T>(label: string, read: () => Promise<T>) =>
+    readDemoState(read, (failure) => {
+      console.error(failure);
+      console.log(
+        'DEMO_READ_RETRY | ' +
+          label +
+          ' | Database busy; retrying this state read once. Saved progress and query limits are unchanged.',
+      );
+    });
+  const reviews = {
+    ...reviewService,
+    view: (...args: Parameters<typeof reviewService.view>) =>
+      readState('external-review-state', () => reviewService.view(...args)),
+  };
+  const committee = {
+    ...committeeService,
+    status: (...args: Parameters<typeof committeeService.status>) =>
+      readState('committee-status', () => committeeService.status(...args)),
+  };
   const media = createVisualMedia({
     databaseUrl: runtime,
     storageRoot: env['PRIVATE_STORAGE_ROOT']!,
