@@ -2,6 +2,7 @@ import 'server-only';
 import type { AccountView } from '@capstone/db/auth';
 import {
   publicCatalogue,
+  publicCatalogueSnapshot,
   publicPeople,
 } from '../public-adoption/discovery-server';
 import { publicView } from '../public-adoption/server';
@@ -32,19 +33,10 @@ export async function searchSnapshot(
   sort = 'newest',
 ): Promise<SearchSnapshot> {
   await assertCurrentGeneration();
-  const items: Row[] = [];
-  let first: Awaited<ReturnType<typeof publicCatalogue>> | undefined;
-  for (let page = 1; ; page++) {
-    const batch = await publicCatalogue(
-      new URLSearchParams({ sort, pageSize: '50', page: String(page) }),
-      account,
-    );
-    first ??= batch;
-    items.push(
-      ...batch.items.filter((p) => !account || Object.hasOwn(p, 'evaluation')),
-    );
-    if (page * 50 >= batch.total) break;
-  }
+  const catalogue = await publicCatalogueSnapshot(account, sort);
+  const items = catalogue.items.filter(
+    (p) => !account || Object.hasOwn(p, 'evaluation'),
+  );
   const bounded = false;
   const content = items
     .map((p) => [
@@ -64,9 +56,9 @@ export async function searchSnapshot(
   await assertCurrentGeneration();
   return {
     items,
-    facets: first!.facets,
+    facets: catalogue.facets,
     revision: digest(content),
-    resolverRevision: digest(first!.facets),
+    resolverRevision: digest(catalogue.facets),
     bounded,
   };
 }

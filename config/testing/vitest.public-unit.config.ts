@@ -3,6 +3,7 @@ import base from './vitest.config.ts';
 // Explicit safe, bounded units: no DB, running app, real model or provider.
 export const publicUnitFiles = [
   'tools/release/ai-runtime.test.ts',
+  'tools/release/catalogue-snapshot.test.ts',
   'tools/release/owned-model-failures.test.ts',
   'tools/release/demo-upload-recovery.test.ts',
   'tools/release/demo-read-retry.test.ts',
