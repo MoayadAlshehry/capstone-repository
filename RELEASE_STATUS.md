@@ -1,6 +1,6 @@
 # Release identity and evaluation permission
 
-This checkout is the **unpublished v1.0.2-rc.1 maintenance candidate**. No Git tag or public release has been created for it, and it has no EVAL-1 activation receipt. Published v1.0.0 and v1.0.1 retain their original identities and permissions. See [candidate notes](CANDIDATE_NOTES.md) for the focused changes.
+The identity for this source is recorded in [RELEASE.json](RELEASE.json). A checkout or review branch is not evidence that a release has been published or that evaluation permission is active. Verify the matching immutable release and completed activation receipt using the links below. [Maintenance changes](CHANGELOG.md) describe the version's scope.
 
 The version for this checkout is recorded in [RELEASE.json](RELEASE.json) and displayed by installer, start, status and doctor. It is a version identifier, not evidence of publication or permission activation. The private npm workspaces deliberately retain `0.0.0`; no workspace is published to npm and no dependency versions are changed for cosmetic numbering.
 
@@ -8,10 +8,11 @@ The version for this checkout is recorded in [RELEASE.json](RELEASE.json) and di
 
 Choose an immutable version from [GitHub Releases](https://github.com/MoayadAlshehry/capstone-repository/releases). Download its complete source archive and SHA256SUMS, verify the archive, and consult the activation receipt for that exact version:
 
-| Version | Exact EVAL-1 activation receipt |
-| --- | --- |
-| v1.0.0 | [EVAL-1_ACTIVATION_RECEIPT.json](https://github.com/MoayadAlshehry/capstone-repository/releases/download/v1.0.0/EVAL-1_ACTIVATION_RECEIPT.json) |
-| v1.0.1 | [EVAL-1_ACTIVATION_RECEIPT.json](https://github.com/MoayadAlshehry/capstone-repository/releases/download/v1.0.1/EVAL-1_ACTIVATION_RECEIPT.json) |
+| Version | Exact EVAL-1 activation receipt                                                                                                                 |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| v1.0.0  | [EVAL-1_ACTIVATION_RECEIPT.json](https://github.com/MoayadAlshehry/capstone-repository/releases/download/v1.0.0/EVAL-1_ACTIVATION_RECEIPT.json) |
+| v1.0.1  | [EVAL-1_ACTIVATION_RECEIPT.json](https://github.com/MoayadAlshehry/capstone-repository/releases/download/v1.0.1/EVAL-1_ACTIVATION_RECEIPT.json) |
+| v1.0.2  | [EVAL-1_ACTIVATION_RECEIPT.json](https://github.com/MoayadAlshehry/capstone-repository/releases/download/v1.0.2/EVAL-1_ACTIVATION_RECEIPT.json) |
 
 These links identify version-specific receipt locations; listing a link does not assert that the asset already exists or that permission is active. Treat EVAL-1 as operative only when express owner approval and the completed public activation receipt identify the exact release, commit/tree, source manifest, source archive and unchanged permission wording, and those identities match the downloaded material. A missing or mismatched receipt does not establish activation. Approval or a receipt for another version does not activate this version.
 

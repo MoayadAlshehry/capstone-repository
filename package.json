@@ -9,7 +9,7 @@
     "pnpm": "11.28.3"
   },
   "scripts": {
-    "build:packages": "corepack pnpm --filter \"./packages/*\" -r build",
+    "build:packages": "corepack pnpm --filter \"./packages/*\" --workspace-concurrency 1 -r build",
     "build": "corepack pnpm build:packages && corepack pnpm --filter \"./apps/*\" --workspace-concurrency 1 -r build",
     "auth:setup": "node --conditions=react-server --import tsx tools/auth/cli.ts setup",
     "auth:bootstrap-platform-admin": "node --conditions=react-server --import tsx tools/auth/cli.ts bootstrap",

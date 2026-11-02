@@ -3,14 +3,41 @@ import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 
 const root = fileURLToPath(new URL('../..', import.meta.url));
-const selected = new Set([
-  'tools/release/ai-runtime.test.ts',
-  'tools/release/demo-marker.test.tsx',
-  'tools/allocation/policy.test.ts',
-  'tools/testing/public-policy.test.ts',
-  'tools/testing/installed-account-setup.test.ts',
-  'tools/testing/published-bindings.test.ts',
-]);
+// Read the explicit CI allowlist without executing the test configuration.
+// This prevents a newly selected suite from being mislabelled as unselected.
+const configuration = ts.createSourceFile(
+  'vitest.public-unit.config.ts',
+  await readFile(root + '/config/testing/vitest.public-unit.config.ts', 'utf8'),
+  ts.ScriptTarget.Latest,
+  true,
+);
+let selectedPaths;
+for (const statement of configuration.statements) {
+  if (!ts.isVariableStatement(statement)) continue;
+  for (const declaration of statement.declarationList.declarations) {
+    if (
+      !ts.isIdentifier(declaration.name) ||
+      declaration.name.text !== 'publicUnitFiles'
+    )
+      continue;
+    if (
+      !declaration.initializer ||
+      !ts.isArrayLiteralExpression(declaration.initializer)
+    )
+      throw Error('Public CI selection must remain an explicit array');
+    selectedPaths = declaration.initializer.elements.map((element) => {
+      if (!ts.isStringLiteral(element))
+        throw Error('Public CI selection must contain literal paths');
+      return element.text;
+    });
+  }
+}
+if (
+  !selectedPaths?.length ||
+  new Set(selectedPaths).size !== selectedPaths.length
+)
+  throw Error('Missing or duplicate public CI selection');
+const selected = new Set(selectedPaths);
 const ignored = new Set([
   '.git',
   '.local',

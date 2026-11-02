@@ -277,22 +277,26 @@ export async function createUploadRuntime(
         (e as { code?: string }).code;
       return {
         status_code:
-          state === 'P0002'
-            ? 404
-            : state === '42501'
-              ? 403
-              : state === '22023' || state === '23505'
-                ? 400
-                : 500,
+          state === '40001'
+            ? 409
+            : state === 'P0002'
+              ? 404
+              : state === '42501'
+                ? 403
+                : state === '22023' || state === '23505'
+                  ? 400
+                  : 500,
         body: JSON.stringify({
           error:
-            state === 'P0002'
-              ? 'NOT_FOUND'
-              : state === '42501'
-                ? 'FORBIDDEN'
-                : state === '22023' || state === '23505'
-                  ? 'ADMISSION_REJECTED'
-                  : 'UPLOAD_FAILED',
+            state === '40001'
+              ? 'UPLOAD_CONFLICT'
+              : state === 'P0002'
+                ? 'NOT_FOUND'
+                : state === '42501'
+                  ? 'FORBIDDEN'
+                  : state === '22023' || state === '23505'
+                    ? 'ADMISSION_REJECTED'
+                    : 'UPLOAD_FAILED',
         }),
       };
     },
