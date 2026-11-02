@@ -217,7 +217,9 @@ export function UnifiedSearchProvider({ children }: { children: ReactNode }) {
         value.query.trim().length >= 2 &&
         (!attempted.current.has(value.key) ||
           changed ||
-          (modeChanged && value.mode === 'semantic'))
+          // An accepted result already represents this key; URL synchronization
+          // must not dispatch the same request again. Explicit refinement still runs.
+          (modeChanged && value.mode === 'semantic' && !result.current))
       ) {
         intent.current = null;
         start();

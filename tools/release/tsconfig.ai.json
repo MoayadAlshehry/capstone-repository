@@ -1,6 +1,14 @@
 {
   "extends": "../../apps/web/tsconfig.json",
-  "compilerOptions": {"noEmit": true},
-  "include": ["ai-runtime.test.ts", "demo-marker.test.tsx"],
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "ai-runtime.test.ts",
+    "demo-marker.test.tsx",
+    "metadata-subject.test.ts",
+    "owned-model-failures.test.ts",
+    "catalogue-snapshot.test.ts"
+  ],
   "exclude": ["node_modules"]
 }

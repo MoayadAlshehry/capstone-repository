@@ -26,6 +26,50 @@ type Snapshot = {
   eventPolicy: { code: string; config_hash: string; config: unknown };
   eventCursor: EventCursor;
 };
+function nextAllocation(source: Snapshot, unreadable: ReadonlySet<string>) {
+  const initial = source.cases.filter(
+    (c) =>
+      c.gateReasons.length === 0 &&
+      c.completed < 2 &&
+      c.active + c.completed < 2 &&
+      c.packet &&
+      c.packetReadable &&
+      !unreadable.has(c.id),
+  );
+  initial.sort(
+    (a, b) =>
+      Number(b.active + b.completed > 0) - Number(a.active + a.completed > 0) ||
+      Date.parse(a.eventEligibleAt ?? a.publishedAt) -
+        Date.parse(b.eventEligibleAt ?? b.publishedAt) ||
+      a.id.localeCompare(b.id, 'en'),
+  );
+  // Optional expansion still uses the established progression conjunction and one-slot guard.
+  const expansion = source.cases.filter(
+    (c) =>
+      c.gateReasons.length === 0 &&
+      c.completed >= 2 &&
+      c.completed < 10 &&
+      c.active === 0 &&
+      c.expansionReady &&
+      c.nextSlot &&
+      c.nextSlot > 2 &&
+      !unreadable.has(c.id),
+  );
+  expansion.sort(
+    (a, b) =>
+      a.completed - b.completed ||
+      Date.parse(a.waitingSince) - Date.parse(b.waitingSince) ||
+      a.id.localeCompare(b.id, 'en'),
+  );
+  return chooseEventAllocation(initial, expansion, source.eventCursor);
+}
+function fileIdentity(files: readonly File[]) {
+  return JSON.stringify(
+    files
+      .map((f) => [f.key, Number(f.size), f.sha256])
+      .sort((a, b) => String(a[0]).localeCompare(String(b[0]))),
+  );
+}
 // This is a transaction-size bound, never a per-project review cap. Releasing
 // capacity locks between small batches prevents ordinary reads/assessments from
 // timing out behind a large eligible population. The queue continues at once.
@@ -59,7 +103,8 @@ export function createEvaluationEventWorker(
     if (running || closed) return null;
     running = true;
     let client: pg.PoolClient;
-    let continueQueue = false;
+    let continueQueue = false,
+      transactionActive = false;
     try {
       client = await pool.connect();
     } catch (error) {
@@ -68,11 +113,62 @@ export function createEvaluationEventWorker(
     }
     try {
       await client.query('BEGIN');
-      const source = await snapshot(client, force);
+      transactionActive = true;
+      let source = await snapshot(client, force);
       if (!source) {
         await client.query('COMMIT');
+        transactionActive = false;
         failed = false;
         return null;
+      }
+      if (source.eventPolicy.code !== 'EVAL_POLICY_V3')
+        throw Error('POLICY_CONFIGURATION_MISMATCH');
+      // Hash immutable originals without holding reviewer or project locks.
+      // The preparation transaction is rolled back, including any tick work.
+      // A fresh locked snapshot and exact file identities are required to commit.
+      let verified:
+        | {
+            caseId: string;
+            reviewer: string;
+            packet: string | null;
+            slot: number;
+            identity: string;
+            readable: boolean;
+          }
+        | undefined;
+      const preparation = nextAllocation(source, new Set());
+      if (preparation) {
+        const candidate = preparation.case;
+        const slot =
+          candidate.nextSlot ?? candidate.completed + candidate.active + 1;
+        const prepared = (
+          await client.query(
+            'SELECT app.first_pair_offer($1,$2,$3,$4,false) value',
+            [randomUUID(), preparation.reviewer, candidate.packet, slot],
+          )
+        ).rows[0].value as { files?: File[] };
+        await client.query('ROLLBACK');
+        transactionActive = false;
+        let readable = !!prepared.files?.length;
+        for (const file of prepared.files ?? [])
+          if (!(await verify(file))) readable = false;
+        verified = {
+          caseId: candidate.id,
+          reviewer: preparation.reviewer,
+          packet: candidate.packet ?? null,
+          slot,
+          identity: fileIdentity(prepared.files ?? []),
+          readable,
+        };
+        await client.query('BEGIN');
+        transactionActive = true;
+        source = await snapshot(client, force);
+        if (!source) {
+          await client.query('COMMIT');
+          transactionActive = false;
+          failed = false;
+          return null;
+        }
       }
       const first = source,
         offers: unknown[] = [],
@@ -82,46 +178,7 @@ export function createEvaluationEventWorker(
         throw Error('POLICY_CONFIGURATION_MISMATCH');
       // Deterministic scarcity queue: complete a started pair first, then oldest lawful wait and stable identity.
       for (let turn = 0; turn < maxOffersPerTransaction; turn++) {
-        const initial = source.cases.filter(
-          (c) =>
-            c.gateReasons.length === 0 &&
-            c.completed < 2 &&
-            c.active + c.completed < 2 &&
-            c.packet &&
-            c.packetReadable &&
-            !unreadable.has(c.id),
-        );
-        initial.sort(
-          (a, b) =>
-            Number(b.active + b.completed > 0) -
-              Number(a.active + a.completed > 0) ||
-            Date.parse(a.eventEligibleAt ?? a.publishedAt) -
-              Date.parse(b.eventEligibleAt ?? b.publishedAt) ||
-            a.id.localeCompare(b.id, 'en'),
-        );
-        // Optional expansion still uses the established progression conjunction and one-slot guard.
-        const expansion = source.cases.filter(
-          (c) =>
-            c.gateReasons.length === 0 &&
-            c.completed >= 2 &&
-            c.completed < 10 &&
-            c.active === 0 &&
-            c.expansionReady &&
-            c.nextSlot &&
-            c.nextSlot > 2 &&
-            !unreadable.has(c.id),
-        );
-        expansion.sort(
-          (a, b) =>
-            a.completed - b.completed ||
-            Date.parse(a.waitingSince) - Date.parse(b.waitingSince) ||
-            a.id.localeCompare(b.id, 'en'),
-        );
-        const choice = chooseEventAllocation(
-            initial,
-            expansion,
-            source.eventCursor,
-          ),
+        const choice = nextAllocation(source, unreadable),
           selected = choice?.case,
           reviewer = choice?.reviewer;
         if (!selected || !reviewer) break;
@@ -134,10 +191,22 @@ export function createEvaluationEventWorker(
             [run, reviewer, selected.packet, slot],
           )
         ).rows[0].value as { files?: File[] };
-        let readable = !!prepared.files?.length;
-        for (const f of prepared.files ?? [])
-          if (!(await verify(f))) readable = false;
-        if (!readable) {
+        if (
+          !verified ||
+          verified.caseId !== selected.id ||
+          verified.reviewer !== reviewer ||
+          verified.packet !== (selected.packet ?? null) ||
+          verified.slot !== slot ||
+          verified.identity !== fileIdentity(prepared.files ?? [])
+        ) {
+          // A competing allocation or authority change invalidates this proof.
+          // Leave durable events unhandled; the ordinary poll retries preparation.
+          await client.query('ROLLBACK');
+          transactionActive = false;
+          failed = false;
+          return null;
+        }
+        if (!verified.readable) {
           unreadable.add(selected.id);
           continue;
         }
@@ -219,11 +288,12 @@ export function createEvaluationEventWorker(
         JSON.stringify(result),
       ]);
       await client.query('COMMIT');
+      transactionActive = false;
       continueQueue = offers.length === maxOffersPerTransaction;
       failed = false;
       return result;
     } catch (e) {
-      await client.query('ROLLBACK');
+      if (transactionActive) await client.query('ROLLBACK');
       throw e;
     } finally {
       client.release();

@@ -1,16 +1,16 @@
-# Public testing policy
+# Testing and verification
 
 ## Safe static and unit checks
 
-Install the frozen dependencies using the documented installer environment. `corepack pnpm check:public`, `corepack pnpm test:inventory`, `corepack pnpm test:unit:public`, `python3 tools/release/installer_guard_test.py` and `python3 tools/release/feature_settings_test.py` are the bounded public CI scope. Python settings tests use an owned loopback mock only to validate configuration/failure contracts; they are not evidence of real-model feature success. The Vitest allowlist contains AI runtime units, synthetic-Demo marker rendering and pure allocation policy units. It has **no test-name exclusion regex** and fails if no tests are collected. It does not require a database, running application, real model weights or provider credentials.
+Install the frozen dependencies in the documented environment. The public CI scope comprises `corepack pnpm check:public`, `corepack pnpm test:inventory`, `corepack pnpm test:unit:public`, `python3 tools/release/installer_guard_test.py` and `python3 tools/release/feature_settings_test.py`. The selected Vitest suite covers AI runtime and source-admission boundaries, allocation policy and transaction preparation, synthetic-Demo rendering, interrupted original-file recovery and bounded state-read retry, installed-account capture and binding guards. Negative model transport tests run against a process-owned loopback HTTP server; no shared model service is contacted. Python settings tests use an owned loopback mock to check configuration and failure contracts. Positive inference verification uses the actual supported models in the isolated procedures below. The unit suite uses an explicit file allowlist, contains no test-name exclusion regex and fails if no tests are collected.
 
-The workflow contains only safe checks with read-only repository permission. A local equivalent run is not a remote GitHub Actions pass. No green badge should be added before actual remote execution after owner-approved publication.
+The workflow uses read-only repository permissions and requires no production database, model service or provider credentials. The published v1.0.1 commit passed [main-branch run 41266061780](https://github.com/MoayadAlshehry/capstone-repository/actions/runs/41266061780) on its first attempt: 108 Vitest tests, 14 installer guards and 13 settings-contract tests, alongside package builds, inventory/static checks, AI types and whitespace checks. Consult the checks on the relevant commit or PR for later changes.
 
-## What the selected results do not include
+## Test scope and result interpretation
 
-`test:inventory` lists every test source and relevant profile, including explicit NOT_SELECTED_BY_SAFE_UNIT_CI and HISTORICAL_TC_NOT_RUN classifications. Literal TC-name counts are source declarations, not dynamically expanded runtime case counts; dynamic declarations are labelled separately. The full default historical/configuration matrix is not advertised as one exhaustive passing suite.
+`test:inventory` reads the same explicit file allowlist as the safe unit configuration and lists test sources and profiles, with explicit `NOT_SELECTED_BY_SAFE_UNIT_CI` and `HISTORICAL_TC_NOT_RUN` classifications. TC-name counts describe source declarations; dynamically expanded cases are labelled separately. Reports should identify the selected suite, executed outcomes, source/build identity and environment. This keeps unit, integration, real-model and historical academic evidence traceable.
 
-Nineteen legacy integration configs consume `engineeringTestNames` from `tools/testing/source-policy.ts`. Their historical TC-numbered thesis scenarios remain deferred by design and now print a policy notice. Those scenarios stay in source and are reported NOT_RUN, never silently counted as passing or relabelled as modern engineering evidence. `docs/registries/validation-policy.json` explains that scope. `phase-status.json` now identifies PUBLIC_RELEASE; `tools/automation/core.ts` continues to protect historical acceptance records and place current engineering output in the private current engineering directory. No historical result registry is promoted.
+Nineteen integration configurations use `engineeringTestNames` from `tools/testing/source-policy.ts` to separate current engineering selections from preserved historical TC-numbered thesis scenarios. Historical scenarios remain recorded as NOT_RUN unless a separately documented execution covers them. `docs/registries/validation-policy.json` defines this policy. Current engineering output is kept separate from historical acceptance records.
 
 ## Opt-in isolated engineering
 
@@ -18,6 +18,12 @@ After a fresh owned local installation, `corepack pnpm test:isolated:release` fi
 
 Read [tools/release/README.md](tools/release/README.md) before the genuine native upload, real AI, browser, retention and controlled failure scripts. Positive AI checks require the actual supported models and an authorized non-production token. No production or Internet-facing application testing is permitted.
 
-Historical phase suites are not bulk enabled by flipping a flag. A historical scenario needs a reviewed per-fixture target mapping to disposable synthetic resources, explicit scope and honest result accounting. Until those prerequisites are supplied and verified, it is NOT_RUN; preserved source code is not a passing result. No public default command executes private reset/recovery or the canonical Demo Setup.
+To replay a historical scenario, first map its fixture and target to an owned disposable environment and document the intended outcomes. Preserve its original record and report the new execution separately. Public verification commands use the supported installer and synthetic fixtures; private operator reset/recovery procedures remain outside this distribution.
 
 Installed proof adapters are development-only and add synthetic QA records outside the original Demo scenarios. Setup-token fixtures handle both queued encrypted content and a worker-delivered private local capture; they never weaken ciphertext retirement. Installed-fixture close only disconnects services and retains existing storage and databases. Some one-use workflow proofs require a fresh scenario rather than replaying consumed setup credentials. The additional safe unit file covers this capture transition and origin validation.
+
+## Search request lifecycle
+
+On a running owned Demo installation with the actual supported models, run `node tools/release/search-request-count.mjs`. This optional browser regression checks changed queries, explicit AI refinement and semantic-link reload while recording the number of inference requests. Run it sequentially with other AI checks so the existing rate limits remain meaningful. The check does not change model settings, ranking, permissions or rate limits. Its private result record is `.local/public-checks/search-dispatch/RESULT.json`.
+
+For input-direction presentation, `node tools/release/search-field-spacing.mjs` checks 24 combinations of locale, theme, viewport and entered-text direction against actual rendered icon clearance. It submits no search requests. Its screenshots and results remain in `.local/public-checks/search-spacing`.

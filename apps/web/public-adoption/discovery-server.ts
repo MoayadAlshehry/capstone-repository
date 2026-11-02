@@ -7,7 +7,7 @@ import {
   catalogueValues,
 } from './discovery-sql';
 export { publicRows, catalogueSql, catalogueValues } from './discovery-sql';
-import { createRuntimeDatabase } from '@capstone/db';
+import { createRuntimeDatabase, type TransactionScope } from '@capstone/db';
 import type { AccountView } from '@capstone/db/auth';
 import type { DiscoveryResult } from '@capstone/domain';
 import { normalizeDiscoveryText } from '@capstone/domain';
@@ -58,6 +58,40 @@ export async function publicPeople(
 export type PublicDiscoveryResult = DiscoveryResult & {
   departmentsByUniversity: Record<string, string[]>;
 };
+async function cataloguePage(
+  tx: TransactionScope,
+  params: URLSearchParams,
+  account: AccountView | null,
+): Promise<PublicDiscoveryResult> {
+  await tx.query('SET LOCAL enable_nestloop=off');
+  await tx.query('SET LOCAL jit=off');
+  const selected = (
+    await tx.query<{
+      value: Omit<PublicDiscoveryResult, 'items'> & {
+        items: { project: string; version: string }[];
+      };
+    }>(catalogueSql, catalogueValues(params, account))
+  )[0]!.value;
+  // Collection and point projections retain their existing query plans.
+  await tx.query('SET LOCAL enable_nestloop=on');
+  const projected = await tx.query<{
+    value: DiscoveryResult['items'][number];
+  }>(
+    'SELECT app.external_projection(project,$2::uuid,$3::uuid) value FROM unnest($1::uuid[]) WITH ORDINALITY AS a(project,position) ORDER BY position',
+    [
+      selected.items.map((item) => item.project),
+      account?.id ?? null,
+      account?.sessionId ?? null,
+    ],
+  );
+  if (
+    projected.some(
+      (item, index) => item.value.version !== selected.items[index]?.version,
+    )
+  )
+    throw Error('PUBLIC_POINTER_CHANGED');
+  return { ...selected, items: projected.map((item) => item.value) };
+}
 export async function publicCatalogue(
   params: URLSearchParams,
   account: AccountView | null,
@@ -66,35 +100,36 @@ export async function publicCatalogue(
     await tx.query(
       'SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY',
     );
-    await tx.query('SET LOCAL enable_nestloop=off');
-    await tx.query('SET LOCAL jit=off');
-    const selected = (
-      await tx.query<{
-        value: Omit<PublicDiscoveryResult, 'items'> & {
-          items: { project: string; version: string }[];
-        };
-      }>(catalogueSql, catalogueValues(params, account))
-    )[0]!.value;
-    // Point projections use their normal indexed plans; do not apply the collection-wide planner hint to them.
-    await tx.query('SET LOCAL enable_nestloop=on');
-    const projected = await tx.query<{
-      value: DiscoveryResult['items'][number];
-    }>(
-      'SELECT app.external_projection(project,$2::uuid,$3::uuid) value FROM unnest($1::uuid[]) WITH ORDINALITY AS a(project,position) ORDER BY position',
-      [
-        selected.items.map((item) => item.project),
-        account?.id ?? null,
-        account?.sessionId ?? null,
-      ],
-    );
-    if (
-      projected.some(
-        (item, index) => item.value.version !== selected.items[index]?.version,
-      )
-    )
-      throw Error('PUBLIC_POINTER_CHANGED');
-    return { ...selected, items: projected.map((item) => item.value) };
+    return cataloguePage(tx, params, account);
   });
   result.items = await Promise.all(result.items.map(publicProject));
   return result;
+}
+/** A composed search snapshot must not mix pages from changing popularity order.
+ * Final source and authority rechecks remain in the search delivery path. */
+export async function publicCatalogueSnapshot(
+  account: AccountView | null,
+  sort = 'newest',
+) {
+  const pages = await db().transactions.run(async (tx) => {
+    await tx.query(
+      'SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY',
+    );
+    const batches: PublicDiscoveryResult[] = [];
+    for (let page = 1; ; page++) {
+      const batch = await cataloguePage(
+        tx,
+        new URLSearchParams({ sort, pageSize: '50', page: String(page) }),
+        account,
+      );
+      batches.push(batch);
+      if (page * 50 >= batch.total) break;
+    }
+    return batches;
+  });
+  // Media reads occur after the transaction, in the same bounded page batches.
+  const items: PublicDiscoveryResult['items'] = [];
+  for (const page of pages)
+    items.push(...(await Promise.all(page.items.map(publicProject))));
+  return { items, facets: pages[0]!.facets };
 }

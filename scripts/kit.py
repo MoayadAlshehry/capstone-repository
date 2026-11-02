@@ -27,7 +27,7 @@ def run(args,tag,env=None):
    r=subprocess.Popen(args,cwd=ROOT,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True);reviews=0
    for line in r.stdout:
     f.write(line);f.flush()
-    if line.startswith(('DEMO_STAGE_COMPLETED | ','DEMO_PROJECT_COMPLETED | ','DEMO_READY | ','DEMO_ALREADY_INSTALLED | ')):out(line.strip())
+    if line.startswith(('DEMO_STAGE_COMPLETED | ','DEMO_READ_RETRY | ','DEMO_PROJECT_COMPLETED | ','DEMO_READY | ','DEMO_ALREADY_INSTALLED | ')):out(line.strip())
     elif line.startswith('{'):
      try:
       event=json.loads(line)

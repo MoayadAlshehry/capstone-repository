@@ -3,9 +3,22 @@
   "compilerOptions": {
     "noEmit": true,
     "allowImportingTsExtensions": true,
-    "lib": ["ES2024", "DOM"],
+    "lib": [
+      "ES2024",
+      "DOM"
+    ],
     "jsx": "react-jsx"
   },
-  "include": ["**/*.ts", "../config/testing/*.ts", "**/*.tsx"],
-  "exclude": ["ai-v1/**/*.test.ts", "release/ai-runtime.test.ts", "release/demo-marker.test.tsx"]
+  "include": [
+    "**/*.ts",
+    "../config/testing/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "ai-v1/**/*.test.ts",
+    "release/ai-runtime.test.ts",
+    "release/demo-marker.test.tsx",
+    "release/metadata-subject.test.ts",
+    "release/owned-model-failures.test.ts"
+  ]
 }

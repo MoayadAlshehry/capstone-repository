@@ -170,11 +170,17 @@ function negatedClaim(clause: string, wanted: string[]) {
     if (negation) {
       const after = part.slice(negation.index + negation[0].length);
       if (negativeSubjectMatches(after, wanted)) return true;
+      // Unqualified postposed absence (for example, "is not implemented")
+      // also negates its subject. Qualified conditions such as "not provided
+      // free of charge" do not establish global absence.
       // "Field deployment is not claimed" is explicit, but "not limited
       // to field deployment" and "not excluded" are not absence evidence.
       if (
         /^not$/iu.test(negation[0]) &&
-        /^(?:claimed|asserted|reported|stated)\b/iu.test(after.trim()) &&
+        (/^(?:claimed|asserted|reported|stated)\b/iu.test(after.trim()) ||
+          /^(?:(?:yet|currently)\s+)?(?:implemented|included|provided)(?:\s+(?:yet|here|in\s+this\s+(?:project|prototype|system)))?[.!?؟]*$/iu.test(
+            after.trim(),
+          )) &&
         negativeSubjectMatches(part.slice(0, negation.index), wanted)
       )
         return true;
@@ -327,7 +333,7 @@ const relatedSubjects: Record<string, string[]> = {
   'disconnected devices': ['offline sync'],
 };
 const genericActivities = new Set(
-  'experiment experiments trial trials test testing method methods methodology study studies research researchwork project projects prototype prototypes development checking check evaluation evaluations analysis analyses work workflow solution solutions platform platforms process processes'
+  'experiment experiments trial trials test testing method methods methodology study studies research researchwork project projects prototype prototypes development checking check evaluation evaluations analysis analyses work workflow solution solutions platform platforms process processes experimental controlled randomized functional operation operations construction fabrication demonstration demonstrations deployment implementation building running executed implemented دراسة تجربة تجارب تجريبية تجريبي منهج منهجية اختبار اختبارات تشغيل بناء تنفيذ نموذج نماذج'
     .split(' ')
     .map(metadataLemma),
 );
@@ -358,6 +364,9 @@ export function safeAlternatives(group: SoftGroup, rows: MetadataRecord[]) {
     const t = metadataTokens(s);
     return (
       t.length > 0 &&
+      // A qualified interest cannot be broadened to a subject-free procedure.
+      // Keep substantive paraphrases/translations and generic-only searches.
+      (!topicalGroup(group) || topicalGroup({ text: s, alternatives: [] })) &&
       !brands.has(normalizeMetadata(s)) &&
       !(terms.length > 1 && t.length === 1 && terms.includes(t[0]!))
     );

@@ -33,6 +33,7 @@ export default defineConfig({
         '../../packages/domain/src/corrections-engine.ts',
       ),
       '@capstone/db/allocation': source('../../packages/db/src/allocation.ts'),
+      '@capstone/domain/event-allocation-policy': source('../../packages/domain/src/event-allocation-policy.ts'),
       '@capstone/domain/allocation-policy': source(
         '../../packages/domain/src/allocation-policy.ts',
       ),

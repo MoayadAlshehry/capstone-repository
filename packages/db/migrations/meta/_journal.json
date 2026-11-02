@@ -974,6 +974,20 @@
       "when": 1793059200000,
       "tag": "0138_exact_internal_eligibility_floor",
       "breakpoints": true
+    },
+    {
+      "idx": 139,
+      "version": "7",
+      "when": 1793531897407,
+      "tag": "0139_batched_allocation_snapshot",
+      "breakpoints": true
+    },
+    {
+      "idx": 140,
+      "version": "7",
+      "when": 1793592473874,
+      "tag": "0140_allocation_snapshot_arrays",
+      "breakpoints": true
     }
   ]
 }
