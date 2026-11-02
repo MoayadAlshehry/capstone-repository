@@ -13,6 +13,7 @@ node --conditions=react-server --import tsx tools/release/mail-contract.mts
 node scripts/verify-owned.mjs
 node tools/release/ai-feature-proof.mjs
 node tools/release/demo-permission-proof.mjs
+node --conditions=react-server tools/release/allocation-concurrency.mjs --run-owned-demo
 python3 tools/release/failure-campaign.py
 ```
 
@@ -21,3 +22,5 @@ The AI/Demo scripts require the existing Demo already loaded. They use real norm
 The failure campaign creates one owned loopback test harness, forwards positive requests unchanged to the already configured actual model service, blocks controlled negative requests locally, verifies bounded failure and actual recovery, restores the prior per-install endpoint and stops its own harness. It does not change the model service or publish a new application provider. Never run it on a shared/production source root. Actual current results, failures/rephrasing, environment/build identities and matrices belong in the private release evidence; these commands alone are not PASS evidence.
 
 The selected release integration suite (`corepack pnpm test:release`) uses disposable databases on the owned PostgreSQL service. Its exact-70 compound has a defined scope distinct from private operator recovery exercises. Preserve historical scenario records and identify any new execution separately. Published release artifacts and [GitHub Actions results](https://github.com/MoayadAlshehry/capstone-repository/actions) provide version-specific verification references; real-model and lifecycle outcomes require their own recorded executions.
+
+The allocation concurrency regression requires a completed disposable original Demo. It creates a private database backup and a uniquely marked temporary clone, obtains a real synthetic supervisor session, and runs three sequential rounds with one allocation snapshot and four committee reads. Each round waits for the actual project lock before issuing the reads; the existing three-second application statement limit remains unchanged. The check compares returned committee state, transaction rollback fingerprints and function privileges, then drops only its marked clone. Generated backups and detailed results remain private under `.local/release-checks`; do not publish them. This is a focused database/service regression, not a browser-workflow or scalability claim.

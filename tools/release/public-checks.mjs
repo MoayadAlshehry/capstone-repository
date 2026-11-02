@@ -13,12 +13,22 @@ assert.equal(
   sha(await readFile(root + '/PUBLIC_EVALUATION_PERMISSION_PROPOSAL.md')),
   '874e20241903a08e8b2a1c486850448fe6d9ffdf44eeb3dec6f4e5fe666f7b83',
 );
-assert.equal(
-  (await readdir(root + '/packages/db/migrations')).filter((n) =>
-    n.endsWith('.sql'),
-  ).length,
-  140,
+const migrationNames = (await readdir(root + '/packages/db/migrations'))
+  .filter((name) => name.endsWith('.sql'))
+  .sort();
+assert.equal(migrationNames.length, 141);
+const journal = JSON.parse(
+  await read('packages/db/migrations/meta/_journal.json'),
 );
+assert.equal(journal.entries.length, 141);
+assert.deepEqual(
+  journal.entries.map((entry) => entry.tag + '.sql'),
+  migrationNames,
+);
+for (const [index, entry] of journal.entries.entries()) {
+  assert.equal(entry.idx, index);
+  if (index > 0) assert(entry.when > journal.entries[index - 1].when);
+}
 const assets = JSON.parse(await read('demo/ASSET_MANIFEST.json')).files;
 assert.equal(assets.length, 540);
 for (const a of assets)
@@ -72,7 +82,7 @@ console.log(
       outcome: 'PASS_SAFE_STATIC_SCOPE',
       release_version: release.version,
       EVAL_1_wording_unchanged: true,
-      migrations: 140,
+      migrations: 141,
       original_demo_input_hashes_verified: 540,
       local_document_links_checked: links,
       browser_readiness_guard_before_fill: true,
